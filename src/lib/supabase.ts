@@ -1,11 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 
 const SUPABASE_URL =
-  process.env.NEXT_PUBLIC_SUPABASE_URL ??
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
   "https://yqgtjgvqeogsykkpgxiy.supabase.co";
 
 const SUPABASE_ANON_KEY =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxZ3RqZ3ZxZW9nc3lra3BneGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNzU0NDksImV4cCI6MjA5Mzg1MTQ0OX0.oeUTdvM_2J9njLuO3N9e7TQY2i1mqN2s0DWrtXIfqlE";
 
 let browserClient: ReturnType<typeof createClient> | undefined;
@@ -21,6 +21,6 @@ export function createServerClient() {
 export function createAdminClient() {
   return createClient(
     SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY ?? SUPABASE_ANON_KEY
+    process.env.SUPABASE_SERVICE_ROLE_KEY || SUPABASE_ANON_KEY
   );
 }
