@@ -1,0 +1,22 @@
+name: Test Actions
+
+on:
+  push:
+    branches: [claude/add-claude-md-XOAOr]
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Write and commit proof
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "Actions ran at $(date -u)" > actions-proof.txt
+          git add actions-proof.txt
+          git commit -m "proof: Actions ran [skip ci]"
+          git push
