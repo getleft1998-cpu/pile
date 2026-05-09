@@ -78,5 +78,5 @@ jobs:
           echo "Deploy: ${{ steps.deploy.outcome }}" >> deploy.log
           git add deploy.log
           git diff --staged --quiet || git commit -m "Add deploy log [skip ci]"
-          git pull --rebase origin HEAD || true
-          git push || true
+          git pull --rebase origin claude/add-claude-md-XOAOr || true
+          git push origin claude/add-claude-md-XOAOr || git push --force-with-lease origin claude/add-claude-md-XOAOr || true
