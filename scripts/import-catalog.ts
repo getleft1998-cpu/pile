@@ -514,7 +514,7 @@ async function main() {
       "name,slug,category_slug,price,sale_price,variants,images,issues,source_url",
       ...report.products.map((p) =>
         [
-          `"${p.name.replace(/"/g, '""')}"`,
+          `"${p.name.replace(/"/g, '""')}"",
           p.slug,
           p.category_slug,
           p.price ?? "",
@@ -557,6 +557,9 @@ async function main() {
   } catch (err) {
     console.error("Fatal error:", err);
     report.errors.push(String(err));
+    // Always write whatever we have so full-import.ts can produce a report
+    const jsonPath = path.join(outDir, "dry-run.json");
+    fs.writeFileSync(jsonPath, JSON.stringify(report, null, 2), "utf-8");
   } finally {
     await browser?.close();
   }

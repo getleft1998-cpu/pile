@@ -1,0 +1,72 @@
+{
+  "scrapedAt": "2026-05-09T12:10:38.507Z",
+  "sourceUrl": "https://flormar.tn",
+  "totals": {
+    "categories": 10,
+    "products": 0,
+    "variants": 0,
+    "matchedImages": 0,
+    "fallbackImages": 0,
+    "uncertainMatches": 0,
+    "missingPrices": 0,
+    "missingImages": 0,
+    "missingSkus": 0,
+    "duplicateSlugs": 0,
+    "failedPages": 0
+  },
+  "categories": [
+    {
+      "name": "category-1",
+      "slug": "category-1",
+      "url": "https://flormar.tn/category/category-1"
+    },
+    {
+      "name": "category-2",
+      "slug": "category-2",
+      "url": "https://flormar.tn/category/category-2"
+    },
+    {
+      "name": "category-3",
+      "slug": "category-3",
+      "url": "https://flormar.tn/category/category-3"
+    },
+    {
+      "name": "ksswrt",
+      "slug": "ksswrt",
+      "url": "https://flormar.tn/category/ksswrt"
+    },
+    {
+      "name": "laany-blbshr",
+      "slug": "laany-blbshr",
+      "url": "https://flormar.tn/category/laany-blbshr"
+    },
+    {
+      "name": "about",
+      "slug": "about",
+      "url": "https://flormar.tn/page/about"
+    },
+    {
+      "name": "terms",
+      "slug": "terms",
+      "url": "https://flormar.tn/page/terms"
+    },
+    {
+      "name": "refund",
+      "slug": "refund",
+      "url": "https://flormar.tn/page/refund"
+    },
+    {
+      "name": "privacy",
+      "slug": "privacy",
+      "url": "https://flormar.tn/page/privacy"
+    },
+    {
+      "name": "contact",
+      "slug": "contact",
+      "url": "https://flormar.tn/page/contact"
+    }
+  ],
+  "products": [],
+  "reviewList": [],
+  "errors": []
+}

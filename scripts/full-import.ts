@@ -9,6 +9,7 @@
  *
  * Run: npx tsx scripts/full-import.ts
  * Requires: SUPABASE_SERVICE_ROLE_KEY env var
+ * Optional: SKIP_IMAGE_UPLOAD=true to store source URLs without uploading
  */
 
 import { createClient } from "@supabase/supabase-js";
@@ -25,7 +26,7 @@ const SERVICE_KEY =
 
 const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
 
-// ─── Types (mirrors dry-run output) ──────────────────────────────────────────
+// ─── Types (mirrors dry-run output) ────────────────────────────────────────────
 
 interface ScrapedVariant {
   shade_name: string;
@@ -89,7 +90,7 @@ interface ImportResult {
   errors: string[];
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 async function downloadImage(
   url: string
@@ -106,7 +107,7 @@ async function downloadImage(
     const contentType =
       resp.headers.get("content-type")?.split(";")[0] || "image/jpeg";
     const data = Buffer.from(await resp.arrayBuffer());
-    if (data.length < 1000) return null; // probably not a real image
+    if (data.length < 1000) return null;
     return { data, contentType };
   } catch {
     return null;
@@ -139,20 +140,22 @@ async function main() {
   const dryRunPath = path.join(process.cwd(), "dry-run-output", "dry-run.json");
 
   if (!fs.existsSync(dryRunPath)) {
-    console.error("dry-run-output/dry-run.json not found. Run import-catalog.ts first.");
+    console.error("dry-run-output/dry-run.json not found. Run fetch-catalog.ts first.");
     writeReport("failed", "dry-run.json not found", null, null);
     process.exit(1);
   }
 
   const dryRun: DryRunReport = JSON.parse(fs.readFileSync(dryRunPath, "utf-8"));
+  const skipUpload = process.env.SKIP_IMAGE_UPLOAD === "true";
+
   console.log("\n🌸 Flormar Tunisia — Supabase Import");
   console.log("═════════════════════════════════════\n");
   console.log(`  Scraped at  : ${dryRun.scrapedAt}`);
   console.log(`  Categories  : ${dryRun.totals.categories}`);
   console.log(`  Products    : ${dryRun.totals.products}`);
   console.log(`  Variants    : ${dryRun.totals.variants}`);
+  console.log(`  Image upload: ${skipUpload ? "SKIPPED (source URLs stored)" : "enabled"}`);
 
-  // Quality check
   const total = dryRun.totals.products;
   if (total === 0) {
     console.log("\n⚠  No products scraped — nothing to import.");
@@ -167,12 +170,7 @@ async function main() {
 
   if (quality < 0.8) {
     console.error(`\n✗ Quality ${qPct}% < 80% — aborting import.`);
-    writeReport(
-      "aborted",
-      `Quality score ${qPct}% is below the 80% threshold`,
-      dryRun,
-      null
-    );
+    writeReport("aborted", `Quality score ${qPct}% is below the 80% threshold`, dryRun, null);
     process.exit(1);
   }
 
@@ -189,7 +187,7 @@ async function main() {
     errors: [],
   };
 
-  // ── 1. Upsert categories ──────────────────────────────────────────────────
+  // ── 1. Upsert categories ──────────────────────────────────────────────────────────
   console.log(`Importing ${dryRun.categories.length} categories...`);
   for (const cat of dryRun.categories) {
     const { error } = await supabase
@@ -203,22 +201,16 @@ async function main() {
   }
   console.log(`  ✓ ${result.categoriesInserted} categories`);
 
-  // Build category slug→id map
-  const { data: catRows } = await supabase
-    .from("categories")
-    .select("id, slug");
-  const catMap = new Map<string, string>(
-    (catRows ?? []).map((r) => [r.slug, r.id])
-  );
+  const { data: catRows } = await supabase.from("categories").select("id, slug");
+  const catMap = new Map<string, string>((catRows ?? []).map((r) => [r.slug, r.id]));
 
-  // ── 2. Products, variants, images ─────────────────────────────────────────
+  // ── 2. Products, variants, images ───────────────────────────────────────────────
   console.log(`\nImporting ${dryRun.products.length} products...\n`);
 
   for (const product of dryRun.products) {
     try {
       const categoryId = catMap.get(product.category_slug) ?? null;
 
-      // Upsert product
       const { data: productRow, error: pErr } = await supabase
         .from("products")
         .upsert(
@@ -245,7 +237,6 @@ async function main() {
       result.productsInserted++;
       const pid = productRow.id as string;
 
-      // Variants — delete existing then insert fresh
       if (product.variants.length > 0) {
         await supabase.from("product_variants").delete().eq("product_id", pid);
         const { error: vErr } = await supabase.from("product_variants").insert(
@@ -265,45 +256,36 @@ async function main() {
         }
       }
 
-      // Images — download, upload to Storage, then insert records
       await supabase.from("product_images").delete().eq("product_id", pid);
 
-      const imageRecords: Array<{
-        product_id: string;
-        url: string;
-        sort_order: number;
-      }> = [];
+      const imageRecords: Array<{ product_id: string; url: string; sort_order: number }> = [];
 
       for (let i = 0; i < product.images.length && i < 5; i++) {
         const imgSrc = product.images[i].url;
         let finalUrl = imgSrc;
 
-        const downloaded = await downloadImage(imgSrc);
-        if (downloaded) {
-          const ext = extFromContentType(downloaded.contentType);
-          const storagePath = `${product.slug}-${i}.${ext}`;
-          const stored = await uploadToStorage(
-            downloaded.data,
-            downloaded.contentType,
-            storagePath
-          );
-          if (stored) {
-            finalUrl = stored;
-            result.imagesUploaded++;
+        if (!skipUpload) {
+          const downloaded = await downloadImage(imgSrc);
+          if (downloaded) {
+            const ext = extFromContentType(downloaded.contentType);
+            const storagePath = `${product.slug}-${i}.${ext}`;
+            const stored = await uploadToStorage(downloaded.data, downloaded.contentType, storagePath);
+            if (stored) {
+              finalUrl = stored;
+              result.imagesUploaded++;
+            } else {
+              result.imagesFailed++;
+            }
           } else {
             result.imagesFailed++;
           }
-        } else {
-          result.imagesFailed++;
         }
 
         imageRecords.push({ product_id: pid, url: finalUrl, sort_order: i });
       }
 
       if (imageRecords.length > 0) {
-        const { error: iErr } = await supabase
-          .from("product_images")
-          .insert(imageRecords);
+        const { error: iErr } = await supabase.from("product_images").insert(imageRecords);
         if (iErr) {
           result.errors.push(`images:${product.slug}: ${iErr.message}`);
         } else {
