@@ -18,22 +18,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Write start marker
+        run: |
+          echo "Workflow started at $(date -u)" > deploy.log
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN: NOT SET" >> deploy.log
+          else
+            echo "VERCEL_TOKEN: SET (length=${#VERCEL_TOKEN})" >> deploy.log
+          fi
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Install Vercel CLI
-        run: npm install -g vercel@latest
+        run: |
+          echo "Installing Vercel CLI..." >> deploy.log
+          npm install -g vercel@latest >> deploy.log 2>&1
+          echo "Vercel CLI installed" >> deploy.log
 
-      - name: Check token and pull Vercel environment
+      - name: Pull Vercel environment
         id: pull
         run: |
-          if [ -z "$VERCEL_TOKEN" ]; then
-            echo "ERROR: VERCEL_TOKEN secret is not set or is empty" | tee deploy.log
-            exit 1
-          fi
-          echo "VERCEL_TOKEN is set, running vercel pull..." | tee deploy.log
+          echo "Running vercel pull..." >> deploy.log
           vercel pull --yes --environment=production --token="$VERCEL_TOKEN" >> deploy.log 2>&1
+          echo "vercel pull exit: $?" >> deploy.log
         continue-on-error: true
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -41,7 +52,9 @@ jobs:
       - name: Build
         id: build
         if: steps.pull.outcome == 'success'
-        run: vercel build --prod --token="$VERCEL_TOKEN" >> deploy.log 2>&1
+        run: |
+          echo "Running vercel build..." >> deploy.log
+          vercel build --prod --token="$VERCEL_TOKEN" >> deploy.log 2>&1
         continue-on-error: true
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -49,7 +62,9 @@ jobs:
       - name: Deploy to production
         id: deploy
         if: steps.build.outcome == 'success'
-        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" >> deploy.log 2>&1
+        run: |
+          echo "Running vercel deploy..." >> deploy.log
+          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" >> deploy.log 2>&1
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
@@ -58,11 +73,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          echo "" >> deploy.log
           echo "Pull: ${{ steps.pull.outcome }}" >> deploy.log
           echo "Build: ${{ steps.build.outcome }}" >> deploy.log
           echo "Deploy: ${{ steps.deploy.outcome }}" >> deploy.log
           git add deploy.log
           git diff --staged --quiet || git commit -m "Add deploy log [skip ci]"
-          git pull --rebase origin main || true
+          git pull --rebase origin HEAD || true
           git push || true
