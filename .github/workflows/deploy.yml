@@ -15,68 +15,44 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
-      - name: Write start marker
+      - name: Diagnostic check
         run: |
-          echo "Workflow started at $(date -u)" > deploy.log
+          echo "=== Deploy Diagnostic ===" > deploy.log
+          echo "Time: $(date -u)" >> deploy.log
+          echo "Commit: $GITHUB_SHA" >> deploy.log
+          echo "Branch: $GITHUB_REF_NAME" >> deploy.log
           if [ -z "$VERCEL_TOKEN" ]; then
-            echo "VERCEL_TOKEN: NOT SET" >> deploy.log
+            echo "VERCEL_TOKEN: NOT SET - cannot deploy" >> deploy.log
           else
-            echo "VERCEL_TOKEN: SET (length=${#VERCEL_TOKEN})" >> deploy.log
+            LEN=${#VERCEL_TOKEN}
+            echo "VERCEL_TOKEN: SET (length=$LEN)" >> deploy.log
           fi
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Vercel CLI
+      - name: Install and deploy
+        if: ${{ secrets.VERCEL_TOKEN != '' }}
         run: |
           echo "Installing Vercel CLI..." >> deploy.log
-          npm install -g vercel@latest >> deploy.log 2>&1
-          echo "Vercel CLI installed" >> deploy.log
-
-      - name: Pull Vercel environment
-        id: pull
-        run: |
+          npm install -g vercel@latest 2>&1 | tail -3 >> deploy.log
           echo "Running vercel pull..." >> deploy.log
-          vercel pull --yes --environment=production --token="$VERCEL_TOKEN" >> deploy.log 2>&1
-          echo "vercel pull exit: $?" >> deploy.log
-        continue-on-error: true
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
-      - name: Build
-        id: build
-        if: steps.pull.outcome == 'success'
-        run: |
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN" >> deploy.log 2>&1 || echo "vercel pull failed" >> deploy.log
           echo "Running vercel build..." >> deploy.log
-          vercel build --prod --token="$VERCEL_TOKEN" >> deploy.log 2>&1
-        continue-on-error: true
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy to production
-        id: deploy
-        if: steps.build.outcome == 'success'
-        run: |
+          vercel build --prod --token="$VERCEL_TOKEN" >> deploy.log 2>&1 || echo "vercel build failed" >> deploy.log
           echo "Running vercel deploy..." >> deploy.log
-          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" >> deploy.log 2>&1
+          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" >> deploy.log 2>&1 || echo "vercel deploy failed" >> deploy.log
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Commit deploy log
+      - name: Commit log
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          echo "Pull: ${{ steps.pull.outcome }}" >> deploy.log
-          echo "Build: ${{ steps.build.outcome }}" >> deploy.log
-          echo "Deploy: ${{ steps.deploy.outcome }}" >> deploy.log
           git add deploy.log
-          git diff --staged --quiet || git commit -m "Add deploy log [skip ci]"
-          git pull --rebase origin claude/add-claude-md-XOAOr || true
-          git push origin claude/add-claude-md-XOAOr || git push --force-with-lease origin claude/add-claude-md-XOAOr || true
+          git diff --staged --quiet || git commit -m "deploy: log [skip ci]"
+          git push origin HEAD || git push --force-with-lease origin HEAD || echo "Push failed"
