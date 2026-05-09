@@ -1,0 +1,35 @@
+name: Do Deploy
+
+on:
+  push:
+    branches: [claude/add-claude-md-XOAOr]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Vercel and log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          echo "=== Do Deploy $(date -u) ===" > do-deploy.log
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN not set — cannot deploy" >> do-deploy.log
+          else
+            echo "VERCEL_TOKEN is set (len=${#VERCEL_TOKEN})" >> do-deploy.log
+            npm install -g vercel@latest >> do-deploy.log 2>&1
+            vercel pull --yes --environment=production --token="$VERCEL_TOKEN" >> do-deploy.log 2>&1 || echo "pull failed" >> do-deploy.log
+            vercel build --prod --token="$VERCEL_TOKEN" >> do-deploy.log 2>&1 || echo "build failed" >> do-deploy.log
+            vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" >> do-deploy.log 2>&1 || echo "deploy failed" >> do-deploy.log
+          fi
+
+          git add do-deploy.log
+          git commit -m "do-deploy: log [skip ci]"
+          git push
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
