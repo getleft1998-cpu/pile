@@ -39,18 +39,16 @@ jobs:
       - uses: actions/setup-node@v4
         if: steps.check.outputs.skip != 'true'
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
 
       - name: Install dependencies
         if: steps.check.outputs.skip != 'true'
-        id: npm_ci
         run: npm ci 2>&1 | tee npm_ci.log
         continue-on-error: true
 
       - name: Seed catalog into Supabase
         if: steps.check.outputs.skip != 'true'
-        id: seed
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://yqgtjgvqeogsykkpgxiy.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -58,8 +56,6 @@ jobs:
           set -x
           {
             node --version || true
-            ls -la node_modules/@supabase 2>&1 || echo "no supabase"
-            ls -la node_modules/.bin/tsx 2>&1 || echo "no tsx"
             npx tsx scripts/seed-catalog.ts
             echo "SEED EXIT: $?"
           } > seed.log 2>&1 || echo "OUTER EXIT: $?" >> seed.log
@@ -70,7 +66,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # If seed didn't write a real report, build one from the captured logs
           if [ ! -f IMPORT_REPORT.md ]; then
             {
               echo "# Flormar Tunisia — Catalog Import Report"
@@ -78,20 +73,13 @@ jobs:
               echo "Status: **failed**  "
               echo "Reason: Seed script did not write a report. Captured logs below."
               echo ""
-              echo "## npm_ci.log"
-              echo ""
-              echo '```'
-              [ -f npm_ci.log ] && tail -100 npm_ci.log || echo "(no log)"
-              echo '```'
-              echo ""
               echo "## seed.log"
               echo ""
               echo '```'
-              [ -f seed.log ] && tail -300 seed.log || echo "(no log)"
+              [ -f seed.log ] && tail -200 seed.log || echo "(no log)"
               echo '```'
             } > IMPORT_REPORT.md
           fi
-          git add IMPORT_REPORT.md npm_ci.log seed.log 2>/dev/null || true
           git add IMPORT_REPORT.md
           git diff --staged --quiet && echo "No changes" || git commit -m "Add catalog import report [skip ci]"
           git pull --rebase origin main || true
