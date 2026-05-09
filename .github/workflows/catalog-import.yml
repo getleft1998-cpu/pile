@@ -40,30 +40,52 @@ jobs:
 
       - name: Install dependencies
         if: steps.check.outputs.skip != 'true'
-        run: npm ci
+        id: npm_ci
+        run: npm ci 2>&1 | tee npm_ci.log
+        continue-on-error: true
 
-      - name: Seed catalog into Supabase
+      - name: Seed catalog into Supabase (capture all output)
         if: steps.check.outputs.skip != 'true'
+        id: seed
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://yqgtjgvqeogsykkpgxiy.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: npx tsx scripts/seed-catalog.ts
+        run: |
+          set -x
+          node --version > seed.log 2>&1
+          ls -la node_modules/@supabase 2>&1 >> seed.log || echo "no supabase" >> seed.log
+          ls -la node_modules/.bin/tsx 2>&1 >> seed.log || echo "no tsx" >> seed.log
+          npx tsx scripts/seed-catalog.ts >> seed.log 2>&1
+          echo "SEED EXIT: $?" >> seed.log
+        continue-on-error: true
 
-      - name: Commit import report
+      - name: Commit import report and logs
         if: always() && steps.check.outputs.skip != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Always have something to commit — fallback if seed didn't write anything
+          # If seed didn't write a report, build one from the captured log
           if [ ! -f IMPORT_REPORT.md ]; then
-            cat > IMPORT_REPORT.md << 'EOF'
-          # Flormar Tunisia — Catalog Import Report
-
-          Status: **failed**  
-          Reason: Workflow step failed before any script wrote a report. Check Actions logs.
-          EOF
+            {
+              echo "# Flormar Tunisia — Catalog Import Report"
+              echo ""
+              echo "Status: **failed**  "
+              echo "Reason: Seed step crashed without writing a report. See logs below."
+              echo ""
+              echo "## npm_ci.log"
+              echo ""
+              echo '```'
+              [ -f npm_ci.log ] && tail -100 npm_ci.log || echo "(no npm_ci.log)"
+              echo '```'
+              echo ""
+              echo "## seed.log"
+              echo ""
+              echo '```'
+              [ -f seed.log ] && tail -200 seed.log || echo "(no seed.log)"
+              echo '```'
+            } > IMPORT_REPORT.md
           fi
           git add IMPORT_REPORT.md || true
           git diff --staged --quiet || git commit -m "Add catalog import report [skip ci]"
           git pull --rebase origin main || true
-          git push || git push --force-with-lease
+          git push || git push --force-with-lease || true
