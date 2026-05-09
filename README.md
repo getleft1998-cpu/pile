@@ -15,6 +15,7 @@ The app uses:
 - Home landing page at `/`
 - Thank-you page at `/thank-you`
 - Order validation endpoint at `/api/orders`
+- Admin panel at `/admin` (password: flormar2024)
 
 ## Environment Variables
 
