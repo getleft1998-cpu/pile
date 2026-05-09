@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #e91e8c;
+  --color-brand-dark: #c2185b;
+  --color-brand-light: #fce4ec;
+  --color-brand-50: #fdf2f8;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-gray-900 antialiased;
+}
+
+input,
+select,
+textarea {
+  @apply outline-none;
+}
