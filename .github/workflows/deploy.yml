@@ -15,51 +15,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Sync env vars to Vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          PROJECT="prj_cG2RSusP9gA7KHXgSE7E0aWzogAc"
-          TEAM="team_kAEHWEKTqPvlEN7ZzklwIEOr"
-
-          upsert() {
-            local key="$1" value="$2" type="$3"
-            id=$(curl -s "https://api.vercel.com/v10/projects/$PROJECT/env?teamId=$TEAM" \
-              -H "Authorization: Bearer $VERCEL_TOKEN" | \
-              python3 -c "
-import sys,json
-data=json.load(sys.stdin)
-envs=data.get('envs',[])
-print(next((e['id'] for e in envs if e['key']=='$key'),''))
-" 2>/dev/null)
-            if [ -n "$id" ]; then
-              curl -s -X PATCH "https://api.vercel.com/v10/projects/$PROJECT/env/$id?teamId=$TEAM" \
-                -H "Authorization: Bearer $VERCEL_TOKEN" \
-                -H "Content-Type: application/json" \
-                -d "{\"value\":\"$value\",\"type\":\"$type\",\"target\":[\"production\",\"preview\"]}"
-            else
-              curl -s -X POST "https://api.vercel.com/v10/projects/$PROJECT/env?teamId=$TEAM" \
-                -H "Authorization: Bearer $VERCEL_TOKEN" \
-                -H "Content-Type: application/json" \
-                -d "{\"key\":\"$key\",\"value\":\"$value\",\"type\":\"$type\",\"target\":[\"production\",\"preview\"]}"
-            fi
-          }
-
-          upsert "NEXT_PUBLIC_SUPABASE_URL" \
-            "https://yqgtjgvqeogsykkpgxiy.supabase.co" "plain"
-          upsert "NEXT_PUBLIC_SUPABASE_ANON_KEY" \
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxZ3RqZ3ZxZW9nc3lra3BneGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNzU0NDksImV4cCI6MjA5Mzg1MTQ0OX0.oeUTdvM_2J9njLuO3N9e7TQY2i1mqN2s0DWrtXIfqlE" "plain"
-          upsert "SUPABASE_SERVICE_ROLE_KEY" \
-            "${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" "encrypted"
-          upsert "ADMIN_PASSWORD" \
-            "${{ secrets.ADMIN_PASSWORD }}" "encrypted"
-
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
+
+      - name: Sync env vars to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          NEXT_PUBLIC_SUPABASE_URL: https://yqgtjgvqeogsykkpgxiy.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxZ3RqZ3ZxZW9nc3lra3BneGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNzU0NDksImV4cCI6MjA5Mzg1MTQ0OX0.oeUTdvM_2J9njLuO3N9e7TQY2i1mqN2s0DWrtXIfqlE
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        run: node .github/scripts/sync-vercel-env.mjs
 
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
