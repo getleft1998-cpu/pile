@@ -1,0 +1,59 @@
+name: Catalog Import
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip if already imported
+        id: check
+        run: |
+          if grep -q "Status: \*\*success\*\*" IMPORT_REPORT.md 2>/dev/null; then
+            echo "Import already completed successfully — skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.skip != 'true'
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        if: steps.check.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Install Playwright browsers
+        if: steps.check.outputs.skip != 'true'
+        run: npx playwright install chromium --with-deps
+
+      - name: Dry-run catalog scrape
+        if: steps.check.outputs.skip != 'true'
+        run: npx tsx scripts/import-catalog.ts
+
+      - name: Import to Supabase + upload images
+        if: steps.check.outputs.skip != 'true'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://yqgtjgvqeogsykkpgxiy.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npx tsx scripts/full-import.ts
+
+      - name: Commit import report
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add IMPORT_REPORT.md dry-run-output/ || true
+          git diff --staged --quiet || git commit -m "Add catalog import report [skip ci]"
+          git push
