@@ -8,6 +8,7 @@ on:
 jobs:
   import:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
 
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +51,7 @@ jobs:
         run: npx tsx scripts/full-import.ts
 
       - name: Commit import report
-        if: steps.check.outputs.skip != 'true'
+        if: always() && steps.check.outputs.skip != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
