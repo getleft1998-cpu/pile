@@ -32,6 +32,10 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Clear old report and logs
+        if: steps.check.outputs.skip != 'true'
+        run: rm -f IMPORT_REPORT.md npm_ci.log seed.log
+
       - uses: actions/setup-node@v4
         if: steps.check.outputs.skip != 'true'
         with:
@@ -44,7 +48,7 @@ jobs:
         run: npm ci 2>&1 | tee npm_ci.log
         continue-on-error: true
 
-      - name: Seed catalog into Supabase (capture all output)
+      - name: Seed catalog into Supabase
         if: steps.check.outputs.skip != 'true'
         id: seed
         env:
@@ -52,40 +56,43 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           set -x
-          node --version > seed.log 2>&1
-          ls -la node_modules/@supabase 2>&1 >> seed.log || echo "no supabase" >> seed.log
-          ls -la node_modules/.bin/tsx 2>&1 >> seed.log || echo "no tsx" >> seed.log
-          npx tsx scripts/seed-catalog.ts >> seed.log 2>&1
-          echo "SEED EXIT: $?" >> seed.log
+          {
+            node --version || true
+            ls -la node_modules/@supabase 2>&1 || echo "no supabase"
+            ls -la node_modules/.bin/tsx 2>&1 || echo "no tsx"
+            npx tsx scripts/seed-catalog.ts
+            echo "SEED EXIT: $?"
+          } > seed.log 2>&1 || echo "OUTER EXIT: $?" >> seed.log
         continue-on-error: true
 
-      - name: Commit import report and logs
+      - name: Always write report and commit
         if: always() && steps.check.outputs.skip != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # If seed didn't write a report, build one from the captured log
+          # If seed didn't write a real report, build one from the captured logs
           if [ ! -f IMPORT_REPORT.md ]; then
             {
               echo "# Flormar Tunisia — Catalog Import Report"
               echo ""
               echo "Status: **failed**  "
-              echo "Reason: Seed step crashed without writing a report. See logs below."
+              echo "Reason: Seed script did not write a report. Captured logs below."
               echo ""
               echo "## npm_ci.log"
               echo ""
               echo '```'
-              [ -f npm_ci.log ] && tail -100 npm_ci.log || echo "(no npm_ci.log)"
+              [ -f npm_ci.log ] && tail -100 npm_ci.log || echo "(no log)"
               echo '```'
               echo ""
               echo "## seed.log"
               echo ""
               echo '```'
-              [ -f seed.log ] && tail -200 seed.log || echo "(no seed.log)"
+              [ -f seed.log ] && tail -300 seed.log || echo "(no log)"
               echo '```'
             } > IMPORT_REPORT.md
           fi
-          git add IMPORT_REPORT.md || true
-          git diff --staged --quiet || git commit -m "Add catalog import report [skip ci]"
+          git add IMPORT_REPORT.md npm_ci.log seed.log 2>/dev/null || true
+          git add IMPORT_REPORT.md
+          git diff --staged --quiet && echo "No changes" || git commit -m "Add catalog import report [skip ci]"
           git pull --rebase origin main || true
           git push || git push --force-with-lease || true
