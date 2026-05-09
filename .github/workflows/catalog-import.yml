@@ -11,7 +11,7 @@ permissions:
 jobs:
   import:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
 
     steps:
       - uses: actions/checkout@v4
@@ -38,9 +38,13 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: npm ci
 
-      - name: Fetch catalog (no browser required)
+      - name: Install Playwright browsers
         if: steps.check.outputs.skip != 'true'
-        run: npx tsx scripts/fetch-catalog.ts
+        run: npx playwright install chromium --with-deps
+
+      - name: Scrape catalog
+        if: steps.check.outputs.skip != 'true'
+        run: npx tsx scripts/import-catalog.ts
 
       - name: Import to Supabase (skip image upload for speed)
         if: steps.check.outputs.skip != 'true'
