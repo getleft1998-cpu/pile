@@ -8,7 +8,7 @@ on:
 jobs:
   import:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v4
@@ -39,11 +39,12 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: npx tsx scripts/fetch-catalog.ts
 
-      - name: Import to Supabase + upload images
+      - name: Import to Supabase (skip image upload for speed)
         if: steps.check.outputs.skip != 'true'
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://yqgtjgvqeogsykkpgxiy.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SKIP_IMAGE_UPLOAD: "true"
         run: npx tsx scripts/full-import.ts
 
       - name: Commit import report
