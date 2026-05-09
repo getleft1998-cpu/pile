@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: catalog-import
+  cancel-in-progress: true
+
 jobs:
   import:
     runs-on: ubuntu-latest
