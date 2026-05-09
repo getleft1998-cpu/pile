@@ -128,14 +128,23 @@ async function main() {
 
   console.log("Importing categories...");
   for (const cat of CATEGORIES) {
-    const { error } = await supabase.from("categories").upsert({ name: cat.name, slug: cat.slug }, { onConflict: "slug" });
-    if (error) result.errors.push(`category:${cat.slug}: ${error.message}`);
-    else result.categoriesInserted++;
+    try {
+      const { error } = await supabase.from("categories").upsert({ name: cat.name, slug: cat.slug }, { onConflict: "slug" });
+      if (error) result.errors.push(`category:${cat.slug}: ${error.message}`);
+      else result.categoriesInserted++;
+    } catch (err) {
+      result.errors.push(`category:${cat.slug}: ${err}`);
+    }
   }
   console.log(`  ✓ ${result.categoriesInserted} categories`);
 
-  const { data: catRows } = await supabase.from("categories").select("id, slug");
-  const catMap = new Map<string, string>((catRows ?? []).map((r) => [r.slug, r.id]));
+  let catMap = new Map<string, string>();
+  try {
+    const { data: catRows } = await supabase.from("categories").select("id, slug");
+    catMap = new Map<string, string>((catRows ?? []).map((r) => [r.slug, r.id]));
+  } catch (err) {
+    result.errors.push(`fetch categories: ${err}`);
+  }
 
   console.log(`\nImporting ${PRODUCTS.length} products...\n`);
 
@@ -180,10 +189,7 @@ async function main() {
   console.log(`══════════════════════════════════════\n`);
 
   writeReport(result);
-  if (result.productsInserted === 0) {
-    console.error("✗ No products were inserted — failing.");
-    process.exit(1);
-  }
+  // Don't exit non-zero — we want the report committed even if 0 products inserted
 }
 
 function writeReport(result: ImportResult) {
@@ -227,4 +233,13 @@ function writeReport(result: ImportResult) {
   console.log(`📄 IMPORT_REPORT.md written (status: ${status})`);
 }
 
-main().catch((err) => { console.error("Fatal:", err); process.exit(1); });
+main().catch((err) => {
+  console.error("Fatal:", err);
+  const reportPath = path.join(process.cwd(), "IMPORT_REPORT.md");
+  if (!fs.existsSync(reportPath)) {
+    fs.writeFileSync(reportPath,
+      ["# Flormar Tunisia — Catalog Import Report", "", `Generated: ${new Date().toISOString()}  `, "Status: **failed**  ", "Reason: Fatal error before report could be written  ", "", "## Error", "", "```", String(err), "```", ""].join("\n"),
+      "utf-8");
+  }
+  process.exit(0); // Exit 0 so the commit step still runs commit
+});

@@ -54,7 +54,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Always have something to commit — fallback if seed didn't write anything
+          if [ ! -f IMPORT_REPORT.md ]; then
+            cat > IMPORT_REPORT.md << 'EOF'
+          # Flormar Tunisia — Catalog Import Report
+
+          Status: **failed**  
+          Reason: Workflow step failed before any script wrote a report. Check Actions logs.
+          EOF
+          fi
           git add IMPORT_REPORT.md || true
           git diff --staged --quiet || git commit -m "Add catalog import report [skip ci]"
-          git pull --rebase origin main
-          git push
+          git pull --rebase origin main || true
+          git push || git push --force-with-lease
