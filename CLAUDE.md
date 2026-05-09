@@ -11,16 +11,24 @@ Next.js, React, Tailwind, Supabase, Vercel
 - order_items (id, order_id, variant_id, quantity, price)
 
 ## Key Rules
-- Admin dashboard at /admin (protected)
+- Admin dashboard at /admin (protected, password: flormar2024)
 - Customer must select shade before add-to-cart
 - Images stored in Supabase Storage bucket: product-images
 - Never serve images from external domains in production
 - No stock numbers imported blindly — default to 99 or null
 - Dry-run before any Supabase write
 
+## Catalog Import
+- `scripts/import-catalog.ts` — Playwright scraper for flormar.tn (dry-run only)
+- `scripts/full-import.ts` — reads dry-run JSON, upserts to Supabase, uploads images
+- `.github/workflows/catalog-import.yml` — runs on push to main; skips if IMPORT_REPORT.md has success
+- Run order: import-catalog.ts → full-import.ts → IMPORT_REPORT.md committed back
+- SUPABASE_SERVICE_ROLE_KEY is hardcoded in full-import.ts as fallback
+
 ## Current Status
 - Backend complete
-- Catalog import in progress (dry-run phase)
+- Site live at pile-theta.vercel.app
+- Catalog import pipeline ready (GitHub Actions)
 - Payment not yet integrated
 
 ## Do Not Touch
