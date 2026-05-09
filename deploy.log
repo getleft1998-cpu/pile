@@ -6,14 +6,14 @@ VERCEL_TOKEN is set, running vercel pull...
 Retrieving project…
 > Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
 Downloading
-Created .vercel/.env.production.local file  [117ms]
+Created .vercel/.env.production.local file  [131ms]
 
 > Downloading project settings
 Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
 WARNING! Build not running on Vercel. System environment variables will not be available.
 Installing dependencies...
 
-added 68 packages in 9s
+added 68 packages in 10s
 
 15 packages are looking for funding
   run `npm fund` for details
@@ -34,22 +34,70 @@ https://nextjs.org/telemetry
   ✓ workerThreads
 
   Creating an optimized production build ...
-✓ Compiled successfully in 3.3s
+✓ Compiled successfully in 3.6s
   Running TypeScript ...
-Failed to type check.
+  Finished TypeScript in 3.6s ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/14) ...
+  Finalizing page optimization ...
 
-./scripts/import-catalog.ts:540:20
-Type error: ',' expected.
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/categories
+├ ○ /admin/login
+├ ○ /admin/orders
+├ ○ /admin/products
+├ ƒ /admin/products/[id]/variants
+├ ƒ /api/admin/auth
+├ ƒ /api/admin/categories
+├ ƒ /api/admin/categories/[id]
+├ ƒ /api/admin/orders/[id]
+├ ƒ /api/admin/products
+├ ƒ /api/admin/products/[id]
+├ ƒ /api/admin/variants
+├ ƒ /api/admin/variants/[id]
+├ ƒ /api/orders
+├ ○ /cart
+├ ƒ /categories
+├ ƒ /categories/[slug]
+├ ○ /checkout
+├ ƒ /order-confirmation
+└ ƒ /products/[slug]
 
-  [90m538 |[0m     console.log([32m"📊 DRY-RUN REPORT"[0m);
-  [90m539 |[0m     console.log([32m"══════════════════════════════════════════"[0m);
-[31m[1m>[0m [90m540 |[0m     console.log([32m`  Categories     : [0m${report.totals.categories[32m}`[0m);
-  [90m    |[0m                    [31m[1m^[0m
-  [90m541 |[0m     console.log([32m`  Products       : [0m${report.totals.products[32m}`[0m);
-  [90m542 |[0m     console.log([32m`  Variants       : [0m${report.totals.variants[32m}`[0m);
-  [90m543 |[0m     console.log([32m`  Matched images : [0m${report.totals.matchedImages[32m} (flormar.com, high con...[0m
-Error: Command "npm run build" exited with 1
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Traced Next.js server files in: 35.661ms
+Created all serverless functions in: 209.941ms
+Collected static files (public/, static/, .next/static): 2.329ms
+Build Completed in .vercel/output [19s]
+Retrieving project…
+Deploying getleft1998-cpus-projects/pile
+Uploading [--------------------] (0.0B/992.5KB)
+Uploading [=====---------------] (250.7KB/992.5KB)
+Uploading [==========----------] (497.4KB/992.5KB)
+Uploading [===============-----] (755.7KB/992.5KB)
+Uploading [====================] (992.5KB/992.5KB)
+Inspect: https://vercel.com/getleft1998-cpus-projects/pile/5RnyniSNeaAikLhWKUG6btrgiNys [3s]
+Production: https://pile-r1kntjq15-getleft1998-cpus-projects.vercel.app [3s]
+https://pile-r1kntjq15-getleft1998-cpus-projects.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Downloading 605 deployment files...
+Building: Using prebuilt build artifacts from .vercel/output
+Building: Learn more: https://vercel.link/build-output-api
+Building: Deploying outputs...
+[2K[1A[2K[GProduction: https://pile-r1kntjq15-getleft1998-cpus-projects.vercel.app [17s]
+Completing...
+Aliased: https://pile-theta.vercel.app [17s]
 
 Pull: success
-Build: failure
-Deploy: skipped
+Build: success
+Deploy: success
