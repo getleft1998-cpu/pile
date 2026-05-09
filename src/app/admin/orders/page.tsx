@@ -1,9 +1,8 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
-import { getSupabase } from "@/src/lib/supabase";
 import { ORDER_STATUS_LABELS } from "@/src/lib/types";
-import type { Order, OrderStatus } from "@/src/lib/types";
+import type { OrderStatus } from "@/src/lib/types";
 
 const STATUSES: OrderStatus[] = [
   "pending",
@@ -13,30 +12,50 @@ const STATUSES: OrderStatus[] = [
   "cancelled",
 ];
 
+interface OrderItemRow {
+  id: string;
+  quantity: number;
+  price: number;
+  product_variants: {
+    shade_name: string;
+    color_hex: string | null;
+    sku: string | null;
+    products: { name: string; slug: string } | null;
+  } | null;
+}
+
+interface OrderRow {
+  id: string;
+  customer_name: string;
+  customer_phone: string;
+  customer_address: string;
+  customer_city: string;
+  status: OrderStatus;
+  total: number;
+  created_at: string;
+  order_items: OrderItemRow[];
+}
+
 export default function AdminOrdersPage() {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<OrderRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   async function load() {
-    const { data } = await getSupabase()
-      .from("orders")
-      .select(
-        `*, order_items(
-          id, quantity, price,
-          product_variants(shade_name, color_hex, sku, products(name, slug)),
-          products(name, slug)
-        )`,
-      )
-      .order("created_at", { ascending: false });
-    setOrders(data ?? []);
+    const res = await fetch("/api/admin/orders");
+    const data = await res.json();
+    setOrders(Array.isArray(data) ? data : []);
     setLoading(false);
   }
 
   useEffect(() => {
     load();
   }, []);
+
+  function toggle(id: string) {
+    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+  }
 
   async function updateStatus(id: string, status: OrderStatus) {
     setUpdating(id);
@@ -47,10 +66,6 @@ export default function AdminOrdersPage() {
     });
     await load();
     setUpdating(null);
-  }
-
-  function toggle(id: string) {
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
   }
 
   if (loading) {
@@ -145,9 +160,7 @@ export default function AdminOrdersPage() {
                                   Adresse de livraison
                                 </h3>
                                 <p className="text-sm text-gray-700 whitespace-pre-line">
-                                  {o.customer_address}
-                                  {"\n"}
-                                  {o.customer_city}
+                                  {o.customer_address}{"\n"}{o.customer_city}
                                 </p>
                               </div>
                               <div>
@@ -161,13 +174,10 @@ export default function AdminOrdersPage() {
                                 ) : (
                                   <ul className="space-y-2">
                                     {items.map((it) => {
-                                      const variant = it.product_variants;
-                                      const product =
-                                        variant?.products ?? it.products;
-                                      const name =
-                                        product?.name ?? "Produit supprimé";
-                                      const shade = variant?.shade_name;
-                                      const color = variant?.color_hex;
+                                      const pv = it.product_variants;
+                                      const name = pv?.products?.name ?? "Produit supprimé";
+                                      const shade = pv?.shade_name;
+                                      const color = pv?.color_hex;
                                       return (
                                         <li
                                           key={it.id}
@@ -176,9 +186,7 @@ export default function AdminOrdersPage() {
                                           {color && (
                                             <span
                                               className="inline-block w-4 h-4 rounded-full border border-gray-200 shrink-0"
-                                              style={{
-                                                backgroundColor: color,
-                                              }}
+                                              style={{ backgroundColor: color }}
                                             />
                                           )}
                                           <span className="font-medium text-gray-900">
@@ -193,10 +201,7 @@ export default function AdminOrdersPage() {
                                             ×{it.quantity}
                                           </span>
                                           <span className="text-gray-700 font-medium w-24 text-right">
-                                            {(
-                                              Number(it.price) * it.quantity
-                                            ).toFixed(3)}{" "}
-                                            TND
+                                            {(Number(it.price) * it.quantity).toFixed(3)} TND
                                           </span>
                                         </li>
                                       );
