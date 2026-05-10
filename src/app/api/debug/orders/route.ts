@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/src/lib/supabase";
 
+// Temporary debug endpoint — remove after diagnosis
 export async function GET() {
   const admin = createAdminClient();
 
@@ -17,7 +18,7 @@ export async function GET() {
 
   const product = variant.products as { id: string; name: string; price: number } | null;
   if (!product) {
-    return NextResponse.json({ step: "product missing on variant" });
+    return NextResponse.json({ step: "product missing on variant", variant });
   }
 
   // Step 2: create a test order
@@ -48,24 +49,21 @@ export async function GET() {
   });
 
   if (ie) {
-    return NextResponse.json({ step: "insert order_item", error: ie.message });
+    return NextResponse.json({ step: "insert order_item", error: ie.message, order_id: order.id });
   }
 
-  // Step 4: read it back with full nested join (same query as admin orders page)
+  // Step 4: read it back with the same nested join the admin page uses
   const { data: result, error: re } = await admin
     .from("orders")
     .select(`*, order_items(id, quantity, price, product_variants(shade_name, color_hex, sku, products(name, slug)))`)
     .eq("id", order.id)
     .single();
 
-  if (re) {
-    return NextResponse.json({ step: "read back", error: re.message });
-  }
-
   return NextResponse.json({
-    ok: true,
+    ok: !re,
     order_id: order.id,
     variant_used: { id: variant.id, shade: variant.shade_name, product: product.name },
+    join_error: re?.message ?? null,
     result,
   });
 }
