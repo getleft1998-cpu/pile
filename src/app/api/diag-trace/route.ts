@@ -34,7 +34,6 @@ export async function GET(req: NextRequest) {
       { name: "wp_search", url: `https://www.flormar.com/?s=${encodeURIComponent(q)}` },
     ];
 
-    // Sequential to avoid 429 rate limits
     const results: Record<string, unknown>[] = [];
     for (const t of targets) {
       const r = await fetchHead(t.url);
@@ -78,6 +77,43 @@ export async function GET(req: NextRequest) {
         };
       })
     );
+  }
+
+  // Direct URL test mode
+  const testUrl = url.searchParams.get("testUrl");
+  if (testUrl) {
+    let html: string | null = null;
+    let httpStatus: number | null = null;
+    try {
+      const res = await fetch(testUrl, {
+        headers: { "User-Agent": UA, Accept: "text/html", "Accept-Language": "en,fr;q=0.8" },
+        redirect: "follow",
+        signal: AbortSignal.timeout(10_000),
+      });
+      httpStatus = res.status;
+      html = await res.text();
+    } catch (e) {
+      return NextResponse.json({ error: `fetch failed: ${e}` });
+    }
+    if (!html) return NextResponse.json({ httpStatus });
+    const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/i);
+    const ogImage = [...html.matchAll(/<meta[^>]+property=["']og:image["'][^>]*content=["']([^"']+)["']/gi)].map((m) => m[1]);
+    const ldRegex = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+    const ldBlocks: unknown[] = [];
+    let m2: RegExpExecArray | null;
+    while ((m2 = ldRegex.exec(html)) !== null) {
+      try { ldBlocks.push(JSON.parse(m2[1].trim())); } catch { ldBlocks.push({ _err: m2[1].slice(0, 100) }); }
+    }
+    const imgRegex2 = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["'][^>]*>/gi;
+    const imgs: string[] = [];
+    while ((m2 = imgRegex2.exec(html)) !== null) { imgs.push(m2[1]); if (imgs.length >= 20) break; }
+    const dataImgRegex = /\bdata-(?:zoom-image|large_image|src-large|hires)=["']([^"']+)["']/gi;
+    const dataImgs: string[] = [];
+    while ((m2 = dataImgRegex.exec(html)) !== null) { dataImgs.push(m2[1]); if (dataImgs.length >= 10) break; }
+    const galleryJsonRe = /"(?:full|src|url)"\s*:\s*"(https:[^"]+\.(?:jpe?g|png|webp)[^"]*)"/gi;
+    const galleryImgs: string[] = [];
+    while ((m2 = galleryJsonRe.exec(html)) !== null) { galleryImgs.push(m2[1].replace(/\\\/g, "")); if (galleryImgs.length >= 20) break; }
+    return NextResponse.json({ httpStatus, htmlLength: html.length, title: titleMatch?.[1]?.trim(), ogImage, ldBlocks, imgSrcs: imgs, dataImgs, galleryImgs });
   }
 
   const slug = url.searchParams.get("slug");

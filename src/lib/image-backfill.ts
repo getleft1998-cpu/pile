@@ -3,7 +3,7 @@ import { createAdminClient } from "@/src/lib/supabase";
 const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
-const FETCH_TIMEOUT_MS = 15_000;
+const FETCH_TIMEOUT_MS = 12_000;
 const DOWNLOAD_TIMEOUT_MS = 20_000;
 const MAX_IMAGES = 5;
 
@@ -15,7 +15,41 @@ export interface BackfillResult {
   imagesAdded: number;
   imagesFailed: number;
   candidates: number;
+  flormarComUrl?: string | null;
 }
+
+// French cosmetics category prefixes to strip so we get the English model name
+const FRENCH_PREFIX_PATTERNS: RegExp[] = [
+  /^rouge\s+à\s+lèvres\s*/i,
+  /^fond\s+de\s+teint\s*/i,
+  /^fard\s+à\s+joues\s*/i,
+  /^ombre\s+à\s+paupières?\s*/i,
+  /^crayon\s+(?:yeux|regard|lèvres|sourcils|khôl)\s*/i,
+  /^vernis\s+à\s+ongles\s*/i,
+  /^correcteur(?:\s+de\s+teint)?\s*/i,
+  /^anticernes\s*/i,
+  /^base\s+de\s+teint\s*/i,
+  /^poudre\s+(?:de\s+)?(?:finition\s*)?/i,
+];
+
+export function extractSearchKeyword(frenchName: string): string {
+  let name = frenchName.trim();
+  for (const pat of FRENCH_PREFIX_PATTERNS) {
+    const cleaned = name.replace(pat, "").trim();
+    if (cleaned.length > 2) { name = cleaned; break; }
+  }
+  return name || frenchName.trim();
+}
+
+// Category slugs that appear in flormar.com nav — filter these out of search results
+const FLORMAR_CATEGORY_SLUGS = new Set([
+  "face", "lips", "eyes", "nails", "skin-care", "hand-body-care", "perfume", "accessories",
+  "stores", "lipstick", "lip-liner", "lip-balm", "lip-gloss", "blush", "mascara",
+  "foundation", "concealer", "bronzer", "highlighter", "nail-polish", "nail-care",
+  "eyeshadow", "eyeliner-dipliner", "eye-pencil", "eye-primer", "primer", "bb-cc-cream",
+  "contour", "makeup-fixer", "powder", "nail-polish-remover", "eye-accessory",
+  "nail-accessory", "face-care", "hand-body",
+]);
 
 async function fetchHtml(url: string): Promise<string | null> {
   try {
@@ -23,8 +57,7 @@ async function fetchHtml(url: string): Promise<string | null> {
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       headers: {
         "User-Agent": UA,
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en,fr;q=0.8",
       },
       redirect: "follow",
@@ -34,6 +67,31 @@ async function fetchHtml(url: string): Promise<string | null> {
   } catch {
     return null;
   }
+}
+
+export async function findFlormarComProductUrl(productName: string): Promise<string | null> {
+  const keyword = extractSearchKeyword(productName);
+  const html = await fetchHtml(`https://www.flormar.com/?s=${encodeURIComponent(keyword)}`);
+  if (!html) return null;
+
+  // Product URLs: flat WooCommerce slugs, optionally with --shade suffix
+  const re = /href=["'](https:\/\/www\.flormar\.com\/(([a-z0-9][a-z0-9-]*)(?:--[a-z0-9][a-z0-9-]*)?)\/?)["']/gi;
+  const seen = new Set<string>();
+  const candidates: string[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(html)) !== null) {
+    const topSlug = m[3]; // first segment before --
+    if (FLORMAR_CATEGORY_SLUGS.has(topSlug)) continue;
+    if (!seen.has(m[1])) { seen.add(m[1]); candidates.push(m[1]); }
+  }
+
+  if (candidates.length === 0) return null;
+
+  // Prefer URLs with -- (product+shade), then strip shade to get base product URL
+  const withShade = candidates.find((u) => u.includes("--"));
+  const chosen = withShade ?? candidates[0];
+  // Return base URL without shade suffix
+  return chosen.replace(/--[^/]+\/?$/, "/");
 }
 
 function resolveUrl(href: string, base: string): string | null {
@@ -49,7 +107,7 @@ function resolveUrl(href: string, base: string): string | null {
 function looksLikeProductImage(url: string): boolean {
   const lower = url.toLowerCase();
   if (!/\.(jpe?g|png|webp|avif)(\?|$)/i.test(lower)) return false;
-  if (/(logo|sprite|icon|favicon|placeholder|thumb-cart|cookie|loader|spinner|swatch)/i.test(lower))
+  if (/(logo|sprite|icon|favicon|placeholder|thumb-cart|cookie|loader|spinner)/i.test(lower))
     return false;
   return true;
 }
@@ -96,15 +154,23 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
     if (resolved) candidates.add(resolved);
   }
 
-  // 3) Common data attributes for product galleries (Shopify/Magento/Prestashop)
+  // 3) WooCommerce gallery data attributes
   const dataAttrRegex =
-    /\b(?:data-zoom-image|data-large-image|data-large_image|data-image|data-src-large|data-original)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["']/gi;
+    /\b(?:data-zoom-image|data-large-image|data-large_image|data-image|data-src-large|data-original|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["']/gi;
   while ((m = dataAttrRegex.exec(html)) !== null) {
     const resolved = resolveUrl(decodeHtmlEntities(m[1]), baseUrl);
     if (resolved) candidates.add(resolved);
   }
 
-  // 4) Bare <img src> as a last resort
+  // 4) WooCommerce gallery JSON embedded in page scripts ("full": "https://...")
+  const galleryJsonRe = /"(?:full|src|url|href)"\s*:\s*"(https:[^"]+\.(?:jpe?g|png|webp|avif)[^"]*)"/gi;
+  while ((m = galleryJsonRe.exec(html)) !== null) {
+    const u = m[1].replace(/\\u0026/g, "&").replace(/\\\//g, "/");
+    const resolved = resolveUrl(u, baseUrl);
+    if (resolved) candidates.add(resolved);
+  }
+
+  // 5) Bare <img src> as a last resort
   const imgRegex = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["'][^>]*>/gi;
   while ((m = imgRegex.exec(html)) !== null) {
     const resolved = resolveUrl(decodeHtmlEntities(m[1]), baseUrl);
@@ -114,8 +180,9 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
   const filtered = [...candidates].filter(looksLikeProductImage);
   const ranked = filtered.sort((a, b) => {
     const score = (u: string) =>
-      (/product|catalog|media|cdn/i.test(u) ? 1 : 0) +
-      (/_(?:small|thumb|tiny|mini)\b/i.test(u) ? -1 : 0);
+      (u.includes("flormar.com/wp-content/uploads") ? 3 : 0) +
+      (/product|catalog|media|cdn|uploads/i.test(u) ? 1 : 0) +
+      (/_(?:small|thumb|tiny|mini|150x150|300x300|100x100)\b/i.test(u) ? -2 : 0);
     return score(b) - score(a);
   });
 
@@ -175,13 +242,11 @@ function extFromContentType(ct: string): string {
 
 export async function ensureBucketPublic(): Promise<void> {
   const supabase = createAdminClient();
-  // Idempotent: try to update first; if bucket doesn't exist, create it.
   const { error: updErr } = await supabase.storage.updateBucket(
     "product-images",
     { public: true }
   );
   if (updErr) {
-    // Likely "Bucket not found" — try to create it as public.
     await supabase.storage.createBucket("product-images", { public: true });
   }
 }
@@ -212,6 +277,7 @@ export async function backfillProductImages(
   }
 
   const slug = product.slug as string;
+  const productName = product.name as string;
 
   if (!opts.overwrite) {
     const { count } = await supabase
@@ -231,33 +297,37 @@ export async function backfillProductImages(
     }
   }
 
-  const sourceUrl = product.source_url as string | null;
-  if (!sourceUrl) {
+  // Search flormar.com for the product page
+  const flormarComUrl = await findFlormarComProductUrl(productName);
+
+  if (!flormarComUrl) {
     return {
       product_id: productId,
       slug,
       status: "no_source",
-      message: "product has no source_url",
+      message: `no flormar.com page found for "${productName}"`,
       imagesAdded: 0,
       imagesFailed: 0,
       candidates: 0,
+      flormarComUrl: null,
     };
   }
 
-  const html = await fetchHtml(sourceUrl);
+  const html = await fetchHtml(flormarComUrl);
   if (!html) {
     return {
       product_id: productId,
       slug,
       status: "error",
-      message: "failed to fetch source_url",
+      message: `failed to fetch ${flormarComUrl}`,
       imagesAdded: 0,
       imagesFailed: 0,
       candidates: 0,
+      flormarComUrl,
     };
   }
 
-  const urls = extractImageUrls(html, sourceUrl);
+  const urls = extractImageUrls(html, flormarComUrl);
   if (urls.length === 0) {
     return {
       product_id: productId,
@@ -267,6 +337,7 @@ export async function backfillProductImages(
       imagesAdded: 0,
       imagesFailed: 0,
       candidates: 0,
+      flormarComUrl,
     };
   }
 
@@ -319,6 +390,7 @@ export async function backfillProductImages(
         imagesAdded: 0,
         imagesFailed: failed,
         candidates: urls.length,
+        flormarComUrl,
       };
     }
   }
@@ -330,5 +402,6 @@ export async function backfillProductImages(
     imagesAdded: inserted.length,
     imagesFailed: failed,
     candidates: urls.length,
+    flormarComUrl,
   };
 }
