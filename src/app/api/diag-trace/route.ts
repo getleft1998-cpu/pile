@@ -2,15 +2,17 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createAdminClient } from "@/src/lib/supabase";
 
+export const maxDuration = 60;
+
 const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
 async function fetchHead(url: string) {
   try {
     const res = await fetch(url, {
-      headers: { "User-Agent": UA, Accept: "text/html", "Accept-Language": "en,fr;q=0.8" },
+      headers: { "User-Agent": UA, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "en,fr;q=0.8" },
       redirect: "follow",
-      signal: AbortSignal.timeout(15_000),
+      signal: AbortSignal.timeout(10_000),
     });
     const html = await res.text();
     return { status: res.status, finalUrl: res.url, htmlLength: html.length, sample: html.slice(0, 800), html };
