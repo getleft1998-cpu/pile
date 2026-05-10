@@ -8,7 +8,7 @@ const UA =
 async function fetchHead(url: string) {
   try {
     const res = await fetch(url, {
-      headers: { "User-Agent": UA, Accept: "text/html", "Accept-Language": "en,fr;q=0.8" },
+      headers: { "User-Agent": UA, Accept: "text/html,application/xml", "Accept-Language": "en,fr;q=0.8" },
       redirect: "follow",
       signal: AbortSignal.timeout(15_000),
     });
@@ -24,29 +24,37 @@ export async function GET(req: NextRequest) {
   const probe = url.searchParams.get("probe");
   if (probe) {
     const q = url.searchParams.get("q") ?? "lipstick";
-    const flormarHome = await fetchHead("https://www.flormar.com/en/");
-    const search1 = await fetchHead(
-      `https://www.flormar.com/en/catalogsearch/result/?q=${encodeURIComponent(q)}`
+    const targets = [
+      { name: "home", url: "https://www.flormar.com/" },
+      { name: "wp_search", url: `https://www.flormar.com/?s=${encodeURIComponent(q)}` },
+      { name: "sitemap_index", url: "https://www.flormar.com/sitemap_index.xml" },
+      { name: "sitemap", url: "https://www.flormar.com/sitemap.xml" },
+      { name: "product_sitemap", url: "https://www.flormar.com/product-sitemap.xml" },
+      { name: "page_sitemap", url: "https://www.flormar.com/page-sitemap.xml" },
+    ];
+    const results = await Promise.all(
+      targets.map((t) => fetchHead(t.url).then((r) => ({ name: t.name, url: t.url, ...(r as object) })))
     );
-    const search2 = await fetchHead(
-      `https://www.flormar.com/catalogsearch/result/?q=${encodeURIComponent(q)}`
-    );
-    const trim = (r: ReturnType<typeof Object>) => {
-      if (!r) return r;
+    const trim = <T>(r: T): T => {
+      if (!r || typeof r !== "object") return r;
       const { html: _h, ...rest } = r as { html?: string } & Record<string, unknown>;
-      return rest;
+      return rest as T;
     };
-    // Look for product anchors in search results
-    const findProductLinks = (html: string | undefined) => {
+    // Surface up to 25 anchors that point to flormar.com pages
+    const findFlormarLinks = (html: string | undefined) => {
       if (!html) return [];
-      const anchors = [...html.matchAll(/<a[^>]+href=["']([^"']*\/(?:[a-z0-9-]+(?:-\d+)?(?:\.html)?)["'])/gi)].map((m) => m[1]).filter((h) => /flormar/.test(h) || h.startsWith("/"));
-      return [...new Set(anchors)].slice(0, 10);
+      const anchors = [
+        ...[...html.matchAll(/href=["']([^"']*flormar\.com[^"']*)["']/gi)].map((m) => m[1]),
+        ...[...html.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((m) => m[1]),
+      ];
+      return [...new Set(anchors)].slice(0, 25);
     };
-    return NextResponse.json({
-      flormarHome: trim(flormarHome),
-      search_en: { ...trim(search1), productLinks: findProductLinks((search1 as { html?: string }).html) },
-      search_root: { ...trim(search2), productLinks: findProductLinks((search2 as { html?: string }).html) },
-    });
+    return NextResponse.json(
+      results.map((r) => ({
+        ...trim(r),
+        flormarLinks: findFlormarLinks((r as { html?: string }).html),
+      }))
+    );
   }
 
   const slug = url.searchParams.get("slug");
@@ -81,35 +89,6 @@ export async function GET(req: NextRequest) {
 
   const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/i);
   const ogImage = [...html.matchAll(/<meta[^>]+property=["']og:image["'][^>]*content=["']([^"']+)["']/gi)].map((m) => m[1]);
-  const ogImageSecure = [...html.matchAll(/<meta[^>]+property=["']og:image:secure_url["'][^>]*content=["']([^"']+)["']/gi)].map((m) => m[1]);
-  const twitterImage = [...html.matchAll(/<meta[^>]+name=["']twitter:image["'][^>]*content=["']([^"']+)["']/gi)].map((m) => m[1]);
-
-  const ldRegex = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
-  const ldBlocks: unknown[] = [];
-  let m: RegExpExecArray | null;
-  while ((m = ldRegex.exec(html)) !== null) {
-    try {
-      ldBlocks.push(JSON.parse(m[1].trim()));
-    } catch {
-      ldBlocks.push({ _parseError: m[1].slice(0, 200) });
-    }
-  }
-
-  const imgUrls: { src: string; context: string }[] = [];
-  const imgRegex =
-    /<img\b[^>]*?\b(?:src|data-src|data-original|data-large_image|data-zoom-image|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["']/gi;
-  while ((m = imgRegex.exec(html)) !== null) {
-    const start = Math.max(0, m.index - 200);
-    const ctx = html.slice(start, m.index + m[0].length);
-    imgUrls.push({ src: m[1], context: ctx.replace(/\s+/g, " ").slice(-300) });
-    if (imgUrls.length >= 30) break;
-  }
-
-  const galleryJs =
-    [...html.matchAll(/data-gallery-role=["']gallery-placeholder["'][\s\S]{0,2000}?<\/div>/gi)].map((g) => g[0].slice(0, 1500))[0] ?? null;
-
-  const swatchOptions =
-    [...html.matchAll(/jsonConfig\s*:\s*(\{[\s\S]*?\})\s*,\s*[}"]/gi)].map((g) => g[1].slice(0, 500))[0] ?? null;
 
   return NextResponse.json({
     product,
@@ -117,13 +96,5 @@ export async function GET(req: NextRequest) {
     htmlLength: html.length,
     title: titleMatch?.[1]?.trim() ?? null,
     ogImage,
-    ogImageSecure,
-    twitterImage,
-    ldBlockCount: ldBlocks.length,
-    ldBlocks,
-    imgCount: imgUrls.length,
-    imgUrls: imgUrls.slice(0, 20),
-    galleryJsSnippet: galleryJs,
-    swatchOptionsSnippet: swatchOptions,
   });
 }
