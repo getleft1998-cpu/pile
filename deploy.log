@@ -6,14 +6,14 @@ VERCEL_TOKEN is set, running vercel pull...
 Retrieving project…
 > Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
 Downloading
-Created .vercel/.env.production.local file  [98ms]
+Created .vercel/.env.production.local file  [52ms]
 
 > Downloading project settings
 Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
 WARNING! Build not running on Vercel. System environment variables will not be available.
 Installing dependencies...
 
-added 68 packages in 9s
+added 68 packages in 7s
 
 15 packages are looking for funding
   run `npm fund` for details
@@ -34,23 +34,71 @@ https://nextjs.org/telemetry
   ✓ workerThreads
 
   Creating an optimized production build ...
-✓ Compiled successfully in 4.0s
+✓ Compiled successfully in 3.0s
   Running TypeScript ...
-Failed to type check.
+  Finished TypeScript in 2.9s ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/15) ...
+  Finalizing page optimization ...
 
-./src/app/api/debug/orders/route.ts:19:19
-Type error: Conversion of type '{ id: any; name: any; price: any; }[]' to type '{ id: string; name: string; price: number; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
-  Type '{ id: any; name: any; price: any; }[]' is missing the following properties from type '{ id: string; name: string; price: number; }': id, name, price
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/categories
+├ ○ /admin/login
+├ ○ /admin/orders
+├ ○ /admin/products
+├ ƒ /admin/products/[id]/variants
+├ ƒ /api/admin/auth
+├ ƒ /api/admin/categories
+├ ƒ /api/admin/categories/[id]
+├ ƒ /api/admin/orders
+├ ƒ /api/admin/orders/[id]
+├ ƒ /api/admin/products
+├ ƒ /api/admin/products/[id]
+├ ƒ /api/admin/variants
+├ ƒ /api/admin/variants/[id]
+├ ƒ /api/orders
+├ ○ /cart
+├ ƒ /categories
+├ ƒ /categories/[slug]
+├ ○ /checkout
+├ ƒ /order-confirmation
+└ ƒ /products/[slug]
 
-  [90m17 |[0m   }
-  [90m18 |[0m
-[31m[1m>[0m [90m19 |[0m   [36mconst[0m product = variant.products [36mas[0m { id: string; name: string; price: number } | [36mnull[0m;
-  [90m   |[0m                   [31m[1m^[0m
-  [90m20 |[0m   [36mif[0m (!product) {
-  [90m21 |[0m     [36mreturn[0m [33mNextResponse[0m.json({ step: [32m"product missing on variant"[0m, variant });
-  [90m22 |[0m   }
-Error: Command "npm run build" exited with 1
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Traced Next.js server files in: 28.427ms
+Created all serverless functions in: 173.123ms
+Collected static files (public/, static/, .next/static): 2.008ms
+Build Completed in .vercel/output [15s]
+Retrieving project…
+Deploying getleft1998-cpus-projects/pile
+Uploading [--------------------] (0.0B/476KB)
+Uploading [=====---------------] (119.6KB/476KB)
+Uploading [==========----------] (239.5KB/476KB)
+Uploading [===============-----] (360.3KB/476KB)
+Uploading [====================] (476.0KB/476KB)
+Inspect: https://vercel.com/getleft1998-cpus-projects/pile/EZZT9CyMoAkoiozhpGXfdMBxSGir [2s]
+Production: https://pile-ikbudlz6y-getleft1998-cpus-projects.vercel.app [2s]
+https://pile-ikbudlz6y-getleft1998-cpus-projects.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Downloading 611 deployment files...
+Building: Using prebuilt build artifacts from .vercel/output
+Building: Learn more: https://vercel.link/build-output-api
+Building: Deploying outputs...
+[2K[1A[2K[GProduction: https://pile-ikbudlz6y-getleft1998-cpus-projects.vercel.app [14s]
+Completing...
+Aliased: https://pile-theta.vercel.app [14s]
 
 Pull: success
-Build: failure
-Deploy: skipped
+Build: success
+Deploy: success
