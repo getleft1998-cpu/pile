@@ -6,14 +6,14 @@ VERCEL_TOKEN is set, running vercel pull...
 Retrieving project…
 > Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
 Downloading
-Created .vercel/.env.production.local file  [73ms]
+Created .vercel/.env.production.local file  [112ms]
 
 > Downloading project settings
 Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
 WARNING! Build not running on Vercel. System environment variables will not be available.
 Installing dependencies...
 
-added 68 packages in 8s
+added 68 packages in 9s
 
 15 packages are looking for funding
   run `npm fund` for details
@@ -34,74 +34,25 @@ https://nextjs.org/telemetry
   ✓ workerThreads
 
   Creating an optimized production build ...
-✓ Compiled successfully in 3.6s
-  Running TypeScript ...
-  Finished TypeScript in 3.7s ...
-  Collecting page data using 1 worker ...
-  Generating static pages using 1 worker (0/17) ...
-  Finalizing page optimization ...
 
-Route (app)
-┌ ƒ /
-├ ○ /_not-found
-├ ○ /admin
-├ ○ /admin/categories
-├ ○ /admin/login
-├ ○ /admin/orders
-├ ○ /admin/products
-├ ƒ /admin/products/[id]/variants
-├ ƒ /api/admin/auth
-├ ƒ /api/admin/categories
-├ ƒ /api/admin/categories/[id]
-├ ƒ /api/admin/orders
-├ ƒ /api/admin/orders/[id]
-├ ƒ /api/admin/products
-├ ƒ /api/admin/products/[id]
-├ ƒ /api/admin/products/[id]/backfill-images
-├ ƒ /api/admin/products/missing-images
-├ ƒ /api/admin/variants
-├ ƒ /api/admin/variants/[id]
-├ ƒ /api/diag-trace
-├ ƒ /api/orders
-├ ○ /cart
-├ ƒ /categories
-├ ƒ /categories/[slug]
-├ ○ /checkout
-├ ƒ /order-confirmation
-└ ƒ /products/[slug]
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./src/app/api/diag-trace/route.ts:115:87
+Unterminated regexp literal
+  [90m113 |[0m ...[35m:jpe?g|png|webp)[^"]*)"/gi[0m;
+  [90m114 |[0m ...
+[31m[1m>[0m [90m115 |[0m ...sh(m2[[35m1[0m].replace(/\\\/g, [32m""[0m)); [36mif[0m (galleryImgs.length >= [35m20[0m) [36mbreak[0m; }
+  [90m    |[0m                     [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m116 |[0m ...itle: titleMatch?.[[35m1[0m]?.trim(), ogImage, ldBlocks, imgSrcs: imgs, dataImgs, galleryImgs...
+  [90m117 |[0m ...
+  [90m118 |[0m ...
+
+Parsing ecmascript source code failed
 
 
-ƒ Proxy (Middleware)
-
-○  (Static)   prerendered as static content
-ƒ  (Dynamic)  server-rendered on demand
-
-Traced Next.js server files in: 25.536ms
-Created all serverless functions in: 213.993ms
-Collected static files (public/, static/, .next/static): 2.018ms
-Build Completed in .vercel/output [17s]
-Retrieving project…
-Deploying getleft1998-cpus-projects/pile
-Uploading [--------------------] (0.0B/585.7KB)
-Uploading [=====---------------] (149.9KB/585.7KB)
-Uploading [==========----------] (293.4KB/585.7KB)
-Uploading [===============-----] (439.4KB/585.7KB)
-Uploading [====================] (585.7KB/585.7KB)
-Inspect: https://vercel.com/getleft1998-cpus-projects/pile/5HAbZJovDFABhWefG2mEeHq9AVF9 [2s]
-Production: https://pile-md5bcu8xa-getleft1998-cpus-projects.vercel.app [2s]
-https://pile-md5bcu8xa-getleft1998-cpus-projects.vercel.appBuilding...
-Building...
-Building: Running build in Washington, D.C., USA (East) – iad1
-Building: Build machine configuration: 2 cores, 8 GB
-Building: Retrieving list of deployment files...
-Building: Downloading 633 deployment files...
-Building: Using prebuilt build artifacts from .vercel/output
-Building: Learn more: https://vercel.link/build-output-api
-Building: Deploying outputs...
-[2K[1A[2K[GProduction: https://pile-md5bcu8xa-getleft1998-cpus-projects.vercel.app [15s]
-Completing...
-Aliased: https://pile-theta.vercel.app [15s]
+    at <unknown> (./src/app/api/diag-trace/route.ts:115:87)
+Error: Command "npm run build" exited with 1
 
 Pull: success
-Build: success
-Deploy: success
+Build: failure
+Deploy: skipped
