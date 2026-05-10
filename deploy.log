@@ -1,5 +1,56 @@
+VERCEL_TOKEN is set, running vercel pull...
+> NOTE: The Vercel CLI now collects telemetry regarding usage of the CLI.
+> This information is used to shape the CLI roadmap and prioritize features.
+> You can learn more, including how to opt-out if you'd not like to participate in this program, by visiting the following URL:
+> https://vercel.com/docs/cli/about-telemetry
+Retrieving project…
+> Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
+Downloading
+Created .vercel/.env.production.local file  [98ms]
+
+> Downloading project settings
+Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
+WARNING! Build not running on Vercel. System environment variables will not be available.
+Installing dependencies...
+
+added 68 packages in 9s
+
+15 packages are looking for funding
+  run `npm fund` for details
+Detected Next.js version: 16.2.5
+Running "npm run build"
+
+> pile-337-landing@1.0.0 build
+> next build
+
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+▲ Next.js 16.2.5 (Turbopack)
+- Experiments (use with caution):
+  · cpus: 1
+  ✓ workerThreads
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.0s
+  Running TypeScript ...
+Failed to type check.
+
+./src/app/api/debug/orders/route.ts:19:19
+Type error: Conversion of type '{ id: any; name: any; price: any; }[]' to type '{ id: string; name: string; price: number; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ id: any; name: any; price: any; }[]' is missing the following properties from type '{ id: string; name: string; price: number; }': id, name, price
+
+  [90m17 |[0m   }
+  [90m18 |[0m
+[31m[1m>[0m [90m19 |[0m   [36mconst[0m product = variant.products [36mas[0m { id: string; name: string; price: number } | [36mnull[0m;
+  [90m   |[0m                   [31m[1m^[0m
+  [90m20 |[0m   [36mif[0m (!product) {
+  [90m21 |[0m     [36mreturn[0m [33mNextResponse[0m.json({ step: [32m"product missing on variant"[0m, variant });
+  [90m22 |[0m   }
+Error: Command "npm run build" exited with 1
+
 Pull: success
 Build: failure
 Deploy: skipped
-Deploy trigger Sun May 10 14:55:33 UTC 2026
-Vercel trigger
