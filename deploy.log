@@ -6,14 +6,14 @@ VERCEL_TOKEN is set, running vercel pull...
 Retrieving project…
 > Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
 Downloading
-Created .vercel/.env.production.local file  [122ms]
+Created .vercel/.env.production.local file  [82ms]
 
 > Downloading project settings
 Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
 WARNING! Build not running on Vercel. System environment variables will not be available.
 Installing dependencies...
 
-added 68 packages in 9s
+added 68 packages in 8s
 
 15 packages are looking for funding
   run `npm fund` for details
@@ -34,9 +34,9 @@ https://nextjs.org/telemetry
   ✓ workerThreads
 
   Creating an optimized production build ...
-✓ Compiled successfully in 3.4s
+✓ Compiled successfully in 4.3s
   Running TypeScript ...
-  Finished TypeScript in 3.7s ...
+  Finished TypeScript in 3.9s ...
   Collecting page data using 1 worker ...
   Generating static pages using 1 worker (0/16) ...
   Finalizing page optimization ...
@@ -75,20 +75,20 @@ Route (app)
 ○  (Static)   prerendered as static content
 ƒ  (Dynamic)  server-rendered on demand
 
-Traced Next.js server files in: 38.88ms
-Created all serverless functions in: 184.988ms
-Collected static files (public/, static/, .next/static): 2.461ms
+Traced Next.js server files in: 43.294ms
+Created all serverless functions in: 176.371ms
+Collected static files (public/, static/, .next/static): 2.054ms
 Build Completed in .vercel/output [18s]
 Retrieving project…
 Deploying getleft1998-cpus-projects/pile
-Uploading [--------------------] (0.0B/1.1MB)
-Uploading [=====---------------] (285.1KB/1.1MB)
-Uploading [==========----------] (554.2KB/1.1MB)
-Uploading [===============-----] (830.3KB/1.1MB)
-Uploading [====================] (1.1MB/1.1MB)
-Inspect: https://vercel.com/getleft1998-cpus-projects/pile/7p5rRA8un3P6no33kkHfFZoWdE7Y [3s]
-Production: https://pile-36xl4hlcr-getleft1998-cpus-projects.vercel.app [3s]
-https://pile-36xl4hlcr-getleft1998-cpus-projects.vercel.appBuilding...
+Uploading [--------------------] (0.0B/469.8KB)
+Uploading [=====---------------] (117.6KB/469.8KB)
+Uploading [==========----------] (235.8KB/469.8KB)
+Uploading [===============-----] (359.7KB/469.8KB)
+Uploading [====================] (469.8KB/469.8KB)
+Inspect: https://vercel.com/getleft1998-cpus-projects/pile/F41HV7tDizTjkj4tni8L9e7p1axv [2s]
+Production: https://pile-4hgk42hu4-getleft1998-cpus-projects.vercel.app [2s]
+https://pile-4hgk42hu4-getleft1998-cpus-projects.vercel.appBuilding...
 Building...
 Building: Running build in Washington, D.C., USA (East) – iad1
 Building: Build machine configuration: 2 cores, 8 GB
@@ -97,9 +97,9 @@ Building: Downloading 627 deployment files...
 Building: Using prebuilt build artifacts from .vercel/output
 Building: Learn more: https://vercel.link/build-output-api
 Building: Deploying outputs...
-[2K[1A[2K[GProduction: https://pile-36xl4hlcr-getleft1998-cpus-projects.vercel.app [18s]
+[2K[1A[2K[GProduction: https://pile-4hgk42hu4-getleft1998-cpus-projects.vercel.app [16s]
 Completing...
-Aliased: https://pile-theta.vercel.app [18s]
+Aliased: https://pile-theta.vercel.app [16s]
 
 Pull: success
 Build: success
