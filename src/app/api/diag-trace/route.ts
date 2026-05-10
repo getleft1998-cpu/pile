@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createAdminClient } from "@/src/lib/supabase";
+import { backfillProductImages } from "@/src/lib/image-backfill";
 
 export const maxDuration = 60;
 
@@ -23,6 +24,18 @@ async function fetchHead(url: string) {
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
+
+  // Backfill trigger — requires ?token=flormar2024 (same password as admin)
+  const backfillId = url.searchParams.get("backfill");
+  const token = url.searchParams.get("token");
+  const expectedToken = process.env.ADMIN_PASSWORD || "flormar2024";
+  if (backfillId) {
+    if (token !== expectedToken) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    const overwrite = url.searchParams.get("overwrite") === "1";
+    const result = await backfillProductImages(backfillId, { overwrite });
+    return NextResponse.json(result);
+  }
+
   const probe = url.searchParams.get("probe");
   if (probe) {
     const q = url.searchParams.get("q") ?? "lipstick";
@@ -114,9 +127,9 @@ export async function GET(req: NextRequest) {
     const dataImgRegex = /\bdata-(?:zoom-image|large_image|src-large|hires)=["']([^"']+)["']/gi;
     const dataImgs: string[] = [];
     while ((m2 = dataImgRegex.exec(html)) !== null) { dataImgs.push(m2[1]); if (dataImgs.length >= 10) break; }
-    const galleryJsonRe = /"(?:full|src|url|href)"\s*:\s*"(https:[^"]+\.(?:jpe?g|png|webp|avif)[^"]*)"/gi;
+    const galleryJsonRe2 = /"(?:full|src|url|href)"\s*:\s*"(https:[^"]+\.(?:jpe?g|png|webp|avif)[^"]*)"/gi;
     const galleryImgs: string[] = [];
-    while ((m2 = galleryJsonRe.exec(html)) !== null) { galleryImgs.push(m2[1].replace(/\\u0026/g, "&").replace(/\\\//g, "/")); if (galleryImgs.length >= 20) break; }
+    while ((m2 = galleryJsonRe2.exec(html)) !== null) { galleryImgs.push(m2[1].replace(/\\u0026/g, "&").replace(/\\\//g, "/")); if (galleryImgs.length >= 20) break; }
     return NextResponse.json({ httpStatus, htmlLength: html.length, title: titleMatch?.[1]?.trim(), ogImage, ldBlocks, imgSrcs: imgs, dataImgs, galleryImgs });
   }
 
