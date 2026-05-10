@@ -38,7 +38,10 @@ export function extractSearchKeyword(frenchName: string): string {
     const cleaned = name.replace(pat, "").trim();
     if (cleaned.length > 2) { name = cleaned; break; }
   }
-  return name || frenchName.trim();
+  // Normalize accented characters: "Suprême" → "Supreme", "Khôl" → "Khol"
+  return (name || frenchName.trim())
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
 }
 
 // Category slugs that appear in flormar.com nav — filter these out of search results
@@ -82,6 +85,8 @@ export async function findFlormarComProductUrl(productName: string): Promise<str
   while ((m = re.exec(html)) !== null) {
     const topSlug = m[3]; // first segment before --
     if (FLORMAR_CATEGORY_SLUGS.has(topSlug)) continue;
+    // Filter WordPress system paths (wp-json, wp-content, wp-includes, wp-admin, feed, etc.)
+    if (/^wp-|^feed$|^search$|^page$|^tag$|^author$|^cart$|^checkout$|^my-account$/.test(topSlug)) continue;
     if (!seen.has(m[1])) { seen.add(m[1]); candidates.push(m[1]); }
   }
 
