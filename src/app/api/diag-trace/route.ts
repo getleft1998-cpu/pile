@@ -5,18 +5,57 @@ import { createAdminClient } from "@/src/lib/supabase";
 const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
-// Temporary diagnostic — fetches a product's source_url, returns key tags
-// and ALL candidate image URLs without filtering, so we can see what the
-// extractor is missing or mis-ranking. Pass ?slug=... or first product is used.
+async function fetchHead(url: string) {
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": UA, Accept: "text/html", "Accept-Language": "en,fr;q=0.8" },
+      redirect: "follow",
+      signal: AbortSignal.timeout(15_000),
+    });
+    const html = await res.text();
+    return { status: res.status, finalUrl: res.url, htmlLength: html.length, sample: html.slice(0, 800), html };
+  } catch (e) {
+    return { error: String(e) };
+  }
+}
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
+  const probe = url.searchParams.get("probe");
+  if (probe) {
+    const q = url.searchParams.get("q") ?? "lipstick";
+    const flormarHome = await fetchHead("https://www.flormar.com/en/");
+    const search1 = await fetchHead(
+      `https://www.flormar.com/en/catalogsearch/result/?q=${encodeURIComponent(q)}`
+    );
+    const search2 = await fetchHead(
+      `https://www.flormar.com/catalogsearch/result/?q=${encodeURIComponent(q)}`
+    );
+    const trim = (r: ReturnType<typeof Object>) => {
+      if (!r) return r;
+      const { html: _h, ...rest } = r as { html?: string } & Record<string, unknown>;
+      return rest;
+    };
+    // Look for product anchors in search results
+    const findProductLinks = (html: string | undefined) => {
+      if (!html) return [];
+      const anchors = [...html.matchAll(/<a[^>]+href=["']([^"']*\/(?:[a-z0-9-]+(?:-\d+)?(?:\.html)?)["'])/gi)].map((m) => m[1]).filter((h) => /flormar/.test(h) || h.startsWith("/"));
+      return [...new Set(anchors)].slice(0, 10);
+    };
+    return NextResponse.json({
+      flormarHome: trim(flormarHome),
+      search_en: { ...trim(search1), productLinks: findProductLinks((search1 as { html?: string }).html) },
+      search_root: { ...trim(search2), productLinks: findProductLinks((search2 as { html?: string }).html) },
+    });
+  }
+
   const slug = url.searchParams.get("slug");
   const admin = createAdminClient();
 
-  let q = admin.from("products").select("id, name, slug, source_url, product_variants(id, shade_name, color_hex)");
-  if (slug) q = q.eq("slug", slug);
-  q = q.limit(1);
-  const { data: rows, error } = await q;
+  let pq = admin.from("products").select("id, name, slug, source_url, product_variants(id, shade_name, color_hex)");
+  if (slug) pq = pq.eq("slug", slug);
+  pq = pq.limit(1);
+  const { data: rows, error } = await pq;
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   const product = rows?.[0];
   if (!product) return NextResponse.json({ error: "no product" }, { status: 404 });
