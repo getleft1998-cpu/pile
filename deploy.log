@@ -6,14 +6,14 @@ VERCEL_TOKEN is set, running vercel pull...
 Retrieving project…
 > Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
 Downloading
-Created .vercel/.env.production.local file  [76ms]
+Created .vercel/.env.production.local file  [52ms]
 
 > Downloading project settings
 Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
 WARNING! Build not running on Vercel. System environment variables will not be available.
 Installing dependencies...
 
-added 68 packages in 9s
+added 68 packages in 8s
 
 15 packages are looking for funding
   run `npm fund` for details
@@ -34,21 +34,21 @@ https://nextjs.org/telemetry
   ✓ workerThreads
 
   Creating an optimized production build ...
-✓ Compiled successfully in 3.4s
+✓ Compiled successfully in 2.9s
   Running TypeScript ...
 Failed to type check.
 
-./src/app/api/debug/orders/route.ts:18:19
+./src/app/api/debug/orders/route.ts:19:19
 Type error: Conversion of type '{ id: any; name: any; price: any; }[]' to type '{ id: string; name: string; price: number; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
   Type '{ id: any; name: any; price: any; }[]' is missing the following properties from type '{ id: string; name: string; price: number; }': id, name, price
 
-  [90m16 |[0m   }
-  [90m17 |[0m
-[31m[1m>[0m [90m18 |[0m   [36mconst[0m product = variant.products [36mas[0m { id: string; name: string; price: number } | [36mnull[0m;
+  [90m17 |[0m   }
+  [90m18 |[0m
+[31m[1m>[0m [90m19 |[0m   [36mconst[0m product = variant.products [36mas[0m { id: string; name: string; price: number } | [36mnull[0m;
   [90m   |[0m                   [31m[1m^[0m
-  [90m19 |[0m   [36mif[0m (!product) {
-  [90m20 |[0m     [36mreturn[0m [33mNextResponse[0m.json({ step: [32m"product missing on variant"[0m });
-  [90m21 |[0m   }
+  [90m20 |[0m   [36mif[0m (!product) {
+  [90m21 |[0m     [36mreturn[0m [33mNextResponse[0m.json({ step: [32m"product missing on variant"[0m, variant });
+  [90m22 |[0m   }
 Error: Command "npm run build" exited with 1
 
 Pull: success
