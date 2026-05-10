@@ -54,10 +54,14 @@ export async function GET() {
       const variant = item.variant_id ? (variantMap[item.variant_id] ?? null) : null;
       const resolvedProductId = variant?.product_id ?? item.product_id;
       const product = resolvedProductId ? (productMap[resolvedProductId] ?? null) : null;
-      return {
-        ...item,
-        product_variants: variant ? { ...variant, products: product } : null,
-      };
+      // Always populate product_variants so the admin page can show product name
+      // even for orders where variant_id is null but product_id is known
+      const pv = variant
+        ? { ...variant, products: product }
+        : product
+        ? { shade_name: null, color_hex: null, sku: null, product_id: item.product_id, products: product }
+        : null;
+      return { ...item, product_variants: pv };
     }),
   }));
 

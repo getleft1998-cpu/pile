@@ -17,7 +17,7 @@ interface OrderItemRow {
   quantity: number;
   price: number;
   product_variants: {
-    shade_name: string;
+    shade_name: string | null;
     color_hex: string | null;
     sku: string | null;
     products: { name: string; slug: string } | null;
