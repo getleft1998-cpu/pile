@@ -6,7 +6,7 @@ VERCEL_TOKEN is set, running vercel pull...
 Retrieving project…
 > Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
 Downloading
-Created .vercel/.env.production.local file  [52ms]
+Created .vercel/.env.production.local file  [79ms]
 
 > Downloading project settings
 Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
@@ -34,7 +34,7 @@ https://nextjs.org/telemetry
   ✓ workerThreads
 
   Creating an optimized production build ...
-✓ Compiled successfully in 2.9s
+✓ Compiled successfully in 3.4s
   Running TypeScript ...
 Failed to type check.
 
