@@ -10,7 +10,7 @@ Next.js 15 (App Router), React, Tailwind CSS, Supabase (Postgres + Storage), Ver
 ## Supabase
 - Project URL: https://yqgtjgvqeogsykkpgxiy.supabase.co
 - Anon key hardcoded in `src/lib/supabase.ts` (fallback, works without env vars)
-- Service role key hardcoded in `scripts/full-import.ts` as fallback
+- Service role key hardcoded in `src/lib/supabase.ts` and `scripts/full-import.ts` as fallback
 
 ### Tables (full schema)
 ```
@@ -68,6 +68,15 @@ scripts/                 — catalog import scripts (excluded from tsconfig)
 - Never serve images from external domains in production
 - Stock defaults to 99 or null — never blindly import
 - Payment: cash on delivery only, not yet integrated
+
+## Testing After Every Deploy — REQUIRED
+After every push to main, always verify the deployment worked:
+1. Wait for `list_deployments` to show a new READY deployment for the commit
+2. Fetch `https://pile-theta.vercel.app/` via `web_fetch_vercel_url` → must return 200
+3. Fetch `https://pile-theta.vercel.app/api/admin/orders` → must return 401 (not 500)
+   - 401 = endpoint exists and middleware is working correctly
+   - 500 = server error (check build logs with `get_deployment_build_logs`)
+4. Report the test results to the user before saying the fix is done
 
 ## Do Not Touch
 - RLS policies unless explicitly asked
