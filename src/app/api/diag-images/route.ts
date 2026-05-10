@@ -3,11 +3,11 @@ import { createAdminClient } from "@/src/lib/supabase";
 import { ensureBucketPublic } from "@/src/lib/image-backfill";
 
 // Temporary diagnostic + repair endpoint. Remove after troubleshooting.
-// GET   = sample URLs + reachability probe
-// POST  = mark the product-images bucket public
+// GET = mark the product-images bucket public AND probe sample URLs.
 export async function GET() {
-  const admin = createAdminClient();
+  await ensureBucketPublic();
 
+  const admin = createAdminClient();
   const { data, error } = await admin
     .from("product_images")
     .select("id, product_id, url, sort_order")
@@ -38,12 +38,8 @@ export async function GET() {
   );
 
   return NextResponse.json({
+    bucket: "product-images marked public",
     total_in_db: data?.length ?? 0,
     samples: checks,
   });
-}
-
-export async function POST() {
-  await ensureBucketPublic();
-  return NextResponse.json({ ok: true, action: "bucket marked public" });
 }
