@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
   const probe = url.searchParams.get("probe");
   if (probe) {
     const q = url.searchParams.get("q") ?? "lipstick";
+    // Sequential fetches to avoid rate limiting
     const targets = [
       { name: "rss_search", url: `https://www.flormar.com/search/${encodeURIComponent(q)}/feed/rss2/` },
       { name: "wc_api", url: `https://www.flormar.com/wp-json/wc/v3/products?search=${encodeURIComponent(q)}&per_page=5` },
@@ -34,6 +35,7 @@ export async function GET(req: NextRequest) {
       { name: "wp_search", url: `https://www.flormar.com/?s=${encodeURIComponent(q)}` },
     ];
 
+    // Sequential to avoid 429 rate limits
     const results: Record<string, unknown>[] = [];
     for (const t of targets) {
       const r = await fetchHead(t.url);
@@ -46,6 +48,7 @@ export async function GET(req: NextRequest) {
       return rest as T;
     };
 
+    // Find product-like hrefs (filter out CSS/JS/media/wp-admin paths)
     const findProductLinks = (html: string | undefined) => {
       if (!html) return [];
       const anchors = [...html.matchAll(/href=["']([^"']*flormar\.com\/[^"'?#]+)["']/gi)].map((m) => m[1]);
@@ -57,8 +60,9 @@ export async function GET(req: NextRequest) {
       }).slice(0, 40);
     };
 
+    // Also extract <item> links from RSS XML
     const findRssLinks = (html: string | undefined) => {
-      if (!html) return {};
+      if (!html) return [];
       const links = [...html.matchAll(/<link>(https?:\/\/[^<]+)<\/link>/gi)].map((m) => m[1].trim());
       const titles = [...html.matchAll(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/gi)].map((m) => m[1].trim());
       const imgs = [...html.matchAll(/<enclosure[^>]+url=["']([^"']+)["']/gi)].map((m) => m[1]);
@@ -79,7 +83,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  // Direct URL test mode
+  // Direct URL test mode — bypasses DB, useful for testing flormar.com product pages
   const testUrl = url.searchParams.get("testUrl");
   if (testUrl) {
     let html: string | null = null;
@@ -104,15 +108,15 @@ export async function GET(req: NextRequest) {
     while ((m2 = ldRegex.exec(html)) !== null) {
       try { ldBlocks.push(JSON.parse(m2[1].trim())); } catch { ldBlocks.push({ _err: m2[1].slice(0, 100) }); }
     }
-    const imgRegex2 = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["'][^>]*>/gi;
+    const imgRegex2 = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["|'][^>]*>/gi;
     const imgs: string[] = [];
     while ((m2 = imgRegex2.exec(html)) !== null) { imgs.push(m2[1]); if (imgs.length >= 20) break; }
     const dataImgRegex = /\bdata-(?:zoom-image|large_image|src-large|hires)=["']([^"']+)["']/gi;
     const dataImgs: string[] = [];
     while ((m2 = dataImgRegex.exec(html)) !== null) { dataImgs.push(m2[1]); if (dataImgs.length >= 10) break; }
-    const galleryJsonRe = /"(?:full|src|url)"\s*:\s*"(https:[^"]+\.(?:jpe?g|png|webp)[^"]*)"/gi;
+    const galleryJsonRe = /"(?:full|src|url|href)"\s*:\s*"(https:[^"]+\.(?:jpe?g|png|webp|avif)[^"]*)"/gi;
     const galleryImgs: string[] = [];
-    while ((m2 = galleryJsonRe.exec(html)) !== null) { galleryImgs.push(m2[1].replace(/\\\/g, "")); if (galleryImgs.length >= 20) break; }
+    while ((m2 = galleryJsonRe.exec(html)) !== null) { galleryImgs.push(m2[1].replace(/\\u0026/g, "&").replace(/\\\//g, "/")); if (galleryImgs.length >= 20) break; }
     return NextResponse.json({ httpStatus, htmlLength: html.length, title: titleMatch?.[1]?.trim(), ogImage, ldBlocks, imgSrcs: imgs, dataImgs, galleryImgs });
   }
 
@@ -164,7 +168,7 @@ export async function GET(req: NextRequest) {
 
   const imgUrls: { src: string; context: string }[] = [];
   const imgRegex =
-    /<img\b[^>]*?\b(?:src|data-src|data-original|data-large_image|data-zoom-image|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["']/gi;
+    /<img\b[^>]*?\b(?:src|data-src|data-original|data-large_image|data-zoom-image|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["|']/gi;
   while ((m = imgRegex.exec(html)) !== null) {
     const start = Math.max(0, m.index - 200);
     const ctx = html.slice(start, m.index + m[0].length);

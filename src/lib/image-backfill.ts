@@ -75,7 +75,7 @@ export async function findFlormarComProductUrl(productName: string): Promise<str
   if (!html) return null;
 
   // Product URLs: flat WooCommerce slugs, optionally with --shade suffix
-  const re = /href=["'](https:\/\/www\.flormar\.com\/(([a-z0-9][a-z0-9-]*)(?:--[a-z0-9][a-z0-9-]*)?)\/?)["']/gi;
+  const re = /href=["'](https:\/\/www\.flormar\.com\/(([a-z0-9][a-z0-9-]*)(?:--[a-z0-9][a-z0-9-]*)?)\/?)["|']/gi;
   const seen = new Set<string>();
   const candidates: string[] = [];
   let m: RegExpExecArray | null;
@@ -156,7 +156,7 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
 
   // 3) WooCommerce gallery data attributes
   const dataAttrRegex =
-    /\b(?:data-zoom-image|data-large-image|data-large_image|data-image|data-src-large|data-original|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["']/gi;
+    /\b(?:data-zoom-image|data-large-image|data-large_image|data-image|data-src-large|data-original|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["|']/gi;
   while ((m = dataAttrRegex.exec(html)) !== null) {
     const resolved = resolveUrl(decodeHtmlEntities(m[1]), baseUrl);
     if (resolved) candidates.add(resolved);
@@ -171,7 +171,7 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
   }
 
   // 5) Bare <img src> as a last resort
-  const imgRegex = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["'][^>]*>/gi;
+  const imgRegex = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["|'][^>]*>/gi;
   while ((m = imgRegex.exec(html)) !== null) {
     const resolved = resolveUrl(decodeHtmlEntities(m[1]), baseUrl);
     if (resolved) candidates.add(resolved);
