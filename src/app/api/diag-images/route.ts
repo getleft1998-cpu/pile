@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/src/lib/supabase";
+import { ensureBucketPublic } from "@/src/lib/image-backfill";
 
-// Temporary public diagnostic endpoint — returns sample product_images URLs
-// and probes their public reachability. Safe because these URLs are designed
-// to be publicly fetched anyway. Remove after troubleshooting.
+// Temporary diagnostic + repair endpoint. Remove after troubleshooting.
+// GET   = sample URLs + reachability probe
+// POST  = mark the product-images bucket public
 export async function GET() {
   const admin = createAdminClient();
 
@@ -40,4 +41,9 @@ export async function GET() {
     total_in_db: data?.length ?? 0,
     samples: checks,
   });
+}
+
+export async function POST() {
+  await ensureBucketPublic();
+  return NextResponse.json({ ok: true, action: "bucket marked public" });
 }

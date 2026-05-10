@@ -77,7 +77,6 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
       const blocks = Array.isArray(parsed) ? parsed : [parsed];
       for (const b of blocks) collectImagesFromLd(b, candidates);
     } catch {
-      // Sometimes the JSON-LD has trailing commas or HTML entities — try a second pass
       try {
         const cleaned = decodeHtmlEntities(raw).replace(/,\s*([}\]])/g, "$1");
         const parsed = JSON.parse(cleaned);
@@ -105,14 +104,13 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
     if (resolved) candidates.add(resolved);
   }
 
-  // 4) Bare <img src> as a last resort, scoped near "product"/"gallery" classes
+  // 4) Bare <img src> as a last resort
   const imgRegex = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["'][^>]*>/gi;
   while ((m = imgRegex.exec(html)) !== null) {
     const resolved = resolveUrl(decodeHtmlEntities(m[1]), baseUrl);
     if (resolved) candidates.add(resolved);
   }
 
-  // Filter and rank: prefer URLs that contain "product"/"catalog" or come from JSON-LD/og
   const filtered = [...candidates].filter(looksLikeProductImage);
   const ranked = filtered.sort((a, b) => {
     const score = (u: string) =>
@@ -141,7 +139,6 @@ function collectImagesFromLd(node: unknown, out: Set<string>): void {
     const url = (img as Record<string, unknown>).url;
     if (typeof url === "string") out.add(url);
   }
-  // Recurse into @graph and other nested objects
   for (const v of Object.values(obj)) {
     if (Array.isArray(v)) for (const x of v) collectImagesFromLd(x, out);
     else if (v && typeof v === "object") collectImagesFromLd(v, out);
@@ -176,11 +173,25 @@ function extFromContentType(ct: string): string {
   return "jpg";
 }
 
+export async function ensureBucketPublic(): Promise<void> {
+  const supabase = createAdminClient();
+  // Idempotent: try to update first; if bucket doesn't exist, create it.
+  const { error: updErr } = await supabase.storage.updateBucket(
+    "product-images",
+    { public: true }
+  );
+  if (updErr) {
+    // Likely "Bucket not found" — try to create it as public.
+    await supabase.storage.createBucket("product-images", { public: true });
+  }
+}
+
 export async function backfillProductImages(
   productId: string,
   opts: { overwrite?: boolean } = {}
 ): Promise<BackfillResult> {
   const supabase = createAdminClient();
+  await ensureBucketPublic();
 
   const { data: product, error: pErr } = await supabase
     .from("products")
