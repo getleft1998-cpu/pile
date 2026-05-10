@@ -156,7 +156,7 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
 
   // 3) WooCommerce gallery data attributes
   const dataAttrRegex =
-    /\b(?:data-zoom-image|data-large-image|data-large_image|data-image|data-src-large|data-original|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["|']/gi;
+    /\b(?:data-zoom-image|data-large-image|data-large_image|data-image|data-src-large|data-original|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["']/gi;
   while ((m = dataAttrRegex.exec(html)) !== null) {
     const resolved = resolveUrl(decodeHtmlEntities(m[1]), baseUrl);
     if (resolved) candidates.add(resolved);
@@ -171,7 +171,7 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
   }
 
   // 5) Bare <img src> as a last resort
-  const imgRegex = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["|'][^>]*>/gi;
+  const imgRegex = /<img[^>]+src=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["'][^>]*>/gi;
   while ((m = imgRegex.exec(html)) !== null) {
     const resolved = resolveUrl(decodeHtmlEntities(m[1]), baseUrl);
     if (resolved) candidates.add(resolved);
@@ -179,10 +179,16 @@ export function extractImageUrls(html: string, baseUrl: string): string[] {
 
   const filtered = [...candidates].filter(looksLikeProductImage);
   const ranked = filtered.sort((a, b) => {
-    const score = (u: string) =>
-      (u.includes("flormar.com/wp-content/uploads") ? 3 : 0) +
-      (/product|catalog|media|cdn|uploads/i.test(u) ? 1 : 0) +
-      (/_(?:small|thumb|tiny|mini|150x150|300x300|100x100)\b/i.test(u) ? -2 : 0);
+    const score = (u: string) => {
+      let s = 0;
+      if (/cloudfront\.net\/PRODUCTS_EN\//i.test(u)) s += 10; // flormar product images on CloudFront
+      if (/\/wp-content\/uploads\/\d{4}\/\d{2}\//i.test(u)) s += 2; // dated WP upload path
+      if (u.includes("flormar.com/wp-content/uploads")) s += 1;
+      if (/product|catalog|media|cdn|uploads/i.test(u)) s += 1;
+      if (/_(?:small|thumb|tiny|mini|150x150|300x300|100x100)\b/i.test(u)) s -= 3;
+      if (/\b\d{3,4}x\d{2,3}\b/.test(u)) s -= 3; // dimension in filename (nav/banner images)
+      return s;
+    };
     return score(b) - score(a);
   });
 
@@ -193,8 +199,12 @@ function collectImagesFromLd(node: unknown, out: Set<string>): void {
   if (!node || typeof node !== "object") return;
   const obj = node as Record<string, unknown>;
   const img = obj.image;
-  if (typeof img === "string") out.add(img);
-  else if (Array.isArray(img)) {
+  if (typeof img === "string") {
+    // flormar.com encodes image as a comma-separated string: `"url1", "url2"` — extract all https URLs
+    const urls = img.match(/https?:\/\/[^\s,"'\\]+/g);
+    if (urls) { for (const u of urls) out.add(u); }
+    else if (img.startsWith("http")) out.add(img);
+  } else if (Array.isArray(img)) {
     for (const v of img) {
       if (typeof v === "string") out.add(v);
       else if (v && typeof v === "object") {
