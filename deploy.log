@@ -6,14 +6,14 @@ VERCEL_TOKEN is set, running vercel pull...
 Retrieving project…
 > Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
 Downloading
-Created .vercel/.env.production.local file  [112ms]
+Created .vercel/.env.production.local file  [76ms]
 
 > Downloading project settings
 Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
 WARNING! Build not running on Vercel. System environment variables will not be available.
 Installing dependencies...
 
-added 68 packages in 9s
+added 68 packages in 8s
 
 15 packages are looking for funding
   run `npm fund` for details
