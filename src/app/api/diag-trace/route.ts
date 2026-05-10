@@ -1,0 +1,90 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createAdminClient } from "@/src/lib/supabase";
+
+const UA =
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+
+// Temporary diagnostic — fetches a product's source_url, returns key tags
+// and ALL candidate image URLs without filtering, so we can see what the
+// extractor is missing or mis-ranking. Pass ?slug=... or first product is used.
+export async function GET(req: NextRequest) {
+  const url = new URL(req.url);
+  const slug = url.searchParams.get("slug");
+  const admin = createAdminClient();
+
+  let q = admin.from("products").select("id, name, slug, source_url, product_variants(id, shade_name, color_hex)");
+  if (slug) q = q.eq("slug", slug);
+  q = q.limit(1);
+  const { data: rows, error } = await q;
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  const product = rows?.[0];
+  if (!product) return NextResponse.json({ error: "no product" }, { status: 404 });
+
+  const sourceUrl = product.source_url as string | null;
+  if (!sourceUrl) return NextResponse.json({ product, html: null, error: "no source_url" });
+
+  let html: string | null = null;
+  let httpStatus: number | null = null;
+  try {
+    const res = await fetch(sourceUrl, {
+      headers: { "User-Agent": UA, Accept: "text/html", "Accept-Language": "fr,en;q=0.8" },
+      redirect: "follow",
+      signal: AbortSignal.timeout(15_000),
+    });
+    httpStatus = res.status;
+    html = await res.text();
+  } catch (e) {
+    return NextResponse.json({ product, error: `fetch failed: ${e}` });
+  }
+
+  if (!html) return NextResponse.json({ product, httpStatus });
+
+  const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/i);
+  const ogImage = [...html.matchAll(/<meta[^>]+property=["']og:image["'][^>]*content=["']([^"']+)["']/gi)].map((m) => m[1]);
+  const ogImageSecure = [...html.matchAll(/<meta[^>]+property=["']og:image:secure_url["'][^>]*content=["']([^"']+)["']/gi)].map((m) => m[1]);
+  const twitterImage = [...html.matchAll(/<meta[^>]+name=["']twitter:image["'][^>]*content=["']([^"']+)["']/gi)].map((m) => m[1]);
+
+  const ldRegex = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+  const ldBlocks: unknown[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = ldRegex.exec(html)) !== null) {
+    try {
+      ldBlocks.push(JSON.parse(m[1].trim()));
+    } catch {
+      ldBlocks.push({ _parseError: m[1].slice(0, 200) });
+    }
+  }
+
+  const imgUrls: { src: string; context: string }[] = [];
+  const imgRegex =
+    /<img\b[^>]*?\b(?:src|data-src|data-original|data-large_image|data-zoom-image|data-hires)=["']([^"']+\.(?:jpe?g|png|webp|avif)[^"']*)["']/gi;
+  while ((m = imgRegex.exec(html)) !== null) {
+    const start = Math.max(0, m.index - 200);
+    const ctx = html.slice(start, m.index + m[0].length);
+    imgUrls.push({ src: m[1], context: ctx.replace(/\s+/g, " ").slice(-300) });
+    if (imgUrls.length >= 30) break;
+  }
+
+  const galleryJs =
+    [...html.matchAll(/data-gallery-role=["']gallery-placeholder["'][\s\S]{0,2000}?<\/div>/gi)].map((g) => g[0].slice(0, 1500))[0] ?? null;
+
+  const swatchOptions =
+    [...html.matchAll(/jsonConfig\s*:\s*(\{[\s\S]*?\})\s*,\s*[}"]/gi)].map((g) => g[1].slice(0, 500))[0] ?? null;
+
+  return NextResponse.json({
+    product,
+    httpStatus,
+    htmlLength: html.length,
+    title: titleMatch?.[1]?.trim() ?? null,
+    ogImage,
+    ogImageSecure,
+    twitterImage,
+    ldBlockCount: ldBlocks.length,
+    ldBlocks,
+    imgCount: imgUrls.length,
+    imgUrls: imgUrls.slice(0, 20),
+    galleryJsSnippet: galleryJs,
+    swatchOptionsSnippet: swatchOptions,
+  });
+}
