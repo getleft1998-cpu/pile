@@ -8,6 +8,10 @@ const SUPABASE_ANON_KEY =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxZ3RqZ3ZxZW9nc3lra3BneGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNzU0NDksImV4cCI6MjA5Mzg1MTQ0OX0.oeUTdvM_2J9njLuO3N9e7TQY2i1mqN2s0DWrtXIfqlE";
 
+const SUPABASE_SERVICE_ROLE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxZ3RqZ3ZxZW9nc3lra3BneGl5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3ODI3NTQ0OSwiZXhwIjoyMDkzODUxNDQ5fQ.1aqknhzGE-YcIJvddlRunrOqJqjUOEkieQ3cUFkDOqM";
+
 let browserClient: ReturnType<typeof createClient> | undefined;
 export function getSupabase() {
   if (!browserClient) browserClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -19,8 +23,5 @@ export function createServerClient() {
 }
 
 export function createAdminClient() {
-  return createClient(
-    SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY || SUPABASE_ANON_KEY
-  );
+  return createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 }
