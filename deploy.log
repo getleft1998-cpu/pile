@@ -6,14 +6,14 @@ VERCEL_TOKEN is set, running vercel pull...
 Retrieving project…
 > Downloading `production` Environment Variables for getleft1998-cpus-projects/pile
 Downloading
-Created .vercel/.env.production.local file  [131ms]
+Created .vercel/.env.production.local file  [60ms]
 
 > Downloading project settings
 Downloaded project settings to ~/work/pile/pile/.vercel/project.json [0ms]
 WARNING! Build not running on Vercel. System environment variables will not be available.
 Installing dependencies...
 
-added 68 packages in 9s
+added 68 packages in 10s
 
 15 packages are looking for funding
   run `npm fund` for details
@@ -38,7 +38,7 @@ https://nextjs.org/telemetry
   Running TypeScript ...
   Finished TypeScript in 3.8s ...
   Collecting page data using 1 worker ...
-  Generating static pages using 1 worker (0/17) ...
+  Generating static pages using 1 worker (0/16) ...
   Finalizing page optimization ...
 
 Route (app)
@@ -61,7 +61,6 @@ Route (app)
 ├ ƒ /api/admin/products/missing-images
 ├ ƒ /api/admin/variants
 ├ ƒ /api/admin/variants/[id]
-├ ƒ /api/diag-images
 ├ ƒ /api/orders
 ├ ○ /cart
 ├ ƒ /categories
@@ -76,31 +75,31 @@ Route (app)
 ○  (Static)   prerendered as static content
 ƒ  (Dynamic)  server-rendered on demand
 
-Traced Next.js server files in: 46.687ms
-Created all serverless functions in: 187.787ms
-Collected static files (public/, static/, .next/static): 2.329ms
-Build Completed in .vercel/output [18s]
+Traced Next.js server files in: 53.787ms
+Created all serverless functions in: 186.275ms
+Collected static files (public/, static/, .next/static): 2.742ms
+Build Completed in .vercel/output [19s]
 Retrieving project…
 Deploying getleft1998-cpus-projects/pile
-Uploading [--------------------] (0.0B/483.2KB)
-Uploading [=====---------------] (122.2KB/483.2KB)
-Uploading [==========----------] (248.3KB/483.2KB)
-Uploading [===============-----] (363.3KB/483.2KB)
-Uploading [====================] (483.2KB/483.2KB)
-Inspect: https://vercel.com/getleft1998-cpus-projects/pile/5nhKxgGZHgDewAa7moeqTYDA1bup [3s]
-Production: https://pile-8a5jp74wb-getleft1998-cpus-projects.vercel.app [3s]
-https://pile-8a5jp74wb-getleft1998-cpus-projects.vercel.appBuilding...
+Uploading [--------------------] (0.0B/482.1KB)
+Uploading [=====---------------] (126.6KB/482.1KB)
+Uploading [==========----------] (241.6KB/482.1KB)
+Uploading [===============-----] (361.9KB/482.1KB)
+Uploading [====================] (482.1KB/482.1KB)
+Inspect: https://vercel.com/getleft1998-cpus-projects/pile/9ph934H2mBuVxvZYUpDSV9g7eTKn [2s]
+Production: https://pile-ht989me25-getleft1998-cpus-projects.vercel.app [2s]
+https://pile-ht989me25-getleft1998-cpus-projects.vercel.appBuilding...
 Building...
 Building: Running build in Washington, D.C., USA (East) – iad1
 Building: Build machine configuration: 2 cores, 8 GB
 Building: Retrieving list of deployment files...
-Building: Downloading 633 deployment files...
+Building: Downloading 627 deployment files...
 Building: Using prebuilt build artifacts from .vercel/output
 Building: Learn more: https://vercel.link/build-output-api
 Building: Deploying outputs...
-[2K[1A[2K[GProduction: https://pile-8a5jp74wb-getleft1998-cpus-projects.vercel.app [16s]
+[2K[1A[2K[GProduction: https://pile-ht989me25-getleft1998-cpus-projects.vercel.app [13s]
 Completing...
-Aliased: https://pile-theta.vercel.app [16s]
+Aliased: https://pile-theta.vercel.app [15s]
 
 Pull: success
 Build: success
