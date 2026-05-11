@@ -19,6 +19,22 @@ const BASE_API = "https://flormar.tn/api/v1";
 const OUT_FILE = path.join(__dirname, "dry-run.json");
 const PAGE_LIMIT = 100;
 
+// Map Arabic/French category names returned by the Converty API to English
+const CAT_NAME_MAP = {
+  "منتجات الوجه": "Face",
+  "منتجات العيون": "Eyes",
+  "منتجات الشفاه": "Lips",
+  "إكسسوارات": "Accessories",
+  "العناية بالبشرة": "Skincare",
+  "Lèvres": "Lips",
+  "Yeux": "Eyes",
+  "Teint": "Face",
+  "Sourcils": "Eyebrows",
+  "Ongles": "Nails",
+  "Soins": "Skincare",
+  "Visage": "Face",
+};
+
 const HEADERS = {
   "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
   "Accept": "application/json, text/plain, */*",
@@ -163,7 +179,13 @@ async function main() {
     const data = await apiFetch("/categories");
     const raw = data.data || data.categories || data.items || data.results || (Array.isArray(data) ? data : []);
     categories = raw
-      .map(c => ({ id: c.id || c._id, name: (c.name || c.title || "").trim(), slug: c.slug || c.handle || slugify(c.name || c.title || "") }))
+      .map(c => {
+        const rawName = (c.name || c.title || "").trim();
+        const name = CAT_NAME_MAP[rawName] || rawName;
+        // Use English name for slug so categories get clean URLs like "face", "eyes", etc.
+        const slug = c.slug || c.handle || slugify(name) || slugify(rawName);
+        return { id: c.id || c._id, name, slug };
+      })
       .filter(c => c.name && c.slug);
     console.log(`  Found ${categories.length} categories: ${categories.map(c => c.name).join(", ")}\n`);
   } catch (err) {
