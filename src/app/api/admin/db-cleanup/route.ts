@@ -4,9 +4,16 @@ import { createAdminClient } from "@/src/lib/supabase";
 
 export const maxDuration = 120;
 
-const ENGLISH_CATEGORIES = new Set([
+// Match by lowercased name so garbled API slugs (category-1, ksswrt, etc.) don't cause false positives
+const ENGLISH_CATEGORY_NAMES = new Set([
   "face", "lips", "eyes", "nails", "skincare", "accessories", "eyebrows",
 ]);
+
+// Canonical slug for each English name
+const ENGLISH_SLUG: Record<string, string> = {
+  face: "face", lips: "lips", eyes: "eyes", nails: "nails",
+  skincare: "skincare", accessories: "accessories", eyebrows: "eyebrows",
+};
 
 export async function GET(req: NextRequest) {
   const expected = process.env.ADMIN_PASSWORD ?? "flormar2024";
@@ -37,7 +44,11 @@ export async function GET(req: NextRequest) {
     .select("id, name, slug");
   if (catsErr) return NextResponse.json({ error: catsErr.message }, { status: 500 });
 
-  const frenchCats = (allCats ?? []).filter((c) => !ENGLISH_CATEGORIES.has(c.slug as string));
+  const isEnglish = (c: { name: unknown }) =>
+    ENGLISH_CATEGORY_NAMES.has((c.name as string ?? "").toLowerCase());
+
+  const englishCats = (allCats ?? []).filter(isEnglish);
+  const frenchCats = (allCats ?? []).filter((c) => !isEnglish(c));
   const frenchCatIds = frenchCats.map((c) => c.id as string);
 
   // Count products per French category
@@ -60,9 +71,10 @@ export async function GET(req: NextRequest) {
   if (dryRun) {
     return NextResponse.json({
       mode: "dry-run",
-      englishCategoriesKept: (allCats ?? [])
-        .filter((c) => ENGLISH_CATEGORIES.has(c.slug as string))
-        .map((c) => ({ name: c.name, slug: c.slug })),
+      englishCategoriesKept: englishCats.map((c) => ({
+        name: c.name, currentSlug: c.slug,
+        willBeUpdatedToSlug: ENGLISH_SLUG[(c.name as string ?? "").toLowerCase()] ?? c.slug,
+      })),
       frenchCategoriesToDelete: catReports,
       totalProductsToDelete: frenchProductIds.length,
       productSample: (frenchProducts ?? []).slice(0, 10).map((p) => ({ name: p.name, slug: p.slug })),
@@ -129,6 +141,14 @@ export async function GET(req: NextRequest) {
       .in("id", frenchProductIds);
     if (prodErr) errors.push(`products: ${prodErr.message}`);
     else deletedProducts = prodCount ?? 0;
+  }
+
+  // Fix slugs of kept English categories to canonical English slugs
+  for (const cat of englishCats) {
+    const canonicalSlug = ENGLISH_SLUG[(cat.name as string ?? "").toLowerCase()];
+    if (canonicalSlug && cat.slug !== canonicalSlug) {
+      await supabase.from("categories").update({ slug: canonicalSlug }).eq("id", cat.id);
+    }
   }
 
   // Delete French categories
