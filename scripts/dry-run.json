@@ -1,0 +1,1967 @@
+{
+  "scrapedAt": "2026-05-11T09:35:16.761Z",
+  "sourceUrl": "https://flormar.tn",
+  "totals": {
+    "categories": 5,
+    "products": 82,
+    "variants": 83,
+    "missingPrices": 0,
+    "missingImages": 0
+  },
+  "categories": [
+    {
+      "name": "منتجات الوجه",
+      "slug": "category-1"
+    },
+    {
+      "name": "منتجات العيون",
+      "slug": "category-2"
+    },
+    {
+      "name": "منتجات الشفاه",
+      "slug": "category-3"
+    },
+    {
+      "name": "إكسسوارات",
+      "slug": "ksswrt"
+    },
+    {
+      "name": "العناية بالبشرة",
+      "slug": "laany-blbshr"
+    }
+  ],
+  "products": [
+    {
+      "name": "stay perfect concealer",
+      "slug": "stay-perfect-concealer-1",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/stay-perfect-concealer-1",
+      "images": [
+        "https://cdn.converty.shop/images/a83544d0986e88283ae3c69f92437e8f76962b135496ff083b23a4d6f8e245cc_lg.webp",
+        "https://cdn.converty.shop/images/4d925e0dee6fa081201bd0c09e5e5034a11bb282df91e41cb717a8b8b98a56c2_lg.webp",
+        "https://cdn.converty.shop/images/95ca69ba48f0c06f53c3729eedc128d5d24b3c3bff41c6beea2941e34f33fdb4_lg.webp",
+        "https://cdn.converty.shop/images/8bcb855ba4467cf74da6a52aea38cd7fa3cc4ed4176e251dccdd16bbd95af65c_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Blush-On",
+      "slug": "blush-on",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 26,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/blush-on",
+      "images": [
+        "https://cdn.converty.shop/images/fb583555bbe96321412ceee2cbbbe7920942c873b0a1566fb4bec2ab87fc540f_lg.webp",
+        "https://cdn.converty.shop/images/25006ba753b6c4c181973f8b4a2bae82410de898085ce824801d1ca379b3efdb_lg.webp",
+        "https://cdn.converty.shop/images/85dc4fea677336bbd88e73c7f79d58fb1a3d252cdf79e8c456866157d629f815_lg.webp",
+        "https://cdn.converty.shop/images/7cf9a05329e7caa68b34678ecd2382d98e4185281930e99bd08e646978a8905e_lg.webp",
+        "https://cdn.converty.shop/images/5b97750dab81c89739b6621143828db5bd7996c00814e980cf5eeba082e46997_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Wet&Dry Compact Powder",
+      "slug": "wet-dry-compact-powder",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 28,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/wet-dry-compact-powder",
+      "images": [
+        "https://cdn.converty.shop/images/c7217fe85e7096879eb7a683b7692a2c3754d8a489cf868176b53de039e69b84_lg.webp",
+        "https://cdn.converty.shop/images/08cbc94832f487e7b7b5c1554468c0c8f89dd6a96edb40999132c57796b316b9_lg.webp",
+        "https://cdn.converty.shop/images/c3432ca026afe2bda1ac5d98e728fde4a38714fd8379158d39dc69a76fd47681_lg.webp",
+        "https://cdn.converty.shop/images/5ff2052f5d14591dd1670c7f8e162ee7562987e7c7b1a1bd208c2ea1b9112311_lg.webp",
+        "https://cdn.converty.shop/images/e5facb2528e93769c5c3120fb49303185c2e4b8f0cc8bf1e506e1e9c9563f040_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Setn Go Fixing Powder Compact Powder",
+      "slug": "setn-go-fixing-powder-compact-powder",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 30,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/setn-go-fixing-powder-compact-powder",
+      "images": [
+        "https://cdn.converty.shop/images/6836784af4837b9e2a4376c606df192b495da7be9ee713c0fb0ab0d7a446f006_lg.webp",
+        "https://cdn.converty.shop/images/14d8aecd9b9b2b51467973a1abb8efe83e3f9e72b6387a86c3bcecc84a1377ac_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Puffy Liquid Blush",
+      "slug": "puffy-liquid-blush",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 45,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/puffy-liquid-blush",
+      "images": [
+        "https://cdn.converty.shop/images/3f79b30aa4f3043b7bfcbb05e28976bbc90cf590aecc19fe130975305a5c32f4_lg.webp",
+        "https://cdn.converty.shop/images/57d3d299b447fadad1e04b80bef6143dc396599d1a2c407a9ae9fe79e4caa18f_lg.webp",
+        "https://cdn.converty.shop/images/cac9c1121edf59c84ceb9d2865f9e0fa2dfd3bff92a91dc04dc630546b96445f_lg.webp",
+        "https://cdn.converty.shop/images/46af9e5004e0aa993e8e44438ed4998ccb4e7829d2c912a6ed0b8aee38541aee_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Puffy Liquid Contour",
+      "slug": "puffy-liquid-contour",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 45,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/puffy-liquid-contour",
+      "images": [
+        "https://cdn.converty.shop/images/79dd435b9ff221c5fbac1bbc0eab8901c621883a779cf970e36a31a9de134561_lg.webp",
+        "https://cdn.converty.shop/images/01a1aa9c4f7405143e622c4dcc081f7d2a03401e68a68abdc31d128aed987866_lg.webp",
+        "https://cdn.converty.shop/images/6164915ca274b95829de77939af7db27aaf30d748410db1c027bd86fb6f3dfff_lg.webp",
+        "https://cdn.converty.shop/images/1cd9c46a79013c24f7df93d5acbc40e6cbabe60c71c39e71c3d8031d327d6f39_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Contour Stick",
+      "slug": "contour-stick",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 30,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/contour-stick",
+      "images": [
+        "https://cdn.converty.shop/images/0f3600b5efccc17fd51ee690a6e9a895a0f9eb40baa24ef460ee86bc19bde7f7_lg.webp",
+        "https://cdn.converty.shop/images/cb8843a6b3ac2470c1130add10aa3c019febe815ac3f15b731d4166f0b1133cd_lg.webp",
+        "https://cdn.converty.shop/images/48024bde2cd4866ea143b0bc3e4463520a3cae07a510120397778015914d84c1_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Blossom Stick Blush",
+      "slug": "blossom-stick-blush",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 40,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/blossom-stick-blush",
+      "images": [
+        "https://cdn.converty.shop/images/59a0993dfe4f189e74f75b2c02223294c4d07ee5231028a46bc9e2033b150fef_lg.webp",
+        "https://cdn.converty.shop/images/85230cc4202e210f552f4cd982f745fa218f17d15a43d43172ae85da80a09383_lg.webp",
+        "https://cdn.converty.shop/images/e2ce645ce1c2768ba77911277254cd98aebb60b43ab4bd674e0368e59165414c_lg.webp",
+        "https://cdn.converty.shop/images/7bdf52734d8917c9bb570acd08cfc7e10a093d2709b3d3bf4592bfa937a469b6_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Pack Flormar",
+      "slug": "pack-flormar",
+      "category_slug": "category-1",
+      "description": "1️⃣ ✨ باك فلورمار الكامل ✨من 250 د.ت إلى 150 د.ت 🔥(برايمر + باليت ظلال + ماسكرا + بلاشر + Shine Kiss Me More + سيلكمات ليبستيك + ليبلانر)🎯 عرض محدود – ما تضيّعش الفرصة!",
+      "price": 199,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/pack-flormar",
+      "images": [
+        "https://cdn.converty.shop/images/43fdee2a27cda729ab9d58959950730d847746313fb8d1d1b91b5efd52d619e8_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Lip & Cheek Tint",
+      "slug": "lip-cheek-tint",
+      "category_slug": "category-1",
+      "description": "💄 منتج 2 في 1: روج وخدود في لمسة واحدة!💧 تركيبة مائية مبتكرة بمواد طبيعية!🌸 ملمس ناعم وإحساس منعش على البشرة!🎨 ألوان تدوم طويلاً... لمسات قليلة تكفي!✨ إشراقة طبيعية تدوم من أول لمسة!",
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/lip-cheek-tint",
+      "images": [
+        "https://cdn.converty.shop/images/e51018289c6ed1e5eb825713f5f15c1ac5f0317a6f2a74b5781be3970bb21a74_lg.webp",
+        "https://cdn.converty.shop/images/e02b4baa0b373d8c07dc03150dedfbd81a5c070594752b42a1fc977cfa347302_lg.webp",
+        "https://cdn.converty.shop/images/c1dfaf31a7f613d83c57016c2b41d9fe979f139101876c4a52c62803840175ee_lg.webp",
+        "https://cdn.converty.shop/images/2beb7d16e5304d7b9812390901d052960be13e786909bfa714d0f638acacffd0_lg.webp",
+        "https://cdn.converty.shop/images/0b7472eb7a3032431e677205cda39487c89f4627ec98a3ba09ecc6d87b807e4c_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Powder Compact",
+      "slug": "powder-compact",
+      "category_slug": "category-1",
+      "description": "إذا كنتِ ترغبين في مكياج بشرة طبيعي، فإن بودرة فلورمار المضغوطة معكِ! ✨ تركيبتها الناعمة تُضفي لمسة خفيفة وطبيعية، وتأتي بـ &nbsp;9درجات لون لتختاري منها ما يناسبكِ! 🎨💖",
+      "price": 28,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/powder-compact",
+      "images": [
+        "https://cdn.converty.shop/images/993693e2eb5e391c6513e58a4ae45acc39c670189477a56d2b8309bcce514721_lg.webp",
+        "https://cdn.converty.shop/images/d422135b918c41213941d4b90c2d38b96c7d767ce8bf30f12bf6b5be7a826cb3_lg.webp",
+        "https://cdn.converty.shop/images/9d1b5dc8e9ff544f30b7015ab6dd556a945e53fc0215064844d0e5b4d2013415_lg.webp",
+        "https://cdn.converty.shop/images/69f520c0d888af5b093ea80dcdccabcf3fe3fc9f63067ed7a76f88ce863c8d26_lg.webp",
+        "https://cdn.converty.shop/images/c5833344ddf16a67558c3e3171f2ade9e25b555576a8644de1ef9314402f340a_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Baked Blush-On",
+      "slug": "baked-blush-on",
+      "category_slug": "category-1",
+      "description": "أحمر الخدود المضغوط من فلورمار ✨ بألوانه المضيئة والمطفية يمنحك مكياج بشرة مثالي! 😍 كما يعتني ببشرتك أثناء المكياج بفضل احتوائه على فيتامين E 🌿💖 للحصول على إشراقة صحية وطبيعية!",
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/baked-blush-on",
+      "images": [
+        "https://cdn.converty.shop/images/5acb89337a0be1747c85389d5730dd637cde766d3e5bdad13163cb9c5abc489b_lg.webp",
+        "https://cdn.converty.shop/images/3f5487f6d5165afcb94527e4f3bab857371a3842d461e666e797bb886ca69311_lg.webp",
+        "https://cdn.converty.shop/images/f113f24a65897a47bfaf3fcb34b75ad756902ee147c24bfa1dc49016ac02494b_lg.webp",
+        "https://cdn.converty.shop/images/640fcd0a7b1e59c278c248c0997876bde4d766d900bb3fb13ef07e960ee41ec5_lg.webp",
+        "https://cdn.converty.shop/images/cc1e94d5013ae4e42f2a9a890d4257c558b306f9ccd1ed0b2c55664b6f375899_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Perfect Coverage Foundation",
+      "slug": "perfect-coverage-foundation",
+      "category_slug": "category-1",
+      "description": "كريم الأساس Perfect Coverage ✨ يوفر تغطية مثالية ويحمي البشرة من أشعة الشمس بفضل SPF 15 ☀️! كما يحافظ على توازن الرطوبة بفضل مستخلص زيت الزيتون 🫒، ليمنحك بشرة صحية ومشرقة طوال اليوم! 💖",
+      "price": 45,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/perfect-coverage-foundation",
+      "images": [
+        "https://cdn.converty.shop/images/c5833344ddf16a67558c3e3171f2ade9e25b555576a8644de1ef9314402f340a_lg.webp",
+        "https://cdn.converty.shop/images/480921dd3def0afae1eb16d95e47f5c873ee2f4fd72ed4a7c486d697c5e84538_lg.webp",
+        "https://cdn.converty.shop/images/d1165640fb0623f54039894979bba0a33d077283b426a58ba5f373238eecc8c9_lg.webp",
+        "https://cdn.converty.shop/images/e847ada988d2a1cd38c3a396fd146b248c6f67e4b843aa5c09f0370f883e0207_lg.webp",
+        "https://cdn.converty.shop/images/bf3759f74639bb5a6e272737cae41a7cc7cc6e98a4a1e5cbfeb361ab99c6c193_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "color",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Mood Booster Blush",
+      "slug": "mood-booster-blush",
+      "category_slug": "category-1",
+      "description": "أحمر الخدود السائل لتعزيز الإشراقة ✨ بفضل تركيبته السائلة ورأسه التطبيقي الخاص 🎨، يمنح خدودك احمرارًا طبيعيًا ولمسة ناعمة منعشة! 💖😊",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/mood-booster-blush",
+      "images": [
+        "https://cdn.converty.shop/images/216625fe42f6be8554021c44dd7493890780d0b7f2ea27bd4d23abe1a44549ac_lg.webp",
+        "https://cdn.converty.shop/images/a40748fc607e4d4d84a8789b9d4fe3ca7dccbda67472a89f44c7fbe5b4d0eb6f_lg.webp",
+        "https://cdn.converty.shop/images/d62f887e51492b91bb1ded314597af01b525fa6b9b42993138e72c62d2f68952_lg.webp",
+        "https://cdn.converty.shop/images/b890bfb621ade6aa5b4f0b0985e7564a166de3c08a31f2d2e568f6d8c1bce1c2_lg.webp",
+        "https://cdn.converty.shop/images/27a7caa44d911238e13f657d95a77fd3f24294bdf8fc0e64f26fc0e58c6610aa_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Mood Booster Illuminator",
+      "slug": "mood-booster-illuminator",
+      "category_slug": "category-1",
+      "description": "إضاءة سائلة لتعزيز الإشراقة ✨ تمنح بشرتك توهّجًا طبيعيًا بفضل قوامها المضيء 🌟! مثالية لإبراز ملامح الوجه بنعومة ولمسة إشراق جذابة! 💖😊",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/mood-booster-illuminator",
+      "images": [
+        "https://cdn.converty.shop/images/4e4796bdf866c23e1466c7b5b67f5fcfa049b66387bc38bd65841c647e54aef0_lg.webp",
+        "https://cdn.converty.shop/images/ff7c51dd73a617d5258ffcaaef9e793fd89d83a44b27358b9c510422d9f0836b_lg.webp",
+        "https://cdn.converty.shop/images/28ff9956411dfa23e7fab825f85350ff6073cf4aa425aaae7c02ac0b1328e594_lg.webp",
+        "https://cdn.converty.shop/images/6a8c420697aebe4fb7dab408113f1f155ce0f5987ee9e45a8080ccf252a05930_lg.webp",
+        "https://cdn.converty.shop/images/fbc00ee087f753a96ddd202afcd0fb2fa23ebf82a2f4f9d143780967d10f1e20_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Invisible Cover Hd Foundation",
+      "slug": "invisible-cover-hd-foundation",
+      "category_slug": "category-1",
+      "description": "كريم الأساس Flormar Invisible Cover HD ✨ &nbsp;🎨! بتركيبته الخفيفة ودرجة تغطيته المتوسطة، يخفي عيوب البشرة بشكل طبيعي ليمنحك مظهراً مثالياً دون إحساس بالثقل! 💖😊",
+      "price": 48,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/invisible-cover-hd-foundation",
+      "images": [
+        "https://cdn.converty.shop/images/a5deaddfb9514ddf1713081069f26b27728bf6fba39c399a7ab4aa240394cc7e_lg.webp",
+        "https://cdn.converty.shop/images/28f894c8a439d8769a2a33ee641712af2d832e55e25855808d49ea6f853d265b_lg.webp",
+        "https://cdn.converty.shop/images/c512f8ce45063ddb89acd2886b1e256720046cd156d66ce2a331cce56c0eb900_lg.webp",
+        "https://cdn.converty.shop/images/6de95713068ebe2cf7c9744f6c7baa87f038937a2c8e72e58609ffa591701702_lg.webp",
+        "https://cdn.converty.shop/images/c5833344ddf16a67558c3e3171f2ade9e25b555576a8644de1ef9314402f340a_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "All I Need Face Palette",
+      "slug": "all-i-need-face-palette",
+      "category_slug": "category-1",
+      "description": "لوحة Flormar All I Need Face Palette ✨ توفر لك كل ما تحتاجينه لمكياج الوجه في بالت واحد! 🎨 بألوانها الغنية 🌈 وخياراتها بين المات والمضيء ✨، تمنحك تحديدًا مثاليًا لملامحك بلمسة واحدة! 💖",
+      "price": 56,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/all-i-need-face-palette",
+      "images": [
+        "https://cdn.converty.shop/images/fbc00ee087f753a96ddd202afcd0fb2fa23ebf82a2f4f9d143780967d10f1e20_lg.webp",
+        "https://cdn.converty.shop/images/795380c825aa54f8c3d62db24fbfebd24cc9fe4d198de7dee19a28d573a2f3d1_lg.webp",
+        "https://cdn.converty.shop/images/7c9f4226e0bd162f08f2eb05bf78b21aeac4171543d9491de5c9455f4e20fbca_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Perfect Coverage Liquid Concealer",
+      "slug": "perfect-coverage-liquid-concealer",
+      "category_slug": "category-1",
+      "description": "الكونسيلر السائل Perfect Coverage ✨ يخفي الهالات السوداء بفضل زيت البندق 🥜 ويمنع ظهور الخطوط بفضل مستخلص ثمرة الورد 🌹! متوفر بـ 12 لون مختلف 🎨 ليناسب كل إطلالة! 💖",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/perfect-coverage-liquid-concealer",
+      "images": [
+        "https://cdn.converty.shop/images/f4222df7737571b48a368372aa8171c1ea3593b1eed8a0fd2746937bfe6b27b5_lg.webp",
+        "https://cdn.converty.shop/images/94ce9ad47b3f46d6c6bcc2c4732293812db28cb7a7f2de03461228ecfb162407_lg.webp",
+        "https://cdn.converty.shop/images/3aa509619554dd158ae12a8a0bed90633fca71f87d884e2307c4126d63df421d_lg.webp",
+        "https://cdn.converty.shop/images/dc6f163013c567176087b873435330c828c90b0fa7c936e5ca6636710e1e1c88_lg.webp",
+        "https://cdn.converty.shop/images/8e8f85d54a8d04e25eb7cde76ecd89d423b4cd0bc6828d543bccc346e2e21576_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Loose Powder",
+      "slug": "loose-powder",
+      "category_slug": "category-1",
+      "description": null,
+      "price": 37,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/loose-powder",
+      "images": [
+        "https://cdn.converty.shop/images/29caff13a6d09636767afc930e9f26b42d07b0f0930d199f6569a230eb92fe45_lg.webp",
+        "https://cdn.converty.shop/images/f54ddb7dfb2d0e7da9790253fbc490cb4fbebf7d9b4794ad7659aa929e4321a6_lg.webp",
+        "https://cdn.converty.shop/images/3b8fbe357813ced688a98e9c90c439611a05aa54e708c7b6f2327984662be049_lg.webp",
+        "https://cdn.converty.shop/images/e69b3f954e391687f754e12929937a2efcfa59738bfcb6bba6541579fb4dca87_lg.webp",
+        "https://cdn.converty.shop/images/bcbd619d6aa55500395bed7e39cdab550fe46484314206adc30ab64b215c1ed6_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Illuminator Powder",
+      "slug": "illuminator-powder",
+      "category_slug": "category-1",
+      "description": "✨ إضاءه البودرة فلورمار ميدنايت ستار بتركيبتها الناعمة والرفيعة تحول مرحلة مكياج البشرة إلى خطوة عملية، وتخلق بشرة مشرقة بفضل قوامها اللامع والمضيء. 💖🌟",
+      "price": 37,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/illuminator-powder",
+      "images": [
+        "https://cdn.converty.shop/images/198a8c1fb692c7e8459476348fb6e2cc1b9b64f4eb930c67c9e31558ba9dedb5_lg.webp",
+        "https://cdn.converty.shop/images/58d5a1c3b7530d4e8af0c117f2731f0c3f81f68193967bdaebb8c26a3f674f3c_lg.webp",
+        "https://cdn.converty.shop/images/04dcb8f5e5c64e3d56a3aff218443708ca413dccac24566ebf613b449c9beab6_lg.webp",
+        "https://cdn.converty.shop/images/c1e95760ea9691c29130ec668daa9cb55887bd86d993e95b468f46d227cd13db_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "All Day Fix Setting Spray",
+      "slug": "product-3",
+      "category_slug": "category-1",
+      "description": "✨ بخاخ التثبيت يمنح مكياجكِ ثباتًا يدوم طوال اليوم، بتركيبة غنية بخلاصة البابونج والبيسابولول للعناية ببشرتكِ! 💖💦",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/product-3",
+      "images": [
+        "https://cdn.converty.shop/images/7631d53648e3fe9e665b63ef0879b397363a716bdbe82d5865f2b5ce5bebf9b9_lg.webp",
+        "https://cdn.converty.shop/images/170c06dad715f796af67bd3158aa69ad9b1e90c66582f8f69ec97d5b636ffca1_lg.webp",
+        "https://cdn.converty.shop/images/23d6715901df8fd057d74122d936f2a34be11d312ca4d621d67054e217b7d976_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Volume Up Mascara",
+      "slug": "volume-up-mascara",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 45,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/volume-up-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/8342b1ce6e69b89322606ebd07805f947bdbf1a7636b3e5164b142644008ff63_lg.webp",
+        "https://cdn.converty.shop/images/b0c98ca43c2e327acb4cd72e5ebc7ce6d5733563f032df76e0f65ed41e6e2d04_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Vinyl Waterproof Dipliner Black",
+      "slug": "vinyl-waterproof-dipliner-black",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/vinyl-waterproof-dipliner-black",
+      "images": [
+        "https://cdn.converty.shop/images/9586e3925d67cee17d2907606cfed6ae5d71d328837e8f508f9d58b34e9a7351_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Tinted Brow Gel",
+      "slug": "tinted-brow-gel",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 28,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/tinted-brow-gel",
+      "images": [
+        "https://cdn.converty.shop/images/020e4cfceacbf30777fc3d14695253b8dc4c899fdef9e5ed49777c2d16568751_lg.webp",
+        "https://cdn.converty.shop/images/cf8e375e24ebf471711602b54381e8dcc60baf065d7bcdc8c06dc3086e8803dc_lg.webp",
+        "https://cdn.converty.shop/images/fa94d0f9a0aaac666dda2ee4798b8d444f4eb04a94d50f5a5119a7c7429002be_lg.webp",
+        "https://cdn.converty.shop/images/5b93294da8baef4ee617062b98c0c713ce98e6dc5c30601c4cf32538af33b5bc_lg.webp",
+        "https://cdn.converty.shop/images/fd3fb24cdc3f89221b0a74a310b3d4b42866927501c1aa848a0423dc5333679e_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Open Up Hd Mascara",
+      "slug": "open-up-hd-mascara",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 35,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/open-up-hd-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/8b9ebff38d20119a3ecd4947d6cf4b766b3745bf4448c47fb1e7530cea29e3da_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Open Up Waterproof Mascara",
+      "slug": "open-up-waterproof-mascara",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 38,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/open-up-waterproof-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/9417fa91eb6f3f816a48c5fb4f97a8aedec874f210742351e4e243ce5bdf07a2_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Hero Volume & Curl Mascara waterproof",
+      "slug": "hero-volume-curl-mascara-waterproof",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 35,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/hero-volume-curl-mascara-waterproof",
+      "images": [
+        "https://cdn.converty.shop/images/f2badc7e598b5d93ce36ccda0be0e37a612e890c275c111581d325043bd6275a_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Eyeshadow Palette",
+      "slug": "eyeshadow-palette",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 35,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/eyeshadow-palette",
+      "images": [
+        "https://cdn.converty.shop/images/996065c90fcfc5e36fcc4ac56a9dbf28268bae65cd49f1590bc0028ecc5d7fb8_lg.webp",
+        "https://cdn.converty.shop/images/badfc9bc82cec012cabc9d387b3dfb67f45b816475d9e43a2b4a343346fd992e_lg.webp",
+        "https://cdn.converty.shop/images/245c64a82df6f7a33b19916adc3c34b052db353e9ea38d780abe5bc7d5b6404e_lg.webp",
+        "https://cdn.converty.shop/images/57533ebb84a58288722e3fdfb133816270be2b632a50aaea664130a43a46a83c_lg.webp",
+        "https://cdn.converty.shop/images/dc3f1cf90d58879c63c48b2e55bfda5aa02335c43b3f460bdbc4da5dc94e59e1_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Eyeliner Pen Black",
+      "slug": "eyeliner-pen-black",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/eyeliner-pen-black",
+      "images": [
+        "https://cdn.converty.shop/images/e46a5d8ab54b8709ed798002f7f3c891895d9fea0d187eba83b72f11e90c6450_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Eyebrow Pencil",
+      "slug": "eyebrow-pencil",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 16,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/eyebrow-pencil",
+      "images": [
+        "https://cdn.converty.shop/images/4a9bc8c65424cdcd2af6f1f22f8c8c767601be29f5b17abc5fa4ca69cea1cccb_lg.webp",
+        "https://cdn.converty.shop/images/4cfc5a1ded2ad875e98fbfbf60a88633fe592f918f41ff94501b82f191d65ef4_lg.webp",
+        "https://cdn.converty.shop/images/d868caba7f455fe21cfd4d53403ba45c0a88e464da89d04967b48b26a15fb292_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Color Eyeshadow Palette",
+      "slug": "color-eyeshadow-palette",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 40,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/color-eyeshadow-palette",
+      "images": [
+        "https://cdn.converty.shop/images/2a66027a79e1c2069a710736e9ac9170425a5161cab9248b8c12e454aed59ee7_lg.webp",
+        "https://cdn.converty.shop/images/56e7f4e1d8b91d40cdadf3746a786248bbfaf3a49c8c4a5c98bc003fcf352ec0_lg.webp",
+        "https://cdn.converty.shop/images/74a7e99182f98e76156d893809dfa59f10cc06ba50aad98a781804158e09c16b_lg.webp",
+        "https://cdn.converty.shop/images/268092215f53134c2950fdf140e0942f7cd302944778b2d52e63f925dfa65bf7_lg.webp",
+        "https://cdn.converty.shop/images/bacc18075b279a30ec2c5e66a72f6e611006ec9d4c26dcfd3ff39ecd53e10e99_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Carefull Volume Mascara",
+      "slug": "carefull-volume-mascara",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 41,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/carefull-volume-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/fef8ca16eaf25da831e04846d313c7564653f6820c44c14abb27209e714b59a2_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Big’N Bold  Mascara",
+      "slug": "big-n-bold-mascara",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/big-n-bold-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/80117a56b80131da1f4c48e0b0d179584dbd8aad87af010c595aef5f180bc3a9_lg.webp",
+        "https://cdn.converty.shop/images/9c7b900d52e711961ee7e9c24df5901824e178b342d3e6f8255327d7a49c754c_lg.webp",
+        "https://cdn.converty.shop/images/958580deb31d7c2fa5af78515426660c96118ab140247b05cb0f4a49c60ce0c5_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Angled Brow Pencil",
+      "slug": "angled-brow-pencil",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/angled-brow-pencil",
+      "images": [
+        "https://cdn.converty.shop/images/a0dffc9b658585b3bc69e2c337f9532a0cea5fee28f3b4c7c032ebecf961335a_lg.webp",
+        "https://cdn.converty.shop/images/5885ad26aa0fad2d6161cf0821774e342d59afec7bd12713554d2ad2f2d9993b_lg.webp",
+        "https://cdn.converty.shop/images/f86e9acaf0b991022b3473580b23ef46e00e9cd8dcdd8f4590a9812cbce6ff25_lg.webp",
+        "https://cdn.converty.shop/images/10e72e70c37f8ec5f7fc8869d910ee1f19dfe8fd1b6e9e16b9fef84727c270ef_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Eyebrow Fixator Mascara",
+      "slug": "eyebrow-fixator-mascara",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/eyebrow-fixator-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/bb42d82a6ac7884344090021225287de3b4da14f8901a2470a603e35dc8f43dc_lg.webp",
+        "https://cdn.converty.shop/images/76b522efbfa34b245d0ad2b1877be9788ff97cc7ffd717ade0c182a2c1d3dab5_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Taille",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        },
+        {
+          "shade_name": "Couleur 🌈",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Pack Flormar",
+      "slug": "pack-flormar-category-2",
+      "category_slug": "category-2",
+      "description": "1️⃣ ✨ باك فلورمار الكامل ✨من 250 د.ت إلى 150 د.ت 🔥(برايمر + باليت ظلال + ماسكرا + بلاشر + Shine Kiss Me More + سيلكمات ليبستيك + ليبلانر)🎯 عرض محدود – ما تضيّعش الفرصة!",
+      "price": 199,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/pack-flormar",
+      "images": [
+        "https://cdn.converty.shop/images/43fdee2a27cda729ab9d58959950730d847746313fb8d1d1b91b5efd52d619e8_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Waterproof Eyeliner",
+      "slug": "waterproof-eyeliner",
+      "category_slug": "category-2",
+      "description": "🖊️ آيلاينر مقاوم للماء وسهل التطبيق!🌟 لون قوي ومكياج عيون متكامل!💧 ثبات يدوم ولمسة دقيقة بدون سيلان!👁️ ارسم عيونك بإتقان وتألق بألوان جذابة!",
+      "price": 12,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/waterproof-eyeliner",
+      "images": [
+        "https://cdn.converty.shop/images/8147b84d85164e08cf298002fc52967ae588ee02d09f9d371e06b5ec81677634_lg.webp",
+        "https://cdn.converty.shop/images/5797de41aa5ec4151dcd0e32d74dd2f9a5f15172e072f7f3e21042d24c786812_lg.webp",
+        "https://cdn.converty.shop/images/535198b53e4008a86bc72fab7b34f529f1b25b03027c70e86a49709ce43e5459_lg.webp",
+        "https://cdn.converty.shop/images/37497b259bad814e357aa62ea83f03ba30888a3ba90e199dd76a8cb3ce473c9b_lg.webp",
+        "https://cdn.converty.shop/images/14cb24784a70d7b5e4302cb0f86cb7e0936a49019a816956515521027a62c4eb_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Spider Lash Volume Mascara 3 en 1",
+      "slug": "spider-lash-volume-mascara-3-en-1",
+      "category_slug": "category-2",
+      "description": "ماسكارا Spider Lash Deep Black 🕷️✨ تمنح رموشك حجماً مضاعفاً ولوناً أسود كثيفاً بفضل فرشاتها الخاصة! 👁️🖤 كما تغذي الرموش بفضل مستخلص زيت الزيتون 🫒 لمظهر جذاب وعناية متكاملة! 💖",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/spider-lash-volume-mascara-3-en-1",
+      "images": [
+        "https://cdn.converty.shop/images/5585e963c67f8d86e8c00894918c95eade3251c1e2ac588a56f5b5ded9a3ea16_lg.webp",
+        "https://cdn.converty.shop/images/37529b76b5d6d90ccd4ca687ba07443ec458477dc7ccb90d91eb941e8312ebd3_lg.webp",
+        "https://cdn.converty.shop/images/decd3d13c78b864e49a86fa3f1b59dd9d9cb450e7afc08e2efe7bba2e224fe29_lg.webp",
+        "https://cdn.converty.shop/images/459c6ca6f32ce25153c87c4e0f1c62df4b5f3189ee9a25be95089c08d48d640a_lg.webp",
+        "https://cdn.converty.shop/images/e655eaf5208b11547dc009995c76e4b48499df81e104271e65e8f67496d789f8_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Precious Curl Mascara",
+      "slug": "precious-curl-mascara",
+      "category_slug": "category-2",
+      "description": "ماسكارا التجعيد الفاخرة ✨ تمنح رموشك حجماً مثاليًا وانحناءة جذابة بفضل فرشاتها المصممة بشكل مائل! 😍 احصلي على رموش محددة ومظهر ساحر يخطف الأنظار! 👁️💖",
+      "price": 39,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/precious-curl-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/430372f3c43c2f794173d39243c678259f0c9890443bd0e5c4f51286578bc5cb_lg.webp",
+        "https://cdn.converty.shop/images/73a7ac6c7758a461fecf7aa9707b5c133a4b8b5069f520a0f35970c7f90b89a7_lg.webp",
+        "https://cdn.converty.shop/images/cba681460bdeebcfd246dbb988271ee7b2dcc6b0b319a79a344199b12a7cc56e_lg.webp",
+        "https://cdn.converty.shop/images/01ce642f559d2ced73a9e27ec24672c1f369f17dceb49a15cad4aef651dfe958_lg.webp",
+        "https://cdn.converty.shop/images/644fe0853f5b8307ebeff2c4f6c7abef578279cb5d2df16bac6cc570d6ecabbe_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Midnight Matte Eyeliner",
+      "slug": "midnight-matte-eyeliner",
+      "category_slug": "category-2",
+      "description": "إذا كنتِ تبحثين عن كحل بقوام مكثف ولمسة مطفية، فالكحل المخملي الليلي هو خيارك المثالي! ✨ بفضل فرشته الرفيعة والمرنة، يضمن لك تطبيقًا سهلًا ودقيقًا لإطلالة جذابة تدوم طويلًا! 👁️🖤",
+      "price": 27,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/midnight-matte-eyeliner",
+      "images": [
+        "https://cdn.converty.shop/images/9657824d1ee1dd584d660f28105c8f0321416d946118cdceb951ff446375f9f0_lg.webp",
+        "https://cdn.converty.shop/images/57110f40c1ca68b3fc0d545931641a5a6acb248fd5dad83c388a6e5e1af279c3_lg.webp",
+        "https://cdn.converty.shop/images/27f1eab715508acab4dbb21d99fac6b7e77d417bacea784554ad4e29b8dce589_lg.webp",
+        "https://cdn.converty.shop/images/dbd1eb7686fd7dceba0843ce0ab83f98bcb5d1ebeb35ce600bdf08234e6c0773_lg.webp",
+        "https://cdn.converty.shop/images/d8b6f6a289ab332e0ebeee0067d93b9b3d94e627cd9396df0b6edd158b535ce0_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Matte Waterproof Dipliner Black",
+      "slug": "matte-waterproof-dipliner-black",
+      "category_slug": "category-2",
+      "description": "محدد العيون المائي المطفي ✨ بتركيبته المقاومة للماء يمنحك إطلالة تدوم طوال اليوم ⏳! بتمريرة واحدة فقط، يحدد عينيك بخطوط درامية جذابة بفضل لونه المكثف ولمسته المخملية! 👁️🖤",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/matte-waterproof-dipliner-black",
+      "images": [
+        "https://cdn.converty.shop/images/7cc478630581267c59b8ef891c3e684c82125ac6fd3d5c6d9e4eb2a819492983_lg.webp",
+        "https://cdn.converty.shop/images/2926172b1d077be837d7aa998b105f916f67fec680b7472b0299811527fbff47_lg.webp",
+        "https://cdn.converty.shop/images/fe5788458962b0c1c40bb79e3079e5508bdca28cb548050f5f163c770b87fe42_lg.webp",
+        "https://cdn.converty.shop/images/811703ad6968b2586d3986d8c2db4e5cb0447b12b3eec7927bbef4d851784040_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Brow Setter & Primer Gel",
+      "slug": "brow-setter-primer-gel",
+      "category_slug": "category-2",
+      "description": "جل تثبيت وتهيئة الحواجب ✨ سهل التطبيق، يجف بسرعة، ويمنح تثبيتًا مثاليًا بفضل تركيبته الشفافة التي لا تترك أي تكتلات! 👁️💖",
+      "price": 32,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/brow-setter-primer-gel",
+      "images": [
+        "https://cdn.converty.shop/images/4987e28871bf20fddec68fddee69edfcb6891be50bf9632e7493743f958c85d7_lg.webp",
+        "https://cdn.converty.shop/images/316c1532682d14ac1844096d5a3b4e80375340f1f2a964f6802c16a8ea919d2c_lg.webp",
+        "https://cdn.converty.shop/images/196d1f92fd368a9303d615b29ca997e0bb63e5d06436a17d7db92b25bd83e7d0_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Mood Booster Illuminator",
+      "slug": "mood-booster-illuminator-category-2",
+      "category_slug": "category-2",
+      "description": "إضاءة سائلة لتعزيز الإشراقة ✨ تمنح بشرتك توهّجًا طبيعيًا بفضل قوامها المضيء 🌟! مثالية لإبراز ملامح الوجه بنعومة ولمسة إشراق جذابة! 💖😊",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/mood-booster-illuminator",
+      "images": [
+        "https://cdn.converty.shop/images/4e4796bdf866c23e1466c7b5b67f5fcfa049b66387bc38bd65841c647e54aef0_lg.webp",
+        "https://cdn.converty.shop/images/ff7c51dd73a617d5258ffcaaef9e793fd89d83a44b27358b9c510422d9f0836b_lg.webp",
+        "https://cdn.converty.shop/images/28ff9956411dfa23e7fab825f85350ff6073cf4aa425aaae7c02ac0b1328e594_lg.webp",
+        "https://cdn.converty.shop/images/6a8c420697aebe4fb7dab408113f1f155ce0f5987ee9e45a8080ccf252a05930_lg.webp",
+        "https://cdn.converty.shop/images/216625fe42f6be8554021c44dd7493890780d0b7f2ea27bd4d23abe1a44549ac_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "All I Need Face Palette",
+      "slug": "all-i-need-face-palette-category-2",
+      "category_slug": "category-2",
+      "description": "لوحة Flormar All I Need Face Palette ✨ توفر لك كل ما تحتاجينه لمكياج الوجه في بالت واحد! 🎨 بألوانها الغنية 🌈 وخياراتها بين المات والمضيء ✨، تمنحك تحديدًا مثاليًا لملامحك بلمسة واحدة! 💖",
+      "price": 56,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/all-i-need-face-palette",
+      "images": [
+        "https://cdn.converty.shop/images/fbc00ee087f753a96ddd202afcd0fb2fa23ebf82a2f4f9d143780967d10f1e20_lg.webp",
+        "https://cdn.converty.shop/images/795380c825aa54f8c3d62db24fbfebd24cc9fe4d198de7dee19a28d573a2f3d1_lg.webp",
+        "https://cdn.converty.shop/images/7c9f4226e0bd162f08f2eb05bf78b21aeac4171543d9491de5c9455f4e20fbca_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Triple Action Mascara",
+      "slug": "triple-action-mascara",
+      "category_slug": "category-2",
+      "description": "👁️ ماسكارا فلورمار تريبل أكشن بفرشاتها السيليكونية الخاصة ذات الثلاث خطوات، تمنح رموشكِ طولًا أكبر، تجعيدًا مثاليًا، وحجمًا مكثفًا، بينما تساعد في تقويتها بفضل زيت الأركان الذي تحتوي عليه! ✨🌿",
+      "price": 39,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/triple-action-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/113e8938fe8d5bb0046efd383da2b1b350c883cd2ad1932f3c71051bc3bd3829_lg.webp",
+        "https://cdn.converty.shop/images/db3dd099fe1358ccc8a5a62f2bb1d77e1982af11112f37dfe00aefa36853239c_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Longer Than Ever Mascara",
+      "slug": "longer-than-ever-mascara",
+      "category_slug": "category-2",
+      "description": "👁️ ماسكارا فلورمار لونغر ذان إيفر توفر لكِ تطبيقًا سهلًا بفضل فرشاتها المرنة، وتمنحكِ مكياج عيون طويل الأمد ومبهر بتركيبتها المغذية التي تساعد في إطالة وتكثيف الرموش! ✨🌟",
+      "price": 40,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/longer-than-ever-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/e5fb0e20c989de6f23b90ac949f41132487d0fef0b552e51866cc84062871b8f_lg.webp",
+        "https://cdn.converty.shop/images/db242251977417619f5cd4934f5545851f5833e7b866827e2b9c88221b7ea35c_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Hero Volume & Curl Mascara",
+      "slug": "hero-volume-curl-mascara",
+      "category_slug": "category-2",
+      "description": "👁️ ماسكارا هيرو تضفي حجمًا مذهلًا وتمنح رموشًا ملتوية بشكل مثالي، لخلق إطلالات عميقة وجذابة بفضل تركيبتها طويلة الأمد! ✨🌟",
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/hero-volume-curl-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/1ff799f1099b633258fd84a1f088f97c3823385ce5d7bf6349e65e894e1062a1_lg.webp",
+        "https://cdn.converty.shop/images/129059502a712fe4bc3e7afc374e3841dd5768f4c79f9a18f55c8f5f64ff52bf_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Color Your Life Mascara",
+      "slug": "color-your-life-mascara",
+      "category_slug": "category-2",
+      "description": null,
+      "price": 49,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/color-your-life-mascara",
+      "images": [
+        "https://cdn.converty.shop/images/2241b7d1a2de618c41608c0f25290f8fce488d73e19e4e60aae71d29573aa25d_lg.webp",
+        "https://cdn.converty.shop/images/497a9fc213ca9897ef750cb40016ae10853a3f6b539edd1b0525bcc68b4d79cb_lg.webp",
+        "https://cdn.converty.shop/images/108669afaa5be06ae4bc7a205c91e20dc3fb9a743084530a9508186659b83fb6_lg.webp",
+        "https://cdn.converty.shop/images/47091ae3e6b6c9d0f4121d0273c03fb54f3086c943a4265486d0dbc6199542f4_lg.webp",
+        "https://cdn.converty.shop/images/f0a30ae7bc00119071d618ef798d80428b3426bfd0b561697f2a90ece079ac68_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Size",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Brow Pomade",
+      "slug": "brow-pomade",
+      "category_slug": "category-2",
+      "description": "🌿 بودرة الحواجب الكريمية تمنحكِ حواجب طبيعية بكل سهولة، بفضل تركيبتها الجل الكريمية والفرشاة المصممة لتناسب يدكِ بدقة! ✨💖",
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/brow-pomade",
+      "images": [
+        "https://cdn.converty.shop/images/5036850acfbd7101efba106fe66c9beeaae872358421aa6b1ea52449939f355e_lg.webp",
+        "https://cdn.converty.shop/images/ccfef4057f476ef79f4292818ff1eea8fcf7ee780411f6e5bcbcf4d4d1b5e35d_lg.webp",
+        "https://cdn.converty.shop/images/18c65281dc7537f038fcf0f1d1c0eb2d147bda3f91255879d0f7ba83af282a26_lg.webp",
+        "https://cdn.converty.shop/images/0764e705a537a3e6711de2c0bfb598249e58c2ec41d10c3d0634a2c1f6aa6a7d_lg.webp",
+        "https://cdn.converty.shop/images/f7df1d47fefbe16fed1c4251ec6b6238fcff6b4b775af62a07110d63e3f523f3_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Water Lip Stain",
+      "slug": "water-lip-stain",
+      "category_slug": "category-3",
+      "description": "💋 تينت الشفاه والخدود يمنح شفتيكِ لونًا نابضًا يدوم لساعات، مع تغذية وترطيب بفضل تركيبته الغنية بخلاصة الفواكه! 🍓✨",
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/water-lip-stain",
+      "images": [
+        "https://cdn.converty.shop/images/6d94736d47cf00a0032b5b247fbe2f8a9831ec264b5553ef4988ac632c81f617_lg.webp",
+        "https://cdn.converty.shop/images/faf52902c56a2334d97b1830349815313e435d51a811bfd9eac18be696cfc2f4_lg.webp",
+        "https://cdn.converty.shop/images/3c8387d75d413a8a2753025db07b733e1f1147cef49423b6a19de4ffcec15475_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Hd Weightless Matte Lipstick – New",
+      "slug": "hd-weightless-matte-lipstick-new",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/hd-weightless-matte-lipstick-new",
+      "images": [
+        "https://cdn.converty.shop/images/10044ba2a96963f79f9f09c65b27d9c64a27e1a83bac24ec853e2e7e3ffa0bfa_lg.webp",
+        "https://cdn.converty.shop/images/c0f1741d31279f5eba5d2bf1530ef0e4a3a91ba63ccbe31a628e683325efe063_lg.webp",
+        "https://cdn.converty.shop/images/462746b4a90b1ab9760af37d1754bf5ef71e824241f7a5aa1c464918cdf680c1_lg.webp",
+        "https://cdn.converty.shop/images/f46a4f0ae1dac03c5017c5a39ffd5ffa6659819c8b18166cc824df3042b6955f_lg.webp",
+        "https://cdn.converty.shop/images/cc7cfe3050c1d6ed365586d707fc281641aceb77b788235153e329411f6a6498_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Lift Up Caring Lip Plumper",
+      "slug": "lift-up-caring-lip-plumper",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 40,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/lift-up-caring-lip-plumper",
+      "images": [
+        "https://cdn.converty.shop/images/ac50e7e90bcfea4fe3c1626d5b265d316c34afb7b477b5a9428f404a5f97762d_lg.webp",
+        "https://cdn.converty.shop/images/9ab8d423f0fb51e62087bf3110118d1ef6ecddb522dafec14c715c0169b5803c_lg.webp",
+        "https://cdn.converty.shop/images/71bfe8e5af22f74906174d314d11487a80d57b1822c65a5b52830e9d137d1623_lg.webp",
+        "https://cdn.converty.shop/images/27825a5e93ed9b4bc7b236bc935fe8358162320fb21cc1a95c167bc6225be63c_lg.webp",
+        "https://cdn.converty.shop/images/a4eb70240bc235d66974a222db806a0d4c487e8d0c8251961951b2aacbeba985_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Sheer Up Lipstick",
+      "slug": "sheer-up-lipstick",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/sheer-up-lipstick",
+      "images": [
+        "https://cdn.converty.shop/images/3b82d6cb0ed52caf65db4a311c9c67a990d778a78a99feeb4a26396b2c07b806_lg.webp",
+        "https://cdn.converty.shop/images/4b618176c83540fbedb92c81677eaa430032e49c0b7e9f2f30ae855e8eddd1c2_lg.webp",
+        "https://cdn.converty.shop/images/7d044010c415a9fef95827e14e4f55786f3671aaafd74e66f2e87adee90736ec_lg.webp",
+        "https://cdn.converty.shop/images/bdda7a1649442e0565caa4f153564c898c4f3bf0b0e556a565dc360201fd3948_lg.webp",
+        "https://cdn.converty.shop/images/1b14b673a726c6acdf9157578f1e9c16f4e4c3857b930ab78d58188ac8d974eb_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "COULEUR",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Lip Balm Strawberry",
+      "slug": "lip-balm-strawberry",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 19,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/lip-balm-strawberry",
+      "images": [
+        "https://cdn.converty.shop/images/5e922e44f12dc0807d38a4fce2f0daeb4fbc17d913a05e7044aa814ddd58e092_lg.webp",
+        "https://cdn.converty.shop/images/545f53fafe1059347f3179e194eb5c778591e42cafcbd00993e705d35342e78b_lg.webp",
+        "https://cdn.converty.shop/images/15abe79d315a8627a871538ec9b54732c4d219348060aed37d94428b633131de_lg.webp",
+        "https://cdn.converty.shop/images/e9eee6aab05abaab3c7b03648c5f6de6cf88c7f669a497487be4614b91e73fc7_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Lightweight Lip Powder",
+      "slug": "lightweight-lip-powder",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 32,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/lightweight-lip-powder",
+      "images": [
+        "https://cdn.converty.shop/images/93fbd9916036e76db27fb525e5ff1b1e33baaf668afc332d690b2066952c5d55_lg.webp",
+        "https://cdn.converty.shop/images/dcf6b07d4ba5cb7d65a6c144c61c67ef0390fb0db5b314901b019f5d42e426a8_lg.webp",
+        "https://cdn.converty.shop/images/1f0c2501ee09738d08a77ded6dac3a3f38d947d76cd5011de1e2f1cd8be2c418_lg.webp",
+        "https://cdn.converty.shop/images/42f690d9485c56bf12ed88590ab2314165f094553db0b01ba3a4436e9c2749da_lg.webp",
+        "https://cdn.converty.shop/images/c953ff5a18c5cdd70201c086e8f3993f625b228f76117c0827af7c8cd0fa4473_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Duoglam Lipstick",
+      "slug": "duoglam-lipstick",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 38,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/duoglam-lipstick",
+      "images": [
+        "https://cdn.converty.shop/images/4e39b27fab7be92c593d20c1ef6f397050c1748c99c48b831d7d931bce0171c5_lg.webp",
+        "https://cdn.converty.shop/images/78718463fd4f3ce05ca64cb0ab89d6c08967286c9626121c1eb90023f1ed17cd_lg.webp",
+        "https://cdn.converty.shop/images/0ac3b9f104e4204090490777cced3826eb74389de0123103975e769124d68a7c_lg.webp",
+        "https://cdn.converty.shop/images/c9567bd29c327db4a3f40dd6622b7b7a44e27a2796787e6fb801e53842342dff_lg.webp",
+        "https://cdn.converty.shop/images/acfa740e5a7351f9104997c072a81360bb81731f9155879b360bdfc2916db651_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Creamy Stylo Lipstick",
+      "slug": "creamy-stylo-lipstick",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/creamy-stylo-lipstick",
+      "images": [
+        "https://cdn.converty.shop/images/2aa3a9de0636a881cb80bd5189fad35de10a1f09025a63034e4ac30170efb089_lg.webp",
+        "https://cdn.converty.shop/images/08b0d4029e3b5fcbb2f565214f76dc7e83845d4aca4c06c62f81c5f0d74e4e7b_lg.webp",
+        "https://cdn.converty.shop/images/0e65c4af10209eeebc36f076a76d8d690b1b22ecb472c4ce4ca1af17ace35b1d_lg.webp",
+        "https://cdn.converty.shop/images/2ed975d307022e224da1cb9b4bb3441051ce254a737412960968b579d6324696_lg.webp",
+        "https://cdn.converty.shop/images/61d7757bbbe66d2fdfc13aca9d72365044b948bda4716779e5e2fcf13ccf792f_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Waterproof Lipliner",
+      "slug": "waterproof-lipliner-1",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 14,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/waterproof-lipliner-1",
+      "images": [
+        "https://cdn.converty.shop/images/fa34725bf98c8f9d4e351e131b4b2f5b0cb11969ba1b79345aca61a879acfbb3_lg.webp",
+        "https://cdn.converty.shop/images/d3bfb683e467a9e1684f3e02b226863e9687e2d74f026c3b1a6d24432464e8a6_lg.webp",
+        "https://cdn.converty.shop/images/3266665e13c70a7f01ab6e02fd8cc9716ef4b65f5610eb9255ada0f76f1d2145_lg.webp",
+        "https://cdn.converty.shop/images/c58eba6f06b51d5915764087da0c2c527ddfc515cb3d8bf859e78d54f94d239c_lg.webp",
+        "https://cdn.converty.shop/images/1d904fec679aaae74dc338ac6a4f98245221d646a1c0a5fb0505055b7c5fa64e_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Dewy Lip Glaze",
+      "slug": "dewy-lip-glaze-1",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/dewy-lip-glaze-1",
+      "images": [
+        "https://cdn.converty.shop/images/384fac91ea3688b99c8c196e9fbecc5b86e4722ec2be362beed27f560fd09817_lg.webp",
+        "https://cdn.converty.shop/images/320422f5f2d32c1e43905d68e653314d923fbbb8465fd41a51f3e50deca52eaf_lg.webp",
+        "https://cdn.converty.shop/images/8dec4358d58cd70be2c8f8b5ffa15dcd63040e4ea72428691967ed44f5856f7d_lg.webp",
+        "https://cdn.converty.shop/images/37808bcd16d9eef243e990304cbdf339906d4f34fa64910de717468bc5bdcfa3_lg.webp",
+        "https://cdn.converty.shop/images/65ae9acea1f5dd2712b91ffca03321394e9cbcb24b39becef11cabb9c7350baf_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Silk matte",
+      "slug": "silk-matte",
+      "category_slug": "category-3",
+      "description": null,
+      "price": 22,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/silk-matte",
+      "images": [
+        "https://cdn.converty.shop/images/58569d39a8e3d3d6859c54b11711fb1ffea866301a58c3070447d8cc4edd6817_lg.webp",
+        "https://cdn.converty.shop/images/aa4beb6308a46aaaea6f40419585c0f5ad418aff4d672e4268e6c11f846acae4_lg.webp",
+        "https://cdn.converty.shop/images/f51c1e6269ac4b9cd8d8ed235d41eba580d6697f073ea3ee17e04d7e5a0686a6_lg.webp",
+        "https://cdn.converty.shop/images/9284892def2104ca716188a021d0bac5b9ebddffb4fd1051cd9192f30cfc2fec_lg.webp",
+        "https://cdn.converty.shop/images/fb198a5f56fba2aa0f6874831a50abf3300865cccedf70620828945ded9c4dd9_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Pack Flormar",
+      "slug": "pack-flormar-category-3",
+      "category_slug": "category-3",
+      "description": "1️⃣ ✨ باك فلورمار الكامل ✨من 250 د.ت إلى 150 د.ت 🔥(برايمر + باليت ظلال + ماسكرا + بلاشر + Shine Kiss Me More + سيلكمات ليبستيك + ليبلانر)🎯 عرض محدود – ما تضيّعش الفرصة!",
+      "price": 199,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/pack-flormar",
+      "images": [
+        "https://cdn.converty.shop/images/43fdee2a27cda729ab9d58959950730d847746313fb8d1d1b91b5efd52d619e8_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Lip Combo",
+      "slug": "kwmbw-lsyf-llshfyf",
+      "category_slug": "category-3",
+      "description": "تحبّي شفايفك تبان مرتبة ولامعة بصيفة طبيعية؟جربّي كومبو الصيف:🔹 Lipliner مقاوم للماء يحدّد الشفاه بدقة🔹 Shine Kiss Me More يضيف لمعان وأنوثة بلا ما يسيح👄 يدوم بالساعات ويريّحك من التعديل كل شوية✨ الكومبو هذا هو السر متاع اللوك الصيفي المثالي!",
+      "price": 50,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/kwmbw-lsyf-llshfyf",
+      "images": [
+        "https://cdn.converty.shop/images/04def67bb37fad161e9dcb5edca5ed78514bb751f6c0136d940738c8f1c63f85_lg.webp",
+        "https://cdn.converty.shop/images/bef78a64c1961c847a931aba26c9fd23091a8152b6bc1370e0b6164a4015b628_lg.webp",
+        "https://cdn.converty.shop/images/36ec446d89c8cd7746fed425921401ec755e36f51f29b2a5955380172b44196a_lg.webp",
+        "https://cdn.converty.shop/images/5c3e4494ad0ed42708eb329f5c3edcf29d19b4481ccdb4193857cbc555cefc84_lg.webp",
+        "https://cdn.converty.shop/images/646f67a0b8eaf9c424674eceabc695a0e22fdf02b8d7e2f1221582ffbfd42a37_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Dewy Lip Booster",
+      "slug": "dewy-lip-booster",
+      "category_slug": "category-3",
+      "description": "💋 شفاه ممتلئة ومثيرة بلمسة واحدة!✨ تأثير تكبير فوري ولمعان يخطف الأنظار!🌈 ألوان نابضة بالحياة ولمسة براقة!🌟 مكياج شفاه جذاب وملفت بكل سهولة!💄 تميّزي بإطلالة شفاه لا تُنسى!",
+      "price": 29.9,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/dewy-lip-booster",
+      "images": [
+        "https://cdn.converty.shop/images/278435789319af6eaf09a4e3a7688adc7a1ce53e053a3585aaf5b31bb1b59b4d_lg.webp",
+        "https://cdn.converty.shop/images/4e23b570ce30fce787c527dadd05d5ebda8869f4853f059759337015888bbff7_lg.webp",
+        "https://cdn.converty.shop/images/af7f993ce1af701e72a09c89affefc0b925b5ce74e856370625b9c47c4e63d4f_lg.webp",
+        "https://cdn.converty.shop/images/c0de91c82d2428c8dfe62c7f6ef8c9b811d94f46e4be9c7b559289c33c54bc7f_lg.webp",
+        "https://cdn.converty.shop/images/3de91b87584161ddb04a50de1fb53d8626265ad67e9f0e8aa12cd0d44b9cbb8e_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Lip & Cheek Tint",
+      "slug": "lip-cheek-tint-category-3",
+      "category_slug": "category-3",
+      "description": "💄 منتج 2 في 1: روج وخدود في لمسة واحدة!💧 تركيبة مائية مبتكرة بمواد طبيعية!🌸 ملمس ناعم وإحساس منعش على البشرة!🎨 ألوان تدوم طويلاً... لمسات قليلة تكفي!✨ إشراقة طبيعية تدوم من أول لمسة!",
+      "price": 29,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/lip-cheek-tint",
+      "images": [
+        "https://cdn.converty.shop/images/e51018289c6ed1e5eb825713f5f15c1ac5f0317a6f2a74b5781be3970bb21a74_lg.webp",
+        "https://cdn.converty.shop/images/e02b4baa0b373d8c07dc03150dedfbd81a5c070594752b42a1fc977cfa347302_lg.webp",
+        "https://cdn.converty.shop/images/c1dfaf31a7f613d83c57016c2b41d9fe979f139101876c4a52c62803840175ee_lg.webp",
+        "https://cdn.converty.shop/images/2beb7d16e5304d7b9812390901d052960be13e786909bfa714d0f638acacffd0_lg.webp",
+        "https://cdn.converty.shop/images/0b7472eb7a3032431e677205cda39487c89f4627ec98a3ba09ecc6d87b807e4c_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Kiss Me More Lip Tattoo",
+      "slug": "kiss-me-more-lip-tattoo",
+      "category_slug": "category-3",
+      "description": "أحمر الشفاه Kiss Me More Lip Tattoo 💄✨ بفضل تركيبته الجديدة الغنية بزبدة الكاكاو 🥥، زيت المورومورو وزبدة الشيا، يمنح ترطيبًا يدوم حتى 24 ساعة 💧 وثباتًا يصل إلى 8 ساعات ⏳ دون تلطخ! 😍💖",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/kiss-me-more-lip-tattoo",
+      "images": [
+        "https://cdn.converty.shop/images/1843636ff4ec223019a559fb01629822b5393c646d086924e01bab68a392012a_lg.webp",
+        "https://cdn.converty.shop/images/2f8252086e6daeb7d4f978948aac9915e0adf911153f9819a80f526c1cdd978a_lg.webp",
+        "https://cdn.converty.shop/images/5fe8da2134338676ecd7500df5321accdb69949b3fecd487bb43838267dc3b99_lg.webp",
+        "https://cdn.converty.shop/images/7a5b5b25186b49825af787b29d836e93affdd4f8a7567be88329ad3d402fdc49_lg.webp",
+        "https://cdn.converty.shop/images/901b09f12aaea60c4db1d0eacdd57454e5a7cdb5a29197f82737e55da9bd7d9f_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Shine Kiss Me More Lip Tattoo",
+      "slug": "shine-kiss-me-more-lip-tattoo",
+      "category_slug": "category-3",
+      "description": "أحمر الشفاه Shine Kiss Me More 💄✨ بفضل إسفنجة التطبيق الناعمة، يمنحك تجربة فريدة بتركيبته الكريمية الناعمة ولونه المكثف! 😍 يدوم طويلاً ليمنح شفتيك لمسة ساحرة تدوم طوال اليوم! 💖",
+      "price": 38,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/shine-kiss-me-more-lip-tattoo",
+      "images": [
+        "https://cdn.converty.shop/images/bef78a64c1961c847a931aba26c9fd23091a8152b6bc1370e0b6164a4015b628_lg.webp",
+        "https://cdn.converty.shop/images/36ec446d89c8cd7746fed425921401ec755e36f51f29b2a5955380172b44196a_lg.webp",
+        "https://cdn.converty.shop/images/5c3e4494ad0ed42708eb329f5c3edcf29d19b4481ccdb4193857cbc555cefc84_lg.webp",
+        "https://cdn.converty.shop/images/646f67a0b8eaf9c424674eceabc695a0e22fdf02b8d7e2f1221582ffbfd42a37_lg.webp",
+        "https://cdn.converty.shop/images/dc11d54021226282445b1a493e7aa38b85e674bf8894186980ae99fe3076fc3e_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Mood Booster Blush",
+      "slug": "mood-booster-blush-category-3",
+      "category_slug": "category-3",
+      "description": "أحمر الخدود السائل لتعزيز الإشراقة ✨ بفضل تركيبته السائلة ورأسه التطبيقي الخاص 🎨، يمنح خدودك احمرارًا طبيعيًا ولمسة ناعمة منعشة! 💖😊",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/mood-booster-blush",
+      "images": [
+        "https://cdn.converty.shop/images/216625fe42f6be8554021c44dd7493890780d0b7f2ea27bd4d23abe1a44549ac_lg.webp",
+        "https://cdn.converty.shop/images/a40748fc607e4d4d84a8789b9d4fe3ca7dccbda67472a89f44c7fbe5b4d0eb6f_lg.webp",
+        "https://cdn.converty.shop/images/d62f887e51492b91bb1ded314597af01b525fa6b9b42993138e72c62d2f68952_lg.webp",
+        "https://cdn.converty.shop/images/b890bfb621ade6aa5b4f0b0985e7564a166de3c08a31f2d2e568f6d8c1bce1c2_lg.webp",
+        "https://cdn.converty.shop/images/27a7caa44d911238e13f657d95a77fd3f24294bdf8fc0e64f26fc0e58c6610aa_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Mood Booster Illuminator",
+      "slug": "mood-booster-illuminator-category-3",
+      "category_slug": "category-3",
+      "description": "إضاءة سائلة لتعزيز الإشراقة ✨ تمنح بشرتك توهّجًا طبيعيًا بفضل قوامها المضيء 🌟! مثالية لإبراز ملامح الوجه بنعومة ولمسة إشراق جذابة! 💖😊",
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/mood-booster-illuminator",
+      "images": [
+        "https://cdn.converty.shop/images/4e4796bdf866c23e1466c7b5b67f5fcfa049b66387bc38bd65841c647e54aef0_lg.webp",
+        "https://cdn.converty.shop/images/ff7c51dd73a617d5258ffcaaef9e793fd89d83a44b27358b9c510422d9f0836b_lg.webp",
+        "https://cdn.converty.shop/images/28ff9956411dfa23e7fab825f85350ff6073cf4aa425aaae7c02ac0b1328e594_lg.webp",
+        "https://cdn.converty.shop/images/6a8c420697aebe4fb7dab408113f1f155ce0f5987ee9e45a8080ccf252a05930_lg.webp",
+        "https://cdn.converty.shop/images/5acb89337a0be1747c85389d5730dd637cde766d3e5bdad13163cb9c5abc489b_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "الألوان :",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Shading Brush",
+      "slug": "shading-brush",
+      "category_slug": "ksswrt",
+      "description": null,
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/shading-brush",
+      "images": [
+        "https://cdn.converty.shop/images/12e9667e34d46ba29206d907422808e580cf9c112fbbc099976c67f5cd11b377_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Powder Brush",
+      "slug": "powder-brush",
+      "category_slug": "ksswrt",
+      "description": null,
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/powder-brush",
+      "images": [
+        "https://cdn.converty.shop/images/20a95419dcf41236b599e583bb5c0383852163b9442d77e5fcc1b1d718777370_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Flared Cut Blush Brush",
+      "slug": "flared-cut-blush-brush",
+      "category_slug": "ksswrt",
+      "description": null,
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/flared-cut-blush-brush",
+      "images": [
+        "https://cdn.converty.shop/images/499ed003e1d249c7711a549ca86dca6dc0a4dd9dc187aded852c97ede2489e96_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Eyeshadow Brush",
+      "slug": "eyeshadow-brush",
+      "category_slug": "ksswrt",
+      "description": null,
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/eyeshadow-brush",
+      "images": [
+        "https://cdn.converty.shop/images/438da4c2068ea73467bd3705ada3ddf287f941dc5125decfeffbb5fe5a4c9c57_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Contour Brush",
+      "slug": "contour-brush",
+      "category_slug": "ksswrt",
+      "description": null,
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/contour-brush",
+      "images": [
+        "https://cdn.converty.shop/images/137a74cb177514a60204a6c2fd99088a6f9b29668fa8d0de1c468dc731e3588b_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Concealer Brush",
+      "slug": "concealer-brush",
+      "category_slug": "ksswrt",
+      "description": "🖌️ فرشاة الكونسيلر فلورمار تسهل دمج الكونسيلر مع البشرة بفضل هيكل شعيراتها الناعمة والرفيعة، وتغطي عيوب البشرة واختلافات اللون بإطلالة طبيعية. ✨💖",
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/concealer-brush",
+      "images": [
+        "https://cdn.converty.shop/images/b44345c4696b8c80f5042039af8495def1768b66ee41d26be45ac4003b4cc130_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Blusher Brush",
+      "slug": "blusher-brush",
+      "category_slug": "ksswrt",
+      "description": "🖌️ فرشاة اللمسة الخدود فلورمار توزع أحمر الخدود بشكل متساوٍ على عظام الوجنتين، وتوفر استخدامًا سهلًا ومريحًا بفضل طرفها المقطوع وشعيراتها الناعمة. ✨💖",
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/blusher-brush",
+      "images": [
+        "https://cdn.converty.shop/images/4651784abd4dd812527c32d29179b04aff611acc25d9eb8741d4aacbb87142d5_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Blending Brush",
+      "slug": "blending-brush",
+      "category_slug": "ksswrt",
+      "description": "🖌️ فرشاة الدمج فلورمار تضفي لمسات احترافية على مكياج العيون بفضل هيكل شعيراتها المصمم خصيصًا، وتوفر لكِ إطلالة مذهلة ودائمة سواء مع ظلال العيون السائلة أو البودرة. ✨👁️",
+      "price": 20,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/blending-brush",
+      "images": [
+        "https://cdn.converty.shop/images/a7b4753d6534d4c3cfe294781df7c9993a908d11e822c2981a1e9999c431ce6d_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Vitamin Bomb Serum&Primer",
+      "slug": "vitamin-bomb-serum-primer",
+      "category_slug": "laany-blbshr",
+      "description": null,
+      "price": 40,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/vitamin-bomb-serum-primer",
+      "images": [
+        "https://cdn.converty.shop/images/8fea0601c81a90f5cf0fdb99d4e6f1a29691c3c64169dac0d2dd90eb4a394f6c_lg.webp",
+        "https://cdn.converty.shop/images/6a2f2a45b89387c978c8cf37c94d5a79785960909505422ef69a93e43174a95e_lg.webp",
+        "https://cdn.converty.shop/images/1e675d38ec1ce82a579f476c22ad8239c52a0a242880eaad470e550aa7e944e1_lg.webp",
+        "https://cdn.converty.shop/images/d2f0fe196eda53b07bc4c70ba0df5ab0415b4710e68c7f223139758021ccae48_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "pore minimizer",
+      "slug": "pore-minimizer",
+      "category_slug": "laany-blbshr",
+      "description": null,
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/pore-minimizer",
+      "images": [
+        "https://cdn.converty.shop/images/e0d6b81560dc4aa64bae4fe9fa16c39a062459d8ba3a4f04dfd15aeebd237b89_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Tinted Moisturizer Spf50",
+      "slug": "tinted-moisturizer-spf50",
+      "category_slug": "laany-blbshr",
+      "description": null,
+      "price": 50,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/tinted-moisturizer-spf50",
+      "images": [
+        "https://cdn.converty.shop/images/9965188d42ff9a2599fec14732c1c90145ddf6801c0c99cc3f7eab34b92afdc2_lg.webp",
+        "https://cdn.converty.shop/images/6c026472f6c29cb04c4a807aeb8c76293bdfc39e26b61ee9403f1b1d7055e019_lg.webp",
+        "https://cdn.converty.shop/images/91bc9ccf578dec13502f4dbf7b5370c74d8287a68bd639264ba57d9d837870ad_lg.webp",
+        "https://cdn.converty.shop/images/b9d35f55d9fc3fab466a27eb4206bc2057d83b95af99bf24cf1b6d5eb4b5de2c_lg.webp",
+        "https://cdn.converty.shop/images/9c86be1de6110d6c2cdb810f85343037d9fd8f88a0ab39c823a9d852cb3e3545_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "couleur",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Illuminating Makeup Primer Plus+",
+      "slug": "illuminating-makeup-primer-plus",
+      "category_slug": "laany-blbshr",
+      "description": null,
+      "price": 25,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/illuminating-makeup-primer-plus",
+      "images": [
+        "https://cdn.converty.shop/images/56bb588136784ddc0c6bc14b7b581b7b132dd44d6b034494cd03abca1f34dfd3_lg.webp",
+        "https://cdn.converty.shop/images/abfed9a1063432b7781f83075017023500936b829491122c4bfa983e13978dd9_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Pack Flormar",
+      "slug": "pack-flormar-laany-blbshr",
+      "category_slug": "laany-blbshr",
+      "description": "1️⃣ ✨ باك فلورمار الكامل ✨من 250 د.ت إلى 150 د.ت 🔥(برايمر + باليت ظلال + ماسكرا + بلاشر + Shine Kiss Me More + سيلكمات ليبستيك + ليبلانر)🎯 عرض محدود – ما تضيّعش الفرصة!",
+      "price": 199,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/pack-flormar",
+      "images": [
+        "https://cdn.converty.shop/images/43fdee2a27cda729ab9d58959950730d847746313fb8d1d1b91b5efd52d619e8_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    },
+    {
+      "name": "Illuminating Primer Make-Up Base",
+      "slug": "illuminating-primer-make-up-base",
+      "category_slug": "laany-blbshr",
+      "description": "✨ قاعدة المكياج فلورمار تمنحكِ راحة بفضل طبقتها الرقيقة، وتحتوي على مستخلصات فواكه الأكاي والشاي الأخضر ذات الخصائص المضادة للأكسدة، مما يساعد في حماية البشرة من علامات الشيخوخة المبكرة. 💖🌿",
+      "price": 40,
+      "sale_price": null,
+      "source_url": "https://flormar.tn/product/illuminating-primer-make-up-base",
+      "images": [
+        "https://cdn.converty.shop/images/d7e59ec0dd4fdd4c9caa3ecd60f93d91087a7cc6190822d2b6b3e33b69523863_lg.webp",
+        "https://cdn.converty.shop/images/e07856a884272017d582f30cee4a2b50d74045686c0d34d10e8ffb0beba94b2e_lg.webp"
+      ],
+      "variants": [
+        {
+          "shade_name": "Standard",
+          "sku": null,
+          "color_hex": null,
+          "swatch_image_url": null,
+          "stock_qty": 99
+        }
+      ]
+    }
+  ]
+}
