@@ -68,6 +68,12 @@ export default function ProductPage() {
   const canAddToCart = requireShade ? selected !== null : defaultVariant !== null;
   const effectiveVariant = requireShade ? selected : defaultVariant;
 
+  // Main display image: prefer the selected shade's image if it has one
+  const displayImage =
+    (selected && selected.swatch_image_url) ||
+    images[activeImg]?.url ||
+    null;
+
   function handleAddToCart() {
     if (!effectiveVariant) return;
     addItem(product!, effectiveVariant);
@@ -82,26 +88,27 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-1 text-sm text-gray-500 hover:text-brand mb-6 transition-colors"
+        className="flex items-center gap-1 text-sm text-gray-500 hover:text-brand mb-4 sm:mb-6 transition-colors"
       >
         <ChevronLeft size={16} /> Retour
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
         {/* Images */}
         <div className="flex flex-col gap-3">
           <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-50">
-            {images[activeImg]?.url ? (
+            {displayImage ? (
               <Image
-                src={images[activeImg].url}
-                alt={product.name}
+                src={displayImage}
+                alt={`${product.name}${selected ? " — " + selected.shade_name : ""}`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
+                unoptimized
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-gray-300">
@@ -117,13 +124,16 @@ export default function ProductPage() {
               {images.map((img, i) => (
                 <button
                   key={img.id}
-                  onClick={() => setActiveImg(i)}
+                  onClick={() => {
+                    setActiveImg(i);
+                    setSelected(null);
+                  }}
                   className={[
                     "relative shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all",
-                    activeImg === i ? "border-brand" : "border-transparent hover:border-gray-300",
+                    activeImg === i && !selected ? "border-brand" : "border-transparent hover:border-gray-300",
                   ].join(" ")}
                 >
-                  <Image src={img.url} alt={`Image ${i + 1}`} fill className="object-cover" sizes="64px" />
+                  <Image src={img.url} alt={`Image ${i + 1}`} fill className="object-cover" sizes="64px" unoptimized />
                 </button>
               ))}
             </div>
@@ -156,7 +166,6 @@ export default function ProductPage() {
             <p className="text-gray-600 leading-relaxed text-sm">{product.description}</p>
           )}
 
-          {/* Shade selector — only for real variants */}
           {requireShade && (
             <ShadeSelector
               variants={realVariants}
@@ -165,14 +174,12 @@ export default function ProductPage() {
             />
           )}
 
-          {/* Validation hint */}
           {requireShade && !selected && (
             <p className="text-sm text-amber-600 font-medium -mt-1">
               Veuillez choisir une teinte pour continuer.
             </p>
           )}
 
-          {/* Action buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={handleAddToCart}

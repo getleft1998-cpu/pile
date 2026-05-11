@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import Image from "next/image";
-import { createServerClient, createAdminClient } from "@/src/lib/supabase";
+import { createServerClient } from "@/src/lib/supabase";
 import ProductCard from "@/src/components/ProductCard";
 import HeroCarousel from "@/src/components/HeroCarousel";
 import type { Category, Product } from "@/src/lib/types";
@@ -11,44 +11,30 @@ const SUPABASE_URL =
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://yqgtjgvqeogsykkpgxiy.supabase.co";
 const BASE = `${SUPABASE_URL}/storage/v1/object/public/product-images`;
 
-const HERO_PATHS = ["banners/hero1.jpg", "banners/hero2.jpg"];
+const HERO_SLIDES = [
+  { src: `${BASE}/banners/hero1.jpg`, alt: "Flormar — collection beauté" },
+  { src: `${BASE}/banners/hero2.jpg`, alt: "Flormar — nouveautés maquillage" },
+];
 
-async function getPageData(): Promise<{
-  categories: Category[];
-  products: Product[];
-  heroSlides: Array<{ src: string; alt: string }>;
-}> {
+async function getPageData(): Promise<{ categories: Category[]; products: Product[] }> {
   const supabase = createServerClient();
-  const adminClient = createAdminClient();
-
-  const [{ data: categories }, { data: products }, { data: bannerFiles }] = await Promise.all([
+  const [{ data: categories }, { data: products }] = await Promise.all([
     supabase.from("categories").select("*").order("name").limit(6),
     supabase
       .from("products")
       .select(
-        "*, categories(*), product_variants(id, shade_name, color_hex, stock_qty), product_images(url, sort_order)"
+        "*, categories(*), product_variants(id, shade_name, color_hex, swatch_image_url, stock_qty), product_images(url, sort_order)"
       )
       .order("created_at", { ascending: false })
       .limit(8),
-    adminClient.storage.from("product-images").list("banners"),
   ]);
-
-  const existingBanners = new Set((bannerFiles ?? []).map((f) => f.name));
-  const heroSlides = HERO_PATHS
-    .filter((p) => existingBanners.has(p.split("/").pop()!))
-    .map((p, i) => ({ src: `${BASE}/${p}`, alt: `Flormar hero ${i + 1}` }));
-
-  return {
-    categories: categories ?? [],
-    products: products ?? [],
-    heroSlides,
-  };
+  return { categories: categories ?? [], products: products ?? [] };
 }
 
 const CATEGORY_DISPLAY_ORDER = ["face", "eyes", "lips", "nails", "skincare", "accessories"];
 
 export default async function HomePage() {
-  const { categories, products, heroSlides } = await getPageData();
+  const { categories, products } = await getPageData();
 
   const sortedCategories = [...categories].sort((a, b) => {
     const ai = CATEGORY_DISPLAY_ORDER.indexOf(a.slug);
@@ -62,34 +48,15 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero Carousel */}
-      {heroSlides.length > 0 ? (
-        <HeroCarousel slides={heroSlides} />
-      ) : (
-        <section className="bg-gradient-to-br from-brand-light to-white py-20 px-4">
-          <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-4">
-              Your beauty,{" "}
-              <span className="text-brand">elevated</span>
-            </h1>
-            <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
-              Discover the Flormar collection — professional makeup delivered
-              across Tunisia, cash on delivery.
-            </p>
-            <Link
-              href="/categories"
-              className="inline-block bg-brand hover:bg-brand-dark text-white font-semibold px-8 py-3 rounded-full transition-colors"
-            >
-              Shop Now
-            </Link>
-          </div>
-        </section>
-      )}
+      <HeroCarousel slides={HERO_SLIDES} />
 
       {/* Shop by Category */}
       {sortedCategories.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Shop by Category</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8 text-center">
+            Shop by Category
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {sortedCategories.map((cat) => (
               <Link
                 key={cat.id}
@@ -104,6 +71,7 @@ export default async function HomePage() {
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw"
+                      unoptimized
                     />
                   ) : (
                     <span className="flex items-center justify-center w-full h-full text-brand font-bold text-3xl">
@@ -111,11 +79,11 @@ export default async function HomePage() {
                     </span>
                   )}
                 </div>
-                <div className="px-2 py-4 text-center w-full">
-                  <p className="text-sm font-semibold text-gray-900 group-hover:text-brand transition-colors mb-2">
+                <div className="px-2 py-3 sm:py-4 text-center w-full">
+                  <p className="text-xs sm:text-sm font-semibold text-gray-900 group-hover:text-brand transition-colors mb-1.5 sm:mb-2">
                     {cat.name}
                   </p>
-                  <span className="inline-block text-xs font-semibold text-brand border border-brand rounded-full px-3 py-1 group-hover:bg-brand group-hover:text-white transition-colors">
+                  <span className="inline-block text-[10px] sm:text-xs font-semibold text-brand border border-brand rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 group-hover:bg-brand group-hover:text-white transition-colors">
                     Shop Now
                   </span>
                 </div>
@@ -127,15 +95,15 @@ export default async function HomePage() {
 
       {/* New Arrivals */}
       {products.length > 0 && (
-        <section className="bg-gray-50 py-14">
+        <section className="bg-gray-50 py-12 sm:py-14">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">New Arrivals</h2>
+            <div className="flex items-center justify-between mb-6 sm:mb-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Nouveautés</h2>
               <Link href="/categories" className="text-sm font-semibold text-brand hover:underline">
-                View All →
+                Voir tout →
               </Link>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {products.map((p) => (
                 <ProductCard key={p.id} product={p as Product} />
               ))}
@@ -145,14 +113,14 @@ export default async function HomePage() {
       )}
 
       {/* COD banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
         <div className="bg-brand rounded-3xl p-8 md:p-12 text-white text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-3">
-            Cash on Delivery
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3">
+            Paiement à la livraison
           </h2>
-          <p className="text-brand-light max-w-md mx-auto">
-            Pay cash when your order arrives, anywhere in Tunisia.
-            Simple, safe, and risk-free.
+          <p className="text-brand-light max-w-md mx-auto text-sm sm:text-base">
+            Payez en cash à la réception de votre commande, partout en Tunisie.
+            Simple, sûr et sans risque.
           </p>
         </div>
       </section>
