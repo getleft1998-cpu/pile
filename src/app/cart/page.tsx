@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { useCart } from "@/src/lib/cart";
+import { isFakeShade } from "@/src/components/ProductCard";
 
 export default function CartPage() {
   const { items, total, removeItem, updateQty } = useCart();
@@ -35,13 +36,15 @@ export default function CartPage() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Items */}
         <div className="flex-1 flex flex-col gap-4">
-          {items.map(({ product, variant, quantity }) => {
+          {items.map(({ key, product, variant, quantity, shade_override }) => {
             const img = product.product_images?.[0]?.url ?? null;
             const price = product.sale_price ?? product.price;
+            const displayShade =
+              shade_override ?? (isFakeShade(variant.shade_name) ? null : variant.shade_name);
 
             return (
               <div
-                key={variant.id}
+                key={key}
                 className="flex gap-4 bg-white rounded-2xl border border-gray-100 p-4"
               >
                 <div className="relative w-20 h-20 shrink-0 rounded-xl overflow-hidden bg-gray-50">
@@ -52,6 +55,7 @@ export default function CartPage() {
                       fill
                       className="object-cover"
                       sizes="80px"
+                      unoptimized
                     />
                   ) : (
                     <div className="w-full h-full bg-gray-100" />
@@ -65,9 +69,11 @@ export default function CartPage() {
                   >
                     {product.name}
                   </Link>
-                  <p className="text-xs text-gray-400 mt-0.5">
-                    Teinte : {variant.shade_name}
-                  </p>
+                  {displayShade && (
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      Couleur : {displayShade}
+                    </p>
+                  )}
                   <p className="font-bold text-gray-900 mt-1">
                     {price.toFixed(3)} TND
                   </p>
@@ -75,7 +81,7 @@ export default function CartPage() {
 
                 <div className="flex flex-col items-end gap-2">
                   <button
-                    onClick={() => removeItem(variant.id)}
+                    onClick={() => removeItem(key)}
                     className="p-1 text-gray-300 hover:text-red-500 transition-colors"
                     aria-label="Supprimer"
                   >
@@ -83,7 +89,7 @@ export default function CartPage() {
                   </button>
                   <div className="flex items-center gap-2 border border-gray-200 rounded-full px-2 py-1">
                     <button
-                      onClick={() => updateQty(variant.id, quantity - 1)}
+                      onClick={() => updateQty(key, quantity - 1)}
                       className="p-0.5 text-gray-500 hover:text-brand"
                       disabled={quantity <= 1}
                     >
@@ -93,7 +99,7 @@ export default function CartPage() {
                       {quantity}
                     </span>
                     <button
-                      onClick={() => updateQty(variant.id, quantity + 1)}
+                      onClick={() => updateQty(key, quantity + 1)}
                       className="p-0.5 text-gray-500 hover:text-brand"
                     >
                       <Plus size={14} />

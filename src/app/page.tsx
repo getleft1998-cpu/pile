@@ -4,17 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createServerClient } from "@/src/lib/supabase";
 import ProductCard from "@/src/components/ProductCard";
-import HeroCarousel from "@/src/components/HeroCarousel";
 import type { Category, Product } from "@/src/lib/types";
-
-const SUPABASE_URL =
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://yqgtjgvqeogsykkpgxiy.supabase.co";
-const BASE = `${SUPABASE_URL}/storage/v1/object/public/product-images`;
-
-const HERO_SLIDES = [
-  { src: `${BASE}/banners/hero1.jpg`, alt: "Flormar — collection beauté" },
-  { src: `${BASE}/banners/hero2.jpg`, alt: "Flormar — nouveautés maquillage" },
-];
 
 async function getPageData(): Promise<{ categories: Category[]; products: Product[] }> {
   const supabase = createServerClient();
@@ -47,12 +37,30 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero Carousel */}
-      <HeroCarousel slides={HERO_SLIDES} />
+      {/* Intro */}
+      <section className="bg-gradient-to-br from-brand-light via-white to-brand-light py-10 sm:py-14 lg:py-16 px-4">
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="text-xs sm:text-sm font-semibold text-brand uppercase tracking-widest mb-3">
+            Flormar Tunisie
+          </p>
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4 leading-tight">
+            Votre beauté, <span className="text-brand">sublimée</span>
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 max-w-xl mx-auto mb-6">
+            Maquillage professionnel livré partout en Tunisie. Paiement à la livraison.
+          </p>
+          <Link
+            href="/categories"
+            className="inline-block bg-brand hover:bg-brand-dark text-white font-semibold px-7 py-3 rounded-full transition-colors text-sm sm:text-base shadow-sm"
+          >
+            Explorer la collection
+          </Link>
+        </div>
+      </section>
 
       {/* Shop by Category */}
       {sortedCategories.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8 text-center">
             Shop by Category
           </h2>
@@ -93,7 +101,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* New Arrivals */}
+      {/* Nouveautés */}
       {products.length > 0 && (
         <section className="bg-gray-50 py-12 sm:py-14">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

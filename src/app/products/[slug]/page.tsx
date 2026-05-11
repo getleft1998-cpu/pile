@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { ShoppingBag, Zap, ChevronLeft } from "lucide-react";
 import { getSupabase } from "@/src/lib/supabase";
 import { useCart } from "@/src/lib/cart";
 import ShadeSelector from "@/src/components/ShadeSelector";
+import ImageShadeSelector from "@/src/components/ImageShadeSelector";
+import { buildImageShades } from "@/src/lib/shade-utils";
 import type { Product, ProductVariant } from "@/src/lib/types";
 
 const FAKE_SHADE_NAMES = new Set([
@@ -47,6 +49,18 @@ export default function ProductPage() {
     load();
   }, [slug, router]);
 
+  const variants = product?.product_variants ?? [];
+  const realVariants = useMemo(() => variants.filter(isRealVariant), [variants]);
+  const images = product?.product_images ?? [];
+
+  // Image-based shade selector kicks in when:
+  //   - there are 2+ images
+  //   - AND there are no real variants
+  const imageShades = useMemo(
+    () => (images.length > 1 && realVariants.length === 0 ? buildImageShades(images) : []),
+    [images, realVariants.length]
+  );
+
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-400">
@@ -56,34 +70,35 @@ export default function ProductPage() {
   }
   if (!product) return null;
 
-  const variants = product.product_variants ?? [];
-  const realVariants = variants.filter(isRealVariant);
-  const requireShade = realVariants.length > 0;
-  const defaultVariant = !requireShade ? (variants[0] ?? null) : null;
+  const requireRealShade = realVariants.length > 0;
+  const defaultVariant = !requireRealShade ? (variants[0] ?? null) : null;
+  const useImageShades = imageShades.length > 1;
 
-  const images = product.product_images ?? [];
   const activePrice = product.sale_price ?? product.price;
   const hasDiscount = product.sale_price !== null;
 
-  const canAddToCart = requireShade ? selected !== null : defaultVariant !== null;
-  const effectiveVariant = requireShade ? selected : defaultVariant;
+  const canAddToCart = requireRealShade ? selected !== null : defaultVariant !== null;
+  const effectiveVariant = requireRealShade ? selected : defaultVariant;
+  const shadeOverride = useImageShades
+    ? imageShades.find((s) => s.index === activeImg)?.code
+    : undefined;
 
-  // Main display image: prefer the selected shade's image if it has one
+  // Main displayed image: real-variant swatch image takes priority; otherwise current image index
   const displayImage =
-    (selected && selected.swatch_image_url) ||
+    (requireRealShade && selected && selected.swatch_image_url) ||
     images[activeImg]?.url ||
     null;
 
   function handleAddToCart() {
     if (!effectiveVariant) return;
-    addItem(product!, effectiveVariant);
+    addItem(product!, effectiveVariant, shadeOverride);
     setAdded(true);
     setTimeout(() => setAdded(false), 2500);
   }
 
   function handleBuyNow() {
     if (!effectiveVariant) return;
-    addItem(product!, effectiveVariant);
+    addItem(product!, effectiveVariant, shadeOverride);
     router.push("/checkout");
   }
 
@@ -103,7 +118,7 @@ export default function ProductPage() {
             {displayImage ? (
               <Image
                 src={displayImage}
-                alt={`${product.name}${selected ? " — " + selected.shade_name : ""}`}
+                alt={`${product.name}${shadeOverride ? " — " + shadeOverride : selected ? " — " + selected.shade_name : ""}`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -119,7 +134,8 @@ export default function ProductPage() {
               </div>
             )}
           </div>
-          {images.length > 1 && (
+          {/* Thumbnail row — only when not using image-based shades (those replace thumbnails) */}
+          {!useImageShades && images.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-1">
               {images.map((img, i) => (
                 <button
@@ -166,20 +182,30 @@ export default function ProductPage() {
             <p className="text-gray-600 leading-relaxed text-sm">{product.description}</p>
           )}
 
-          {requireShade && (
+          {/* Real-variant shade selector */}
+          {requireRealShade && (
             <ShadeSelector
               variants={realVariants}
               selected={selected}
               onSelect={setSelected}
             />
           )}
-
-          {requireShade && !selected && (
+          {requireRealShade && !selected && (
             <p className="text-sm text-amber-600 font-medium -mt-1">
               Veuillez choisir une teinte pour continuer.
             </p>
           )}
 
+          {/* Image-based shade selector (only when no real variants and 2+ images) */}
+          {useImageShades && (
+            <ImageShadeSelector
+              shades={imageShades}
+              selectedIndex={activeImg}
+              onSelect={(i) => setActiveImg(i)}
+            />
+          )}
+
+          {/* Action buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={handleAddToCart}

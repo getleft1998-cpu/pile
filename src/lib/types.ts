@@ -78,7 +78,9 @@ export interface OrderItem {
 }
 
 export interface CartItem {
+  key: string;            // unique line-item identifier: `${variant.id}::${shade_override ?? ""}`
   product: Product;
   variant: ProductVariant;
   quantity: number;
+  shade_override?: string; // image-based shade label (e.g. "001", "Couleur 2")
 }

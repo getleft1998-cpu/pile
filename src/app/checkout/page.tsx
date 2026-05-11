@@ -180,21 +180,25 @@ export default function CheckoutPage() {
           <div className="bg-white rounded-2xl border border-gray-100 p-6 sticky top-24">
             <h2 className="font-bold text-gray-900 mb-4">Votre commande</h2>
             <div className="flex flex-col gap-3 mb-4">
-              {items.map(({ product, variant, quantity }) => (
-                <div key={variant.id} className="flex justify-between text-sm">
-                  <div>
-                    <p className="font-medium text-gray-900 line-clamp-1">
-                      {product.name}
-                    </p>
-                    <p className="text-gray-400 text-xs">
-                      {!isFakeShade(variant.shade_name) && `${variant.shade_name} · `}qté: {quantity}
-                    </p>
+              {items.map(({ key, product, variant, quantity, shade_override }) => {
+                const displayShade =
+                  shade_override ?? (isFakeShade(variant.shade_name) ? null : variant.shade_name);
+                return (
+                  <div key={key} className="flex justify-between text-sm">
+                    <div>
+                      <p className="font-medium text-gray-900 line-clamp-1">
+                        {product.name}
+                      </p>
+                      <p className="text-gray-400 text-xs">
+                        {displayShade && `Couleur ${displayShade} · `}qté: {quantity}
+                      </p>
+                    </div>
+                    <span className="font-semibold text-gray-900 shrink-0 ml-2">
+                      {((product.sale_price ?? product.price) * quantity).toFixed(3)} TND
+                    </span>
                   </div>
-                  <span className="font-semibold text-gray-900 shrink-0 ml-2">
-                    {((product.sale_price ?? product.price) * quantity).toFixed(3)} TND
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="border-t pt-4 flex justify-between font-bold text-gray-900">
               <span>Total</span>
