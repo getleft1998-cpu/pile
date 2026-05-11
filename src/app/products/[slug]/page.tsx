@@ -3,11 +3,19 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { ShoppingBag, ChevronLeft } from "lucide-react";
+import { ShoppingBag, Zap, ChevronLeft } from "lucide-react";
 import { getSupabase } from "@/src/lib/supabase";
 import { useCart } from "@/src/lib/cart";
 import ShadeSelector from "@/src/components/ShadeSelector";
 import type { Product, ProductVariant } from "@/src/lib/types";
+
+const FAKE_SHADE_NAMES = new Set([
+  "standard", "couleur", "color", "default", "taille unique", "unique", "n/a", "",
+]);
+
+function isRealVariant(v: ProductVariant): boolean {
+  return !FAKE_SHADE_NAMES.has((v.shade_name ?? "").toLowerCase().trim());
+}
 
 export default function ProductPage() {
   const { slug } = useParams() as { slug: string };
@@ -24,9 +32,7 @@ export default function ProductPage() {
     async function load() {
       const { data } = await getSupabase()
         .from("products")
-        .select(
-          "*, categories(*), product_variants(*), product_images(id, url, sort_order)"
-        )
+        .select("*, categories(*), product_variants(*), product_images(id, url, sort_order)")
         .eq("slug", slug)
         .single();
       if (!data) {
@@ -34,9 +40,7 @@ export default function ProductPage() {
         return;
       }
       const p = data as Product;
-      // Sort images by sort_order
-      if (p.product_images)
-        p.product_images.sort((a, b) => a.sort_order - b.sort_order);
+      if (p.product_images) p.product_images.sort((a, b) => a.sort_order - b.sort_order);
       setProduct(p);
       setLoading(false);
     }
@@ -50,23 +54,35 @@ export default function ProductPage() {
       </div>
     );
   }
-
   if (!product) return null;
 
   const variants = product.product_variants ?? [];
+  const realVariants = variants.filter(isRealVariant);
+  const requireShade = realVariants.length > 0;
+  const defaultVariant = !requireShade ? (variants[0] ?? null) : null;
+
   const images = product.product_images ?? [];
   const activePrice = product.sale_price ?? product.price;
   const hasDiscount = product.sale_price !== null;
 
+  const canAddToCart = requireShade ? selected !== null : defaultVariant !== null;
+  const effectiveVariant = requireShade ? selected : defaultVariant;
+
   function handleAddToCart() {
-    if (!selected) return;
-    addItem(product!, selected);
+    if (!effectiveVariant) return;
+    addItem(product!, effectiveVariant);
     setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+    setTimeout(() => setAdded(false), 2500);
+  }
+
+  function handleBuyNow() {
+    if (!effectiveVariant) return;
+    addItem(product!, effectiveVariant);
+    router.push("/checkout");
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <button
         onClick={() => router.back()}
         className="flex items-center gap-1 text-sm text-gray-500 hover:text-brand mb-6 transition-colors"
@@ -89,18 +105,9 @@ export default function ProductPage() {
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-gray-300">
-                <svg
-                  className="w-24 h-24"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
+                <svg className="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
             )}
@@ -113,18 +120,10 @@ export default function ProductPage() {
                   onClick={() => setActiveImg(i)}
                   className={[
                     "relative shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all",
-                    activeImg === i
-                      ? "border-brand"
-                      : "border-transparent hover:border-gray-300",
+                    activeImg === i ? "border-brand" : "border-transparent hover:border-gray-300",
                   ].join(" ")}
                 >
-                  <Image
-                    src={img.url}
-                    alt={`Image ${i + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                  />
+                  <Image src={img.url} alt={`Image ${i + 1}`} fill className="object-cover" sizes="64px" />
                 </button>
               ))}
             </div>
@@ -132,7 +131,7 @@ export default function ProductPage() {
         </div>
 
         {/* Info */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5">
           {product.categories && (
             <a
               href={`/categories/${product.categories.slug}`}
@@ -142,56 +141,70 @@ export default function ProductPage() {
             </a>
           )}
 
-          <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{product.name}</h1>
 
           <div className="flex items-baseline gap-3">
             <span className="text-3xl font-black text-gray-900">
-              {activePrice.toFixed(3)} TND
+              {activePrice.toFixed(3)} <span className="text-xl">TND</span>
             </span>
             {hasDiscount && (
-              <span className="text-lg text-gray-400 line-through">
-                {product.price.toFixed(3)} TND
-              </span>
+              <span className="text-lg text-gray-400 line-through">{product.price.toFixed(3)} TND</span>
             )}
           </div>
 
           {product.description && (
-            <p className="text-gray-600 leading-relaxed">{product.description}</p>
+            <p className="text-gray-600 leading-relaxed text-sm">{product.description}</p>
           )}
 
-          {/* Shade selector */}
-          {variants.length > 0 && (
+          {/* Shade selector — only for real variants */}
+          {requireShade && (
             <ShadeSelector
-              variants={variants}
+              variants={realVariants}
               selected={selected}
               onSelect={setSelected}
             />
           )}
 
-          {/* Add to cart */}
-          <div className="flex flex-col gap-3">
-            {variants.length > 0 && !selected && (
-              <p className="text-sm text-amber-600 font-medium">
-                Veuillez sélectionner une teinte avant d'ajouter au panier.
-              </p>
-            )}
+          {/* Validation hint */}
+          {requireShade && !selected && (
+            <p className="text-sm text-amber-600 font-medium -mt-1">
+              Veuillez choisir une teinte pour continuer.
+            </p>
+          )}
+
+          {/* Action buttons */}
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={handleAddToCart}
-              disabled={variants.length > 0 && !selected}
+              disabled={!canAddToCart}
               className={[
-                "flex items-center justify-center gap-2 w-full py-4 rounded-full font-bold text-white transition-all",
-                variants.length > 0 && !selected
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-brand hover:bg-brand-dark active:scale-95",
-                added ? "bg-green-500 hover:bg-green-600" : "",
+                "flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full font-semibold transition-all text-sm",
+                canAddToCart
+                  ? added
+                    ? "bg-green-500 text-white"
+                    : "border-2 border-brand text-brand hover:bg-brand hover:text-white"
+                  : "bg-gray-100 text-gray-400 cursor-not-allowed",
               ].join(" ")}
             >
-              <ShoppingBag size={20} />
-              {added ? "Ajouté !" : "Ajouter au panier"}
+              <ShoppingBag size={18} />
+              {added ? "Ajouté au panier !" : "Ajouter au panier"}
+            </button>
+            <button
+              onClick={handleBuyNow}
+              disabled={!canAddToCart}
+              className={[
+                "flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full font-semibold transition-all text-sm",
+                canAddToCart
+                  ? "bg-brand hover:bg-brand-dark text-white active:scale-95"
+                  : "bg-gray-100 text-gray-400 cursor-not-allowed",
+              ].join(" ")}
+            >
+              <Zap size={18} />
+              Commander maintenant
             </button>
           </div>
 
-          <div className="border-t pt-4 text-sm text-gray-500">
+          <div className="border-t pt-4 text-sm text-gray-500 space-y-1">
             <p>✓ Paiement à la livraison (COD)</p>
             <p>✓ Livraison dans toute la Tunisie</p>
           </div>

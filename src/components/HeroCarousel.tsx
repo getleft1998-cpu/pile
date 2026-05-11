@@ -26,21 +26,22 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-gray-900"
-      style={{ aspectRatio: "1920/810" }}
+      className="relative w-full overflow-hidden bg-brand-light h-[200px] sm:h-[340px] md:h-[460px] lg:h-[540px]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
       {slides.map((slide, i) => (
         <div
           key={slide.src}
-          className={`absolute inset-0 transition-opacity duration-700 ${i === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            i === current ? "opacity-100 z-10" : "opacity-0 z-0"
+          }`}
         >
           <Image
             src={slide.src}
             alt={slide.alt}
             fill
-            className="object-cover object-center"
+            className="object-cover object-top"
             priority={i === 0}
             sizes="100vw"
           />
@@ -52,27 +53,29 @@ export default function HeroCarousel({ slides }: { slides: Slide[] }) {
         <>
           <button
             onClick={prev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 rounded-full p-2 shadow-md transition-all"
-            aria-label="Previous slide"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 rounded-full p-1.5 sm:p-2 shadow-md transition-all"
+            aria-label="Diapositive précédente"
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={18} />
           </button>
           <button
             onClick={next}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 rounded-full p-2 shadow-md transition-all"
-            aria-label="Next slide"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 rounded-full p-1.5 sm:p-2 shadow-md transition-all"
+            aria-label="Diapositive suivante"
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={18} />
           </button>
 
           {/* Dots */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
             {slides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrent(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-all ${i === current ? "bg-white scale-125" : "bg-white/50 hover:bg-white/80"}`}
-                aria-label={`Go to slide ${i + 1}`}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  i === current ? "bg-white scale-125" : "bg-white/50 hover:bg-white/80"
+                }`}
+                aria-label={`Diapositive ${i + 1}`}
               />
             ))}
           </div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/src/lib/cart";
+import { isFakeShade } from "@/src/components/ProductCard";
 
 const TUNISIAN_CITIES = [
   "Ariana","Béja","Ben Arous","Bizerte","Gabès","Gafsa","Jendouba",
@@ -185,7 +186,9 @@ export default function CheckoutPage() {
                     <p className="font-medium text-gray-900 line-clamp-1">
                       {product.name}
                     </p>
-                    <p className="text-gray-400 text-xs">{variant.shade_name} × {quantity}</p>
+                    <p className="text-gray-400 text-xs">
+                      {!isFakeShade(variant.shade_name) && `${variant.shade_name} · `}qté: {quantity}
+                    </p>
                   </div>
                   <span className="font-semibold text-gray-900 shrink-0 ml-2">
                     {((product.sale_price ?? product.price) * quantity).toFixed(3)} TND
