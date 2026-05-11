@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import Image from "next/image";
-import { createServerClient } from "@/src/lib/supabase";
+import { createServerClient, createAdminClient } from "@/src/lib/supabase";
 import ProductCard from "@/src/components/ProductCard";
 import type { Category, Product } from "@/src/lib/types";
 
@@ -25,7 +25,7 @@ async function getFeatured(): Promise<{
       )
       .order("created_at", { ascending: false })
       .limit(8),
-    supabase.storage.from("product-images").list("banners"),
+    createAdminClient().storage.from("product-images").list("banners"),
   ]);
   const hasBanner = (bannerFiles ?? []).some((f) => f.name === "hero.jpg");
   return { categories: categories ?? [], products: products ?? [], hasBanner };
