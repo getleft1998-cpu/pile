@@ -1,30 +1,25 @@
 # Flormar Tunisia — Catalog Import Report
 
-Generated: 2026-05-09T13:43:47.282Z  
+Generated: 2026-05-11T09:58:27.311Z  
 Status: **success**  
-Source: Direct seed (no scraping — flormar.tn requires JS rendering)  
 
-## Catalog Totals
+## Scrape Totals
 
 | Metric | Count |
 |--------|------:|
-| Categories | 6 |
-| Products | 32 |
-| Variants (shades) | 87 |
-| Failed products | 0 |
+| Categories | 5 |
+| Products | 82 |
+| Variants | 83 |
+| Missing prices | 0 |
+| Missing images | 0 |
 
-## Categories
+## Supabase Import
 
-- **Lèvres** (`levres`)
-- **Yeux** (`yeux`)
-- **Teint** (`teint`)
-- **Sourcils** (`sourcils`)
-- **Ongles** (`ongles`)
-- **Soins** (`soins`)
-
-## Notes
-
-- Products were seeded with realistic Flormar Tunisia data (names, descriptions, shades, prices in TND).
-- Product images are not yet uploaded — add via `/admin` when ready.
-- All variants default to `stock_qty: 99`.
-- Edit any time at https://pile-theta.vercel.app/admin (password: `flormar2024`).
+| Metric | Count |
+|--------|------:|
+| Categories inserted | 5 |
+| Products inserted | 82 |
+| Variants inserted | 83 |
+| Images uploaded | 285 |
+| Image failures | 0 |
+| Product failures | 0 |

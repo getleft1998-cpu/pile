@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-05-11T09:35:16.761Z",
+  "scrapedAt": "2026-05-11T09:54:43.741Z",
   "sourceUrl": "https://flormar.tn",
   "totals": {
     "categories": 5,
@@ -10,23 +10,23 @@
   },
   "categories": [
     {
-      "name": "منتجات الوجه",
+      "name": "Face",
       "slug": "category-1"
     },
     {
-      "name": "منتجات العيون",
+      "name": "Eyes",
       "slug": "category-2"
     },
     {
-      "name": "منتجات الشفاه",
+      "name": "Lips",
       "slug": "category-3"
     },
     {
-      "name": "إكسسوارات",
+      "name": "Accessories",
       "slug": "ksswrt"
     },
     {
-      "name": "العناية بالبشرة",
+      "name": "Skincare",
       "slug": "laany-blbshr"
     }
   ],
@@ -1963,5 +1963,6 @@
         }
       ]
     }
-  ]
+  ],
+  "errors": []
 }
