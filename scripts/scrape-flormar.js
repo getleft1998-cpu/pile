@@ -4,6 +4,7 @@
  *
  * Scrapes all categories and products from the flormar.tn Converty REST API.
  * Saves output to scripts/dry-run.json.
+ * Always writes dry-run.json (even if empty) so import-to-supabase.js can run.
  *
  * Run: node scripts/scrape-flormar.js
  * Requires: Node 18+ (native fetch)
@@ -26,6 +27,26 @@ const HEADERS = {
   "Origin": "https://flormar.tn",
 };
 
+function saveReport(categories, products, errors) {
+  const report = {
+    scrapedAt: new Date().toISOString(),
+    sourceUrl: "https://flormar.tn",
+    totals: {
+      categories: categories.length,
+      products: products.length,
+      variants: products.reduce((s, p) => s + p.variants.length, 0),
+      missingPrices: products.filter(p => !p.price).length,
+      missingImages: products.filter(p => !p.images.length).length,
+    },
+    categories: categories.map(({ id: _id, ...c }) => c),
+    products,
+    errors,
+  };
+  fs.writeFileSync(OUT_FILE, JSON.stringify(report, null, 2), "utf-8");
+  console.log(`\n📁 Saved ${products.length} products to ${OUT_FILE}`);
+  return report;
+}
+
 async function apiFetch(endpoint, retries = 3) {
   const url = `${BASE_API}${endpoint}`;
   for (let attempt = 0; attempt < retries; attempt++) {
@@ -36,7 +57,7 @@ async function apiFetch(endpoint, retries = 3) {
       });
       if (!res.ok) {
         const body = await res.text();
-        throw new Error(`HTTP ${res.status} from ${url}: ${body.slice(0, 200)}`);
+        throw new Error(`HTTP ${res.status}: ${body.slice(0, 200)}`);
       }
       return await res.json();
     } catch (err) {
@@ -47,12 +68,8 @@ async function apiFetch(endpoint, retries = 3) {
 }
 
 function slugify(text) {
-  return String(text)
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+  return String(text).toLowerCase().normalize("NFD")
+    .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
 function parsePrice(val) {
@@ -137,8 +154,11 @@ async function main() {
   console.log("\n🌸 Flormar Tunisia — API Scraper");
   console.log("══════════════════════════════════\n");
 
-  console.log("Fetching categories...");
+  const allErrors = [];
   let categories = [];
+
+  // Fetch categories — on failure write empty report and exit 0 so import step still runs
+  console.log("Fetching categories...");
   try {
     const data = await apiFetch("/categories");
     const raw = data.data || data.categories || data.items || data.results || (Array.isArray(data) ? data : []);
@@ -147,15 +167,25 @@ async function main() {
       .filter(c => c.name && c.slug);
     console.log(`  Found ${categories.length} categories: ${categories.map(c => c.name).join(", ")}\n`);
   } catch (err) {
-    console.error("  Failed to fetch categories:", err.message);
-    console.error("\n  The Converty API may block requests from this IP.");
-    process.exit(1);
+    const msg = `Failed to fetch categories: ${err.message}`;
+    console.error(`  ✗ ${msg}`);
+    console.error("  ⚠ flormar.tn API may block requests from this IP.");
+    allErrors.push(msg);
+    saveReport([], [], allErrors);
+    // Exit 0 so the import step still runs (it will skip gracefully with 0 products)
+    process.exit(0);
   }
 
-  if (!categories.length) { console.error("  No categories returned."); process.exit(1); }
+  if (!categories.length) {
+    console.error("  No categories returned.");
+    saveReport([], [], ["No categories returned"]);
+    process.exit(0);
+  }
 
+  // Fetch products per category
   const allProducts = [];
   const slugsSeen = new Set();
+
   for (const cat of categories) {
     console.log(`  → ${cat.name} (id: ${cat.id})`);
     try {
@@ -166,32 +196,31 @@ async function main() {
         allProducts.push(p);
       }
       console.log(`    ✓ ${products.length} products\n`);
-    } catch (err) { console.error(`    ✗ Failed: ${err.message}`); }
+    } catch (err) {
+      const msg = `Category ${cat.slug}: ${err.message}`;
+      console.error(`    ✗ ${msg}`);
+      allErrors.push(msg);
+    }
     await new Promise(r => setTimeout(r, 500));
   }
 
-  const report = {
-    scrapedAt: new Date().toISOString(),
-    sourceUrl: "https://flormar.tn",
-    totals: {
-      categories: categories.length, products: allProducts.length,
-      variants: allProducts.reduce((s, p) => s + p.variants.length, 0),
-      missingPrices: allProducts.filter(p => !p.price).length,
-      missingImages: allProducts.filter(p => !p.images.length).length,
-    },
-    categories: categories.map(({ id: _id, ...c }) => c),
-    products: allProducts,
-  };
+  const report = saveReport(categories, allProducts, allErrors);
 
-  fs.writeFileSync(OUT_FILE, JSON.stringify(report, null, 2), "utf-8");
   console.log("══════════════════════════════════");
   console.log(`  Categories : ${report.totals.categories}`);
   console.log(`  Products   : ${report.totals.products}`);
   console.log(`  Variants   : ${report.totals.variants}`);
   console.log(`  No price   : ${report.totals.missingPrices}`);
   console.log(`  No images  : ${report.totals.missingImages}`);
-  console.log(`\n📁 Saved to ${OUT_FILE}`);
-  allProducts.slice(0, 3).forEach(p => console.log(`  • "${p.name}" | ${p.price} DT | ${p.variants.length} shades | ${p.images.length} img`));
+
+  allProducts.slice(0, 3).forEach(p =>
+    console.log(`  • "${p.name}" | ${p.price} DT | ${p.variants.length} shades | ${p.images.length} img`)
+  );
 }
 
-main().catch(err => { console.error("Fatal:", err); process.exit(1); });
+main().catch(err => {
+  console.error("Fatal:", err);
+  // Still write a report so the import step sees a valid (empty) JSON file
+  try { saveReport([], [], [String(err)]); } catch {}
+  process.exit(0); // exit 0 so continue-on-error doesn't matter and import still runs
+});
