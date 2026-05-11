@@ -10,10 +10,7 @@ export const metadata = {
 };
 
 async function getCategories(): Promise<Category[]> {
-  const { data } = await createServerClient()
-    .from("categories")
-    .select("*")
-    .order("name");
+  const { data } = await createServerClient().from("categories").select("*").order("name");
   return data ?? [];
 }
 
@@ -34,26 +31,28 @@ export default async function CategoriesPage() {
             <Link
               key={cat.id}
               href={`/categories/${cat.slug}`}
-              className="group flex flex-col items-center gap-4 p-6 bg-white rounded-2xl border border-gray-100 hover:border-brand hover:shadow-lg transition-all"
+              className="group block overflow-hidden rounded-2xl border border-gray-100 hover:border-brand hover:shadow-lg transition-all"
             >
-              <div className="relative w-24 h-24 rounded-full overflow-hidden bg-brand-light">
+              <div className="relative w-full aspect-[4/3] overflow-hidden bg-brand-light">
                 {cat.image_url ? (
                   <Image
                     src={cat.image_url}
                     alt={cat.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform"
-                    sizes="96px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
                 ) : (
-                  <span className="flex items-center justify-center w-full h-full text-brand font-bold text-3xl">
+                  <span className="flex items-center justify-center w-full h-full text-brand font-bold text-5xl">
                     {cat.name.charAt(0)}
                   </span>
                 )}
               </div>
-              <span className="font-semibold text-gray-900 text-center group-hover:text-brand transition-colors">
-                {cat.name}
-              </span>
+              <div className="p-4 bg-white">
+                <span className="font-semibold text-gray-900 group-hover:text-brand transition-colors">
+                  {cat.name}
+                </span>
+              </div>
             </Link>
           ))}
         </div>
