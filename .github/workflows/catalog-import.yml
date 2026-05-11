@@ -1,9 +1,13 @@
 name: Catalog Import
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-  workflow_dispatch:
+    paths:
+      - "scripts/scrape-flormar.js"
+      - "scripts/import-to-supabase.js"
+      - ".github/workflows/catalog-import.yml"
 
 permissions:
   contents: write
@@ -15,72 +19,39 @@ concurrency:
 jobs:
   import:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Skip if already imported
-        id: check
-        run: |
-          if grep -q "Status: \*\*success\*\*" IMPORT_REPORT.md 2>/dev/null; then
-            echo "Import already completed successfully — skipping."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Clear old report and logs
-        if: steps.check.outputs.skip != 'true'
-        run: rm -f IMPORT_REPORT.md npm_ci.log seed.log
-
       - uses: actions/setup-node@v4
-        if: steps.check.outputs.skip != 'true'
         with:
           node-version: "22"
           cache: "npm"
 
       - name: Install dependencies
-        if: steps.check.outputs.skip != 'true'
-        run: npm ci 2>&1 | tee npm_ci.log
+        run: npm ci
+
+      - name: Scrape flormar.tn catalog
+        run: node scripts/scrape-flormar.js
         continue-on-error: true
 
-      - name: Seed catalog into Supabase
-        if: steps.check.outputs.skip != 'true'
+      - name: Import to Supabase
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://yqgtjgvqeogsykkpgxiy.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: |
-          set -x
-          {
-            node --version || true
-            npx tsx scripts/seed-catalog.ts
-            echo "SEED EXIT: $?"
-          } > seed.log 2>&1 || echo "OUTER EXIT: $?" >> seed.log
+        run: node scripts/import-to-supabase.js
         continue-on-error: true
 
-      - name: Always write report and commit
-        if: always() && steps.check.outputs.skip != 'true'
+      - name: Commit results
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ ! -f IMPORT_REPORT.md ]; then
-            {
-              echo "# Flormar Tunisia — Catalog Import Report"
-              echo ""
-              echo "Status: **failed**  "
-              echo "Reason: Seed script did not write a report. Captured logs below."
-              echo ""
-              echo "## seed.log"
-              echo ""
-              echo '```'
-              [ -f seed.log ] && tail -200 seed.log || echo "(no log)"
-              echo '```'
-            } > IMPORT_REPORT.md
-          fi
-          git add IMPORT_REPORT.md
-          git diff --staged --quiet && echo "No changes" || git commit -m "Add catalog import report [skip ci]"
+          git add -f scripts/dry-run.json IMPORT_REPORT.md 2>/dev/null || true
+          git diff --staged --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Catalog import results [skip ci]"
           git pull --rebase origin main || true
-          git push || git push --force-with-lease || true
+          git push
