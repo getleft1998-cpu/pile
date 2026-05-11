@@ -10,7 +10,10 @@ export function middleware(request: NextRequest) {
   }
 
   if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
-    const token = request.cookies.get("admin_token")?.value;
+    const token =
+      request.cookies.get("admin_token")?.value ??
+      request.headers.get("x-admin-token") ??
+      request.nextUrl.searchParams.get("token");
     const expected = process.env.ADMIN_PASSWORD || "flormar2024";
 
     if (!expected || token !== expected) {
