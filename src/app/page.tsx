@@ -4,18 +4,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { createServerClient, createAdminClient } from "@/src/lib/supabase";
 import ProductCard from "@/src/components/ProductCard";
+import HeroCarousel from "@/src/components/HeroCarousel";
 import type { Category, Product } from "@/src/lib/types";
 
 const SUPABASE_URL =
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://yqgtjgvqeogsykkpgxiy.supabase.co";
-const HERO_URL = `${SUPABASE_URL}/storage/v1/object/public/product-images/banners/hero.jpg`;
+const BASE = `${SUPABASE_URL}/storage/v1/object/public/product-images`;
 
-async function getFeatured(): Promise<{
+const HERO_PATHS = ["banners/hero1.jpg", "banners/hero2.jpg"];
+
+async function getPageData(): Promise<{
   categories: Category[];
   products: Product[];
-  hasBanner: boolean;
+  heroSlides: Array<{ src: string; alt: string }>;
 }> {
   const supabase = createServerClient();
+  const adminClient = createAdminClient();
+
   const [{ data: categories }, { data: products }, { data: bannerFiles }] = await Promise.all([
     supabase.from("categories").select("*").order("name").limit(6),
     supabase
@@ -25,115 +30,116 @@ async function getFeatured(): Promise<{
       )
       .order("created_at", { ascending: false })
       .limit(8),
-    createAdminClient().storage.from("product-images").list("banners"),
+    adminClient.storage.from("product-images").list("banners"),
   ]);
-  const hasBanner = (bannerFiles ?? []).some((f) => f.name === "hero.jpg");
-  return { categories: categories ?? [], products: products ?? [], hasBanner };
+
+  const existingBanners = new Set((bannerFiles ?? []).map((f) => f.name));
+  const heroSlides = HERO_PATHS
+    .filter((p) => existingBanners.has(p.split("/").pop()!))
+    .map((p, i) => ({ src: `${BASE}/${p}`, alt: `Flormar hero ${i + 1}` }));
+
+  return {
+    categories: categories ?? [],
+    products: products ?? [],
+    heroSlides,
+  };
 }
 
+const CATEGORY_DISPLAY_ORDER = ["face", "eyes", "lips", "nails", "skincare", "accessories"];
+
 export default async function HomePage() {
-  const { categories, products, hasBanner } = await getFeatured();
+  const { categories, products, heroSlides } = await getPageData();
+
+  const sortedCategories = [...categories].sort((a, b) => {
+    const ai = CATEGORY_DISPLAY_ORDER.indexOf(a.slug);
+    const bi = CATEGORY_DISPLAY_ORDER.indexOf(b.slug);
+    if (ai === -1 && bi === -1) return 0;
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
 
   return (
     <>
-      {/* Hero */}
-      {hasBanner ? (
-        <section className="relative min-h-[460px] md:min-h-[560px] flex items-center overflow-hidden bg-gray-900">
-          <Image
-            src={HERO_URL}
-            alt="Flormar — votre beauté, sublimée"
-            fill
-            className="object-cover object-center"
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
-          <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-16 py-20">
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 max-w-xl leading-tight">
-              Votre beauté,{" "}
-              <span className="text-pink-300">sublimée</span>
-            </h1>
-            <p className="text-lg text-gray-200 mb-8 max-w-lg">
-              Découvrez la collection Flormar — maquillage professionnel livré
-              partout en Tunisie, paiement à la livraison.
-            </p>
-            <Link
-              href="/categories"
-              className="inline-block bg-white hover:bg-gray-100 text-brand font-semibold px-8 py-3 rounded-full transition-colors"
-            >
-              Explorer la collection
-            </Link>
-          </div>
-        </section>
+      {/* Hero Carousel */}
+      {heroSlides.length > 0 ? (
+        <HeroCarousel slides={heroSlides} />
       ) : (
         <section className="bg-gradient-to-br from-brand-light to-white py-20 px-4">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-4">
-              Votre beauté,{" "}
-              <span className="text-brand">sublimée</span>
+              Your beauty,{" "}
+              <span className="text-brand">elevated</span>
             </h1>
             <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
-              Découvrez la collection Flormar — maquillage professionnel livré
-              partout en Tunisie, paiement à la livraison.
+              Discover the Flormar collection — professional makeup delivered
+              across Tunisia, cash on delivery.
             </p>
             <Link
               href="/categories"
               className="inline-block bg-brand hover:bg-brand-dark text-white font-semibold px-8 py-3 rounded-full transition-colors"
             >
-              Explorer la collection
+              Shop Now
             </Link>
           </div>
         </section>
       )}
 
-      {/* Categories */}
-      {categories.length > 0 && (
+      {/* Shop by Category */}
+      {sortedCategories.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Nos catégories</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Shop by Category</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map((cat) => (
+            {sortedCategories.map((cat) => (
               <Link
                 key={cat.id}
                 href={`/categories/${cat.slug}`}
-                className="group flex flex-col items-center gap-3 p-4 bg-white rounded-2xl border border-gray-100 hover:border-brand hover:shadow-md transition-all"
+                className="group flex flex-col items-center overflow-hidden rounded-2xl border border-gray-100 hover:border-brand hover:shadow-lg transition-all bg-white"
               >
-                <div className="relative w-20 h-20 rounded-2xl overflow-hidden bg-brand-light flex-shrink-0">
+                <div className="relative w-full aspect-[4/3] overflow-hidden bg-brand-light">
                   {cat.image_url ? (
                     <Image
                       src={cat.image_url}
                       alt={cat.name}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="80px"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw"
                     />
                   ) : (
-                    <span className="flex items-center justify-center w-full h-full text-brand font-bold text-2xl">
+                    <span className="flex items-center justify-center w-full h-full text-brand font-bold text-3xl">
                       {cat.name.charAt(0)}
                     </span>
                   )}
                 </div>
-                <span className="text-xs font-medium text-gray-700 text-center group-hover:text-brand transition-colors">
-                  {cat.name}
-                </span>
+                <div className="px-2 py-4 text-center w-full">
+                  <p className="text-sm font-semibold text-gray-900 group-hover:text-brand transition-colors mb-2">
+                    {cat.name}
+                  </p>
+                  <span className="inline-block text-xs font-semibold text-brand border border-brand rounded-full px-3 py-1 group-hover:bg-brand group-hover:text-white transition-colors">
+                    Shop Now
+                  </span>
+                </div>
               </Link>
             ))}
-          </div>
-          <div className="mt-6 text-center">
-            <Link href="/categories" className="text-sm text-brand font-semibold hover:underline">
-              Voir toutes les catégories →
-            </Link>
           </div>
         </section>
       )}
 
-      {/* Featured products */}
+      {/* New Arrivals */}
       {products.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 bg-gray-50 rounded-3xl">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Nouveautés</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p as Product} />
-            ))}
+        <section className="bg-gray-50 py-14">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-gray-900">New Arrivals</h2>
+              <Link href="/categories" className="text-sm font-semibold text-brand hover:underline">
+                View All →
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {products.map((p) => (
+                <ProductCard key={p.id} product={p as Product} />
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -142,11 +148,11 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="bg-brand rounded-3xl p-8 md:p-12 text-white text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">
-            Paiement à la livraison
+            Cash on Delivery
           </h2>
           <p className="text-brand-light max-w-md mx-auto">
-            Payez en cash à la réception de votre commande, partout en Tunisie.
-            Simple, sûr et sans risque.
+            Pay cash when your order arrives, anywhere in Tunisia.
+            Simple, safe, and risk-free.
           </p>
         </div>
       </section>
